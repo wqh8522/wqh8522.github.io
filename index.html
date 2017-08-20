@@ -60,6 +60,8 @@
 			
 				<li><a href="/">主页</a></li>
 	        
+				<li><a href="/archives">博客</a></li>
+	        
 				<li><a href="/tags/随笔/">随笔</a></li>
 	        
 			</ul>
@@ -120,6 +122,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -137,12 +141,14 @@
 			</nav>
 
 			<nav class="header-menu js-header-menu">
-				<ul style="width: 50%">
+				<ul style="width: 70%">
 				
 				
-					<li style="width: 50%"><a href="/">主页</a></li>
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
 		        
-					<li style="width: 50%"><a href="/tags/随笔/">随笔</a></li>
+					<li style="width: 33.333333333333336%"><a href="/archives">博客</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/tags/随笔/">随笔</a></li>
 		        
 				</ul>
 			</nav>
@@ -166,7 +172,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/20/title/">title</a>
+      <a class="article-title" href="/2017/08/20/title/">Redis入门之环境的搭建</a>
     </h1>
   
 
@@ -179,7 +185,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Redis入门之环境的搭建"><a href="#Redis入门之环境的搭建" class="headerlink" title="Redis入门之环境的搭建"></a>Redis入门之环境的搭建</h1><p>##一、 Ubuntu下redis的搭建 ##<br>这里直接使用命令下载以及安装，</p>
+        <h2 id="一、-Ubuntu下redis的搭建"><a href="#一、-Ubuntu下redis的搭建" class="headerlink" title="一、 Ubuntu下redis的搭建"></a>一、 Ubuntu下redis的搭建</h2><p>这里直接使用命令下载以及安装，</p>
 <h3 id="1、下载redis"><a href="#1、下载redis" class="headerlink" title="1、下载redis"></a>1、下载redis</h3><p>首先进入root下</p>
 <pre><code>root@ubuntu:~# wget http://download.redis.io/releases/redis-4.0.1.tar.gz
 </code></pre><h3 id="2、解压"><a href="#2、解压" class="headerlink" title="2、解压"></a>2、解压</h3><p>这里可以直接使用解压命令解压文件</p>
@@ -224,6 +230,17 @@ root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -295,6 +312,17 @@ root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -360,7 +388,7 @@ root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -420,6 +448,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
