@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>wanqh的个人博客</title>
+  <subtitle>记录生活、工作、学习点点滴滴</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-08-20T11:01:36.541Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Wan QingHua</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用JavaMail发送邮件（带附件）</title>
+    <link href="http://yoursite.com/2017/08/20/javamail/"/>
+    <id>http://yoursite.com/2017/08/20/javamail/</id>
+    <published>2017-08-20T09:36:06.000Z</published>
+    <updated>2017-08-20T11:01:36.541Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用javaMail发邮件之前先简单说一下邮件的三个协议：</p>
+<ol>
+<li>POP3：POP的全称是 Post Office Protocol ，即邮局协议，用于电子邮件的接收，它使用TCP的110端口，现在常用的是第三版，所以简称为 POP3。 <a id="more"></a></li>
+<li>SMTP：SMTP（Simple Mail Transfer Protocal）称为简单邮件传输协议，目标是向用户提供高效、可靠的邮件传输。</li>
+<li>IMAP：<br>IMAP是Internet Message Access Protocol的缩写，顾名思义，主要提供的是通过Internet获取信息的一种协议。</li>
+</ol>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>如果是使用像QQ邮箱、163邮箱、126邮箱等这种普通的邮箱，需要先开启POP3/SMTP/IMAP服务，并且获取授权。如果是企业邮箱，可以直接使用。这里以163邮箱为例。</p>
+<p><img src="http://i.imgur.com/5fMcgQh.png" alt=""><br>先查看是否开启服务<br><img src="http://i.imgur.com/YU0igMq.png" alt=""><br>开启并设置客户端授权码，这个很重要。如果是qq邮箱，需要发短信配置</p>
+<h2 id="jar包"><a href="#jar包" class="headerlink" title="jar包"></a>jar包</h2><p>javaMail需要两个jar，直接使用maven导入依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">          &lt;groupId&gt;javax.activation&lt;/groupId&gt;</div><div class="line">          &lt;artifactId&gt;activation&lt;/artifactId&gt;</div><div class="line">          &lt;version&gt;1.1.1&lt;/version&gt;</div><div class="line">      &lt;/dependency&gt;</div><div class="line">      &lt;dependency&gt;</div><div class="line">          &lt;groupId&gt;com.sun.mail&lt;/groupId&gt;</div><div class="line">          &lt;artifactId&gt;javax.mail&lt;/artifactId&gt;</div><div class="line">          &lt;version&gt;1.5.2&lt;/version&gt;</div><div class="line">      &lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">//主机名,上面在开启POP3/SMTP/IMAP服务的时候有服务器地址</div><div class="line">   public static String HOST_NAME = &quot;smtp.126.com&quot;;</div><div class="line">   //用户名，邮箱的登陆名</div><div class="line">   public static String USER_NAME = &quot;xxxxx&quot;;</div><div class="line">   //密码，这里是开始设置的授权码</div><div class="line">   public static String USER_PASSWD = &quot;xxxxx&quot;;</div><div class="line">   //发件人</div><div class="line">   public static String FROM_NAME = &quot;xxxxx&quot;;</div><div class="line">   //抄送人</div><div class="line">   public static String CC_NAME = &quot;xxxxx&quot;;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * @param toEmail 发送给谁</div><div class="line">    * @param code   发送的内容，验证码</div><div class="line">    */</div><div class="line">   public static void sendMail(String toEmail, String code) &#123;</div><div class="line">       //1：创建Properties</div><div class="line">       Properties properties = new Properties();</div><div class="line">       properties.put(&quot;mail.host&quot;, HOST_NAME);</div><div class="line">       properties.put(&quot;mail.smtp.auth&quot;, &quot;true&quot;);</div><div class="line">       //2：获取用户名和密码进行认证</div><div class="line">       Authenticator authenticator = new Authenticator() &#123;</div><div class="line">           @Override</div><div class="line">           protected PasswordAuthentication getPasswordAuthentication() &#123;</div><div class="line">               return new PasswordAuthentication(USER_NAME, USER_PASSWD);</div><div class="line">           &#125;</div><div class="line">       &#125;;</div><div class="line">       //3：获取session对象</div><div class="line">       Session session = Session.getInstance(properties, authenticator);</div><div class="line">       //4：设置邮件发送信息</div><div class="line">       Message message = new MimeMessage(session);</div><div class="line">       try &#123;</div><div class="line">           //4.1：设置发件人</div><div class="line">           message.setFrom(new InternetAddress(FROM_NAME));</div><div class="line">           //4.2：设置收件人</div><div class="line">		//Message.RecipientType.TO 收件人</div><div class="line">		//Message.RecipientType.CC 抄送</div><div class="line">		//Message.RecipientType.BCC 暗送</div><div class="line">           message.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));</div><div class="line">           //4.3：设置邮件主题</div><div class="line">           message.setSubject(&quot;主题！！&quot;);</div><div class="line">           //4.4：设置邮件正文</div><div class="line">           message.setContent(code,&quot;text/html;charset=utf-8&quot;);</div><div class="line">           //5：发送邮件</div><div class="line">           Transport.send(message);</div><div class="line">       &#125; catch (MessagingException e) &#123;</div><div class="line">           e.printStackTrace();</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用javaMail发邮件之前先简单说一下邮件的三个协议：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;POP3：POP的全称是 Post Office Protocol ，即邮局协议，用于电子邮件的接收，它使用TCP的110端口，现在常用的是第三版，所以简称为 POP3。
+    
+    </summary>
+    
+    
+      <category term="javamail" scheme="http://yoursite.com/tags/javamail/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis入门之环境的搭建</title>
+    <link href="http://yoursite.com/2017/08/20/Redis%E5%85%A5%E9%97%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2017/08/20/Redis入门之环境的搭建/</id>
+    <published>2017-08-20T05:09:50.000Z</published>
+    <updated>2017-08-20T09:09:51.304Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="一、-Ubuntu下redis的搭建"><a href="#一、-Ubuntu下redis的搭建" class="headerlink" title="一、 Ubuntu下redis的搭建"></a>一、 Ubuntu下redis的搭建</h2><p>这里直接使用命令下载以及安装，<br><a id="more"></a></p>
+<h3 id="1、下载redis"><a href="#1、下载redis" class="headerlink" title="1、下载redis"></a>1、下载redis</h3><p>首先进入root下</p>
+<pre><code>root@ubuntu:~# wget http://download.redis.io/releases/redis-4.0.1.tar.gz
+</code></pre><h3 id="2、解压"><a href="#2、解压" class="headerlink" title="2、解压"></a>2、解压</h3><p>这里可以直接使用解压命令解压文件</p>
+<pre><code>root@ubuntu:~# tar -xzvf redis-4.0.1.tar.gz 
+</code></pre><h3 id="3、编译安装"><a href="#3、编译安装" class="headerlink" title="3、编译安装"></a>3、编译安装</h3><p>解压完成后进入到解压后的目录中使用make命令既可编译</p>
+<figure>
+
+<pre><code>root@ubuntu:~# cd redis-4.0.1
+root@ubuntu:~/redis-4.0.1# make
+</code></pre><p></p></figure><br><img src="http://i.imgur.com/OLbC1eB.png" alt=""><p></p>
+<p>如上图所示如果没有错误为编译成功</p>
+<p>输入make test命令测试是否安装成功</p>
+<pre><code>root@ubuntu:~/redis-4.0.1# make test
+</code></pre><p><img src="http://i.imgur.com/7uhWPED.png" alt=""></p>
+<p>这里第一次可能会出现错误，如果出现错误可以再次执行该命令</p>
+<h3 id="4、启动redis"><a href="#4、启动redis" class="headerlink" title="4、启动redis"></a>4、启动redis</h3><pre><code>root@ubuntu:~/redis-4.0.1# cd src/
+root@ubuntu:~/redis-4.0.1/src# ls
+</code></pre><p>在redis的根目录下查看是否含有redis.conf文件</p>
+<p><img src="http://i.imgur.com/GDekIrp.png" alt=""></p>
+<p>然后进入到src目录中使用ls命令查看是否包含以下文件</p>
+<p><img src="http://i.imgur.com/n5F2V47.png" alt=""></p>
+<p>将redis添加到Path环境变量中，方便下次直接启动redis</p>
+<pre><code>root@ubuntu:~/redis-4.0.1/src# cp redis-server /usr/local/bin/
+root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
+</code></pre><p>使用命令启动redis</p>
+<pre><code>root@ubuntu:~/redis-4.0.1/src# redis-server 
+</code></pre><p><img src="http://i.imgur.com/2WyODnB.png" alt=""></p>
+<p>如图表示服务启动成功，不要关闭该终端，使用shift+ctrl+t开启一个新的终端，输入redis-cli命令进入redis</p>
+<p><img src="http://i.imgur.com/emLpYDY.png" alt=""></p>
+<p>配置成功</p>
+<p>另外在Ubuntu中可以直接使用apt-get命令安装，这里直接盗用<a href="https://www.runoob.com/redis/redis-install.html" title="菜鸟教程" target="_blank" rel="external">菜鸟教程</a>了。<br><img src="http://i.imgur.com/sF1LCM8.png" alt=""></p>
+<h2 id="二、在window中搭建"><a href="#二、在window中搭建" class="headerlink" title="二、在window中搭建"></a>二、在window中搭建</h2><p>这使用的是win7-64的系统</p>
+<h3 id="1、首先当然是下载"><a href="#1、首先当然是下载" class="headerlink" title="1、首先当然是下载"></a>1、首先当然是下载</h3><p><a href="https://github.com/MicrosoftArchive/redis/releases" target="_blank" rel="external">redis下载地址</a></p>
+<p><img src="http://i.imgur.com/pugaQ5M.png" alt=""></p>
+<h3 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h3><p>安装版的直接点下一步就行了，安装完成之后直接进入在命令行中输入redis-cli既可<br><img src="http://i.imgur.com/E9EFy95.png" alt=""></p>
+<p>如果是解压版的需要解压后，进入到解压后的目录中使用redis-server命令启动服务既可使用。</p>
+<h2 id="三、连接远程redis"><a href="#三、连接远程redis" class="headerlink" title="三、连接远程redis"></a>三、连接远程redis</h2><p><img src="http://i.imgur.com/gjVNyMe.png" alt=""></p>
+<p>-h后面为连接主机的ip地址，-p为端口号</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;一、-Ubuntu下redis的搭建&quot;&gt;&lt;a href=&quot;#一、-Ubuntu下redis的搭建&quot; class=&quot;headerlink&quot; title=&quot;一、 Ubuntu下redis的搭建&quot;&gt;&lt;/a&gt;一、 Ubuntu下redis的搭建&lt;/h2&gt;&lt;p&gt;这里直接使用命令下载以及安装，&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
+    
+  </entry>
+  
+</feed>
