@@ -261,46 +261,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="一、-Ubuntu下redis的搭建"><a href="#一、-Ubuntu下redis的搭建" class="headerlink" title="一、 Ubuntu下redis的搭建"></a>一、 Ubuntu下redis的搭建</h2><p>这里直接使用命令下载以及安装，</p>
-<h3 id="1、下载redis"><a href="#1、下载redis" class="headerlink" title="1、下载redis"></a>1、下载redis</h3><p>首先进入root下</p>
-<pre><code>root@ubuntu:~# wget http://download.redis.io/releases/redis-4.0.1.tar.gz
-</code></pre><h3 id="2、解压"><a href="#2、解压" class="headerlink" title="2、解压"></a>2、解压</h3><p>这里可以直接使用解压命令解压文件</p>
-<pre><code>root@ubuntu:~# tar -xzvf redis-4.0.1.tar.gz 
-</code></pre><h3 id="3、编译安装"><a href="#3、编译安装" class="headerlink" title="3、编译安装"></a>3、编译安装</h3><p>解压完成后进入到解压后的目录中使用make命令既可编译</p>
-<figure>
-
-<pre><code>root@ubuntu:~# cd redis-4.0.1
-root@ubuntu:~/redis-4.0.1# make
-</code></pre><p></p></figure><br><img src="http://i.imgur.com/OLbC1eB.png" alt=""><p></p>
-<p>如上图所示如果没有错误为编译成功</p>
-<p>输入make test命令测试是否安装成功</p>
-<pre><code>root@ubuntu:~/redis-4.0.1# make test
-</code></pre><p><img src="http://i.imgur.com/7uhWPED.png" alt=""></p>
-<p>这里第一次可能会出现错误，如果出现错误可以再次执行该命令</p>
-<h3 id="4、启动redis"><a href="#4、启动redis" class="headerlink" title="4、启动redis"></a>4、启动redis</h3><pre><code>root@ubuntu:~/redis-4.0.1# cd src/
-root@ubuntu:~/redis-4.0.1/src# ls
-</code></pre><p>在redis的根目录下查看是否含有redis.conf文件</p>
-<p><img src="http://i.imgur.com/GDekIrp.png" alt=""></p>
-<p>然后进入到src目录中使用ls命令查看是否包含以下文件</p>
-<p><img src="http://i.imgur.com/n5F2V47.png" alt=""></p>
-<p>将redis添加到Path环境变量中，方便下次直接启动redis</p>
-<pre><code>root@ubuntu:~/redis-4.0.1/src# cp redis-server /usr/local/bin/
-root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
-</code></pre><p>使用命令启动redis</p>
-<pre><code>root@ubuntu:~/redis-4.0.1/src# redis-server 
-</code></pre><p><img src="http://i.imgur.com/2WyODnB.png" alt=""></p>
-<p>如图表示服务启动成功，不要关闭该终端，使用shift+ctrl+t开启一个新的终端，输入redis-cli命令进入redis</p>
-<p><img src="http://i.imgur.com/emLpYDY.png" alt=""></p>
-<p>配置成功</p>
-<p>另外在Ubuntu中可以直接使用apt-get命令安装，这里直接盗用<a href="https://www.runoob.com/redis/redis-install.html" title="菜鸟教程" target="_blank" rel="external">菜鸟教程</a>了。<br><img src="http://i.imgur.com/sF1LCM8.png" alt=""></p>
-<h2 id="二、在window中搭建"><a href="#二、在window中搭建" class="headerlink" title="二、在window中搭建"></a>二、在window中搭建</h2><p>这使用的是win7-64的系统</p>
-<h3 id="1、首先当然是下载"><a href="#1、首先当然是下载" class="headerlink" title="1、首先当然是下载"></a>1、首先当然是下载</h3><p><a href="https://github.com/MicrosoftArchive/redis/releases" target="_blank" rel="external">redis下载地址</a></p>
-<p><img src="http://i.imgur.com/pugaQ5M.png" alt=""></p>
-<h3 id="2、安装"><a href="#2、安装" class="headerlink" title="2、安装"></a>2、安装</h3><p>安装版的直接点下一步就行了，安装完成之后直接进入在命令行中输入redis-cli既可<br><img src="http://i.imgur.com/E9EFy95.png" alt=""></p>
-<p>如果是解压版的需要解压后，进入到解压后的目录中使用redis-server命令启动服务既可使用。</p>
-<h2 id="三、连接远程redis"><a href="#三、连接远程redis" class="headerlink" title="三、连接远程redis"></a>三、连接远程redis</h2><p><img src="http://i.imgur.com/gjVNyMe.png" alt=""></p>
-<p>-h后面为连接主机的ip地址，-p为端口号</p>
-
+        <h2 id="一、-Ubuntu下redis的搭建"><a href="#一、-Ubuntu下redis的搭建" class="headerlink" title="一、 Ubuntu下redis的搭建"></a>一、 Ubuntu下redis的搭建</h2><p>这里直接使用命令下载以及安装，<br>
+        
+          <a class="article-more-a" href="/2017/08/20/title/#more">more >></a>
+        
       
 
       
@@ -353,10 +317,6 @@ root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
 
 
   
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -451,10 +411,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
