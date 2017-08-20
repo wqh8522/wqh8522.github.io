@@ -6,14 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Redis入门之环境的搭建 | wanqh blog</title>
+  <title>Redis入门之环境的搭建 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="一、 Ubuntu下redis的搭建这里直接使用命令下载以及安装， 1、下载redis首先进入root下 root@ubuntu:~# wget http://download.redis.io/releases/redis-4.0.1.tar.gz 2、解压这里可以直接使用解压命令解压文件 root@ubuntu:~# tar -xzvf redis-4.0.1.tar.gz  3、编译安装解压">
 <meta name="keywords" content="redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis入门之环境的搭建">
 <meta property="og:url" content="http://yoursite.com/2017/08/20/title/index.html">
-<meta property="og:site_name" content="wanqh blog">
+<meta property="og:site_name" content="wanqh的个人博客">
 <meta property="og:description" content="一、 Ubuntu下redis的搭建这里直接使用命令下载以及安装， 1、下载redis首先进入root下 root@ubuntu:~# wget http://download.redis.io/releases/redis-4.0.1.tar.gz 2、解压这里可以直接使用解压命令解压文件 root@ubuntu:~# tar -xzvf redis-4.0.1.tar.gz  3、编译安装解压">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://i.imgur.com/OLbC1eB.png">
@@ -26,13 +26,13 @@
 <meta property="og:image" content="http://i.imgur.com/pugaQ5M.png">
 <meta property="og:image" content="http://i.imgur.com/E9EFy95.png">
 <meta property="og:image" content="http://i.imgur.com/gjVNyMe.png">
-<meta property="og:updated_time" content="2017-08-20T07:43:36.654Z">
+<meta property="og:updated_time" content="2017-08-20T08:37:13.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis入门之环境的搭建">
 <meta name="twitter:description" content="一、 Ubuntu下redis的搭建这里直接使用命令下载以及安装， 1、下载redis首先进入root下 root@ubuntu:~# wget http://download.redis.io/releases/redis-4.0.1.tar.gz 2、解压这里可以直接使用解压命令解压文件 root@ubuntu:~# tar -xzvf redis-4.0.1.tar.gz  3、编译安装解压">
 <meta name="twitter:image" content="http://i.imgur.com/OLbC1eB.png">
   
-    <link rel="alternative" href="/atom.xml" title="wanqh blog" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
   
     <link rel="icon" href="/img/favicon.png">
@@ -202,9 +202,11 @@
 </code></pre><h3 id="2、解压"><a href="#2、解压" class="headerlink" title="2、解压"></a>2、解压</h3><p>这里可以直接使用解压命令解压文件</p>
 <pre><code>root@ubuntu:~# tar -xzvf redis-4.0.1.tar.gz 
 </code></pre><h3 id="3、编译安装"><a href="#3、编译安装" class="headerlink" title="3、编译安装"></a>3、编译安装</h3><p>解压完成后进入到解压后的目录中使用make命令既可编译</p>
+<figure>
+
 <pre><code>root@ubuntu:~# cd redis-4.0.1
 root@ubuntu:~/redis-4.0.1# make
-</code></pre><p><img src="http://i.imgur.com/OLbC1eB.png" alt=""></p>
+</code></pre><p></p></figure><br><img src="http://i.imgur.com/OLbC1eB.png" alt=""><p></p>
 <p>如上图所示如果没有错误为编译成功</p>
 <p>输入make test命令测试是否安装成功</p>
 <pre><code>root@ubuntu:~/redis-4.0.1# make test
@@ -337,6 +339,15 @@ root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
   
 <nav id="article-nav">
   
+    <a href="/2017/08/20/linux/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Linux 简介
+        
+      </div>
+    </a>
+  
   
     <a href="/2017/08/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">Hello World</div>
@@ -414,7 +425,7 @@ root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: true
+		showTags: false
 	}
 </script>
 
@@ -474,6 +485,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
