@@ -20,7 +20,11 @@
 <meta property="og:image" content="http://i.imgur.com/bFjiI1f.png">
 <meta property="og:image" content="http://i.imgur.com/zX6j3RL.png">
 <meta property="og:image" content="http://i.imgur.com/vKXgX4K.png">
-<meta property="og:updated_time" content="2017-08-26T04:10:00.832Z">
+<meta property="og:image" content="http://i.imgur.com/26dQrro.png">
+<meta property="og:image" content="http://i.imgur.com/k8Ri1H5.png">
+<meta property="og:image" content="http://i.imgur.com/N7lLSTQ.png">
+<meta property="og:image" content="http://i.imgur.com/8Q2U44B.png">
+<meta property="og:updated_time" content="2017-08-26T09:12:24.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入分析ClassLoader工作机制">
 <meta name="twitter:description" content="ClassLoader：类加载器，作用：  负责将Class加载到JVM中； 审查每个类应该又谁来加载，是一个父优先的等级加载机制； 将Class字节码重新解析成JVM统一要求的对象格式ClassLoader类结构分析">
@@ -202,10 +206,33 @@
 <p>查看源码可以发现ClassLoader是一个抽象类。如果要实现自己的ClassLoader，一般继承URLClassLoader。另外在ClassLoader中还有一些辅助方法：<br><img src="http://i.imgur.com/vKXgX4K.png" alt=""></p>
 <h2 id="ClassLoader的等级加载机制"><a href="#ClassLoader的等级加载机制" class="headerlink" title="ClassLoader的等级加载机制"></a>ClassLoader的等级加载机制</h2><p>整个JVM提供了三层    ClassLoader，可以分为两种类型。</p>
 <ol>
-<li>BootStrap ClassLoader：启动类加载器。该类仅仅是一个类记载工具，既没有更高一级的父加载器，也没有子加载器。</li>
-<li>ExtClassLoader：扩展类加载器。该类JVM自身的一部分，如果一个类既不是JVM内部的类，也不用户定义的类，将会由这个类来加载。</li>
-<li>AppClassLoader：系统类加载器</li>
+<li>BootStrap ClassLoader：启动类加载器。该类仅仅是一个类记载工具，既没有更高一级的父加载器，也没有子加载器。该类加载器并不属于JVM的类等级层次，因为BootStrap ClassLoader并没有遵守ClassLoader的加载规则，所以该加载器并没有子类。</li>
+<li>ExtClassLoader：扩展类加载器。该类JVM自身的一部分，如果一个类既不是JVM内部的类，也不用户定义的类，将会由这个类来加载。加载System.getProperty(“java.ext.dirs”)所指定的路径或jar。打印主要加载目录</li>
 </ol>
+<p><img src="http://i.imgur.com/26dQrro.png" alt=""></p>
+<ol>
+<li>AppClassLoader：系统类加载器。它是ExtClassLoader的子类。加载System.getProperty(“java.class.path”)所指定的路径或jar，这个目录就是我们常用到的classpath。除了System.getProperty(“java.ext.dirs”)目录下的类由ExtClassLoader加载，其他类都由AppClassLoader加载。</li>
+</ol>
+<p>类加载器的等级结构图：</p>
+<p><img src="http://i.imgur.com/k8Ri1H5.png" alt=""></p>
+<p>ClassLoader的类层次结构，参考深入分析JavaWeb技术内幕</p>
+<p><img src="http://i.imgur.com/N7lLSTQ.png" alt=""></p>
+<h2 id="JVM加载Class文件"><a href="#JVM加载Class文件" class="headerlink" title="JVM加载Class文件"></a>JVM加载Class文件</h2><h3 id="加载方式"><a href="#加载方式" class="headerlink" title="加载方式"></a>加载方式</h3><p>JVM加载class文件到内存有两种方式：</p>
+<ul>
+<li>显示加载：在代码中通过ClassLoader来加载需要的类。<br>  显示加载类的方式通常有：<ul>
+<li>Class.forName();</li>
+<li>ClassLoader.loadClass();</li>
+<li>ClassLoader.findSystemClass();</li>
+</ul>
+</li>
+<li>隐式加载：JVM自动加载需要的类到内存。<h3 id="如何加载"><a href="#如何加载" class="headerlink" title="如何加载"></a>如何加载</h3>一般有三个阶段：</li>
+</ul>
+<ol>
+<li>将.class文件包含的字节码加载到内存中。</li>
+<li>字节码验证、Class类等数据结构的分析以及相应的内存分配和最后符号表的链接。</li>
+<li>类中静态属性和初始化赋值，以及静态块的执行。</li>
+</ol>
+<p><img src="http://i.imgur.com/8Q2U44B.png" alt=""></p>
 
       
 
@@ -230,6 +257,17 @@
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/java/" class="article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -322,7 +360,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassLoader类结构分析"><span class="toc-number">1.</span> <span class="toc-text">ClassLoader类结构分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassLoader的等级加载机制"><span class="toc-number">2.</span> <span class="toc-text">ClassLoader的等级加载机制</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassLoader类结构分析"><span class="toc-number">1.</span> <span class="toc-text">ClassLoader类结构分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassLoader的等级加载机制"><span class="toc-number">2.</span> <span class="toc-text">ClassLoader的等级加载机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM加载Class文件"><span class="toc-number">3.</span> <span class="toc-text">JVM加载Class文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载方式"><span class="toc-number">3.1.</span> <span class="toc-text">加载方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何加载"><span class="toc-number">3.2.</span> <span class="toc-text">如何加载</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -432,15 +470,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">classloader</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">

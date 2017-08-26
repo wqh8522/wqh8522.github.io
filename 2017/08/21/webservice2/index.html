@@ -17,7 +17,7 @@
 <meta property="og:description" content="三要素SOAPSOAP:简单对象访问协议（Simple Object Access Protocal），是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息，简单理解为soap=http+xml。Soap协议版本主要使用soap1.1、soap1.2">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://i.imgur.com/Oy0c8Ll.png">
-<meta property="og:updated_time" content="2017-08-22T02:40:36.327Z">
+<meta property="og:updated_time" content="2017-08-26T07:24:31.891Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebService知识点">
 <meta name="twitter:description" content="三要素SOAPSOAP:简单对象访问协议（Simple Object Access Protocal），是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息，简单理解为soap=http+xml。Soap协议版本主要使用soap1.1、soap1.2">
@@ -205,7 +205,7 @@
 <li>SOAP 消息不能包含 DTD 引用</li>
 <li>SOAP 消息不能包含 XML 处理指令</li>
 </ul>
-<h5 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</div><div class="line">&lt;soap:Envelope</div><div class="line">xmlns:soap=&quot;http://www.w3.org/2001/12/soap-envelope&quot;</div><div class="line">soap:encodingStyle=&quot;http://www.w3.org/2001/12/soap-encoding&quot;&gt;</div><div class="line"></div><div class="line">&lt;soap:Header&gt;</div><div class="line">...</div><div class="line">&lt;/soap:Header&gt;</div><div class="line"></div><div class="line">&lt;soap:Body&gt;</div><div class="line">...</div><div class="line">  &lt;soap:Fault&gt;</div><div class="line">  ...</div><div class="line">  &lt;/soap:Fault&gt;</div><div class="line">&lt;/soap:Body&gt;</div><div class="line"></div><div class="line">&lt;/soap:Envelope&gt;</div></pre></td></tr></table></figure>
+<h5 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h5><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span>?&gt;</div><div class="line">&lt;soap:Envelope</div><div class="line">xmlns:soap=<span class="string">"http://www.w3.org/2001/12/soap-envelope"</span></div><div class="line">soap:encodingStyle=<span class="string">"http://www.w3.org/2001/12/soap-encoding"</span>&gt;</div><div class="line"></div><div class="line">&lt;soap:Header&gt;</div><div class="line">...</div><div class="line">&lt;/soap:Header&gt;</div><div class="line"></div><div class="line">&lt;soap:Body&gt;</div><div class="line">...</div><div class="line">  &lt;soap:Fault&gt;</div><div class="line">  ...</div><div class="line">  &lt;/soap:Fault&gt;</div><div class="line">&lt;/soap:Body&gt;</div><div class="line"></div><div class="line">&lt;/soap:Envelope&gt;</div></pre></td></tr></table></figure>
 <h3 id="WSDL"><a href="#WSDL" class="headerlink" title="WSDL"></a>WSDL</h3><p>WSDL 是基于 XML 的用于描述Web Service及其函数、参数和返回值。通俗理解Wsdl是webservice的使用说明书。</p>
 <h4 id="wsdl是什么"><a href="#wsdl是什么" class="headerlink" title="wsdl是什么"></a>wsdl是什么</h4><ul>
 <li>WSDL 指网络服务描述语言(Web Services Description Language)。</li>
@@ -491,15 +491,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">classloader</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">jvm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
