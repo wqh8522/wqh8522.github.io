@@ -4,9 +4,9 @@
   <subtitle>记录生活、工作、学习点点滴滴</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://www.wanqhblog.top/"/>
   <updated>2017-08-26T04:10:00.832Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://www.wanqhblog.top/</id>
   
   <author>
     <name>Wan QingHua</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>深入分析ClassLoader工作机制</title>
-    <link href="http://yoursite.com/2017/08/26/classload/"/>
-    <id>http://yoursite.com/2017/08/26/classload/</id>
+    <link href="http://www.wanqhblog.top/2017/08/26/classload/"/>
+    <id>http://www.wanqhblog.top/2017/08/26/classload/</id>
     <published>2017-08-26T03:54:25.000Z</published>
     <updated>2017-08-26T04:10:00.832Z</updated>
     
@@ -57,16 +57,16 @@
     </summary>
     
     
-      <category term="classloader" scheme="http://yoursite.com/tags/classloader/"/>
+      <category term="classloader" scheme="http://www.wanqhblog.top/tags/classloader/"/>
     
-      <category term="jvm" scheme="http://yoursite.com/tags/jvm/"/>
+      <category term="jvm" scheme="http://www.wanqhblog.top/tags/jvm/"/>
     
   </entry>
   
   <entry>
     <title>WebService之CXF</title>
-    <link href="http://yoursite.com/2017/08/23/cxf/"/>
-    <id>http://yoursite.com/2017/08/23/cxf/</id>
+    <link href="http://www.wanqhblog.top/2017/08/23/cxf/"/>
+    <id>http://www.wanqhblog.top/2017/08/23/cxf/</id>
     <published>2017-08-23T03:52:00.000Z</published>
     <updated>2017-08-23T10:23:19.978Z</updated>
     
@@ -125,14 +125,14 @@
     </summary>
     
     
-      <category term="webservice" scheme="http://yoursite.com/tags/webservice/"/>
+      <category term="webservice" scheme="http://www.wanqhblog.top/tags/webservice/"/>
     
   </entry>
   
   <entry>
     <title>WebService知识点</title>
-    <link href="http://yoursite.com/2017/08/21/webservice2/"/>
-    <id>http://yoursite.com/2017/08/21/webservice2/</id>
+    <link href="http://www.wanqhblog.top/2017/08/21/webservice2/"/>
+    <id>http://www.wanqhblog.top/2017/08/21/webservice2/</id>
     <published>2017-08-21T06:47:38.000Z</published>
     <updated>2017-08-22T02:40:36.327Z</updated>
     
@@ -224,14 +224,14 @@
     </summary>
     
     
-      <category term="webservice" scheme="http://yoursite.com/tags/webservice/"/>
+      <category term="webservice" scheme="http://www.wanqhblog.top/tags/webservice/"/>
     
   </entry>
   
   <entry>
     <title>WebService入门介绍</title>
-    <link href="http://yoursite.com/2017/08/21/webservice1/"/>
-    <id>http://yoursite.com/2017/08/21/webservice1/</id>
+    <link href="http://www.wanqhblog.top/2017/08/21/webservice1/"/>
+    <id>http://www.wanqhblog.top/2017/08/21/webservice1/</id>
     <published>2017-08-21T03:12:38.000Z</published>
     <updated>2017-08-21T07:57:11.569Z</updated>
     
@@ -316,14 +316,14 @@
     </summary>
     
     
-      <category term="webservice" scheme="http://yoursite.com/tags/webservice/"/>
+      <category term="webservice" scheme="http://www.wanqhblog.top/tags/webservice/"/>
     
   </entry>
   
   <entry>
     <title>使用JavaMail发送邮件（带附件）</title>
-    <link href="http://yoursite.com/2017/08/20/javamail/"/>
-    <id>http://yoursite.com/2017/08/20/javamail/</id>
+    <link href="http://www.wanqhblog.top/2017/08/20/javamail/"/>
+    <id>http://www.wanqhblog.top/2017/08/20/javamail/</id>
     <published>2017-08-20T09:36:06.000Z</published>
     <updated>2017-08-20T11:01:36.541Z</updated>
     
@@ -348,14 +348,14 @@
     </summary>
     
     
-      <category term="javamail" scheme="http://yoursite.com/tags/javamail/"/>
+      <category term="javamail" scheme="http://www.wanqhblog.top/tags/javamail/"/>
     
   </entry>
   
   <entry>
     <title>Redis入门之环境的搭建</title>
-    <link href="http://yoursite.com/2017/08/20/Redis%E5%85%A5%E9%97%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA/"/>
-    <id>http://yoursite.com/2017/08/20/Redis入门之环境的搭建/</id>
+    <link href="http://www.wanqhblog.top/2017/08/20/Redis%E5%85%A5%E9%97%A8%E4%B9%8B%E7%8E%AF%E5%A2%83%E7%9A%84%E6%90%AD%E5%BB%BA/"/>
+    <id>http://www.wanqhblog.top/2017/08/20/Redis入门之环境的搭建/</id>
     <published>2017-08-20T05:09:50.000Z</published>
     <updated>2017-08-20T09:09:51.304Z</updated>
     
@@ -407,7 +407,7 @@ root@ubuntu:~/redis-4.0.1/src# cp redis-cli /usr/local/bin/
     </summary>
     
     
-      <category term="redis" scheme="http://yoursite.com/tags/redis/"/>
+      <category term="redis" scheme="http://www.wanqhblog.top/tags/redis/"/>
     
   </entry>
   
