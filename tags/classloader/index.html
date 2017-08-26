@@ -6,24 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>WebService之CXF | wanqh的个人博客</title>
+  <title>Tag: classloader | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="什么是CXFApache CXF = Celtix + XFire，开始叫 Apache CeltiXfire，后来更名为 Apache CXF 了，以下简称为 CXF。CXF 继承了 Celtix 和 XFire 两大开源项目的精华，提供了对 JAX-WS 全面的支持，并且提供了多种 Binding 、DataBinding、Transport 以及各种 Format 的支持，并且可以根据实际项">
-<meta name="keywords" content="webservice">
-<meta property="og:type" content="article">
-<meta property="og:title" content="WebService之CXF">
-<meta property="og:url" content="http://yoursite.com/2017/08/23/cxf/index.html">
+  <meta name="description" content="努力思考中...">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wanqh的个人博客">
+<meta property="og:url" content="http://yoursite.com/tags/classloader/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="什么是CXFApache CXF = Celtix + XFire，开始叫 Apache CeltiXfire，后来更名为 Apache CXF 了，以下简称为 CXF。CXF 继承了 Celtix 和 XFire 两大开源项目的精华，提供了对 JAX-WS 全面的支持，并且提供了多种 Binding 、DataBinding、Transport 以及各种 Format 的支持，并且可以根据实际项">
+<meta property="og:description" content="努力思考中...">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i.imgur.com/JOt5ubZ.png">
-<meta property="og:image" content="http://i.imgur.com/tLQzzPQ.png">
-<meta property="og:image" content="http://i.imgur.com/HGBkyCK.png">
-<meta property="og:updated_time" content="2017-08-23T10:23:19.978Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WebService之CXF">
-<meta name="twitter:description" content="什么是CXFApache CXF = Celtix + XFire，开始叫 Apache CeltiXfire，后来更名为 Apache CXF 了，以下简称为 CXF。CXF 继承了 Celtix 和 XFire 两大开源项目的精华，提供了对 JAX-WS 全面的支持，并且提供了多种 Binding 、DataBinding、Transport 以及各种 Format 的支持，并且可以根据实际项">
-<meta name="twitter:image" content="http://i.imgur.com/JOt5ubZ.png">
+<meta name="twitter:title" content="wanqh的个人博客">
+<meta name="twitter:description" content="努力思考中...">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -163,211 +157,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-cxf" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      WebService之CXF
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/08/26/classload/" class="archive-article-date">
+  	<time datetime="2017-08-26T03:54:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-26</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/08/26/classload/">深入分析ClassLoader工作机制</a>
     </h1>
   
 
-        
-        <a href="/2017/08/23/cxf/" class="archive-article-date">
-  	<time datetime="2017-08-23T03:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是CXF"><a href="#什么是CXF" class="headerlink" title="什么是CXF"></a>什么是CXF</h2><p>Apache CXF = Celtix + XFire，开始叫 Apache CeltiXfire，后来更名为 Apache CXF 了，以下简称为 CXF。CXF 继承了 Celtix 和 XFire 两大开源项目的精华，提供了对 JAX-WS 全面的支持，并且提供了多种 Binding 、DataBinding、Transport 以及各种 Format 的支持，并且可以根据实际项目的需要，采用代码优先（Code First）或者 WSDL 优先（WSDL First）来轻松地实现 Web Services 的发布和使用。Apache CXF已经是一个正式的Apache顶级项目。<a id="more"></a></p>
-<h2 id="CXF与Spring整合"><a href="#CXF与Spring整合" class="headerlink" title="CXF与Spring整合"></a>CXF与Spring整合</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>CXF与spring整合，实现手机号码归属地查询。所以这里我们需要调用公网的号码归属地查询。</p>
-<h3 id="导入公网的接口"><a href="#导入公网的接口" class="headerlink" title="导入公网的接口"></a>导入公网的接口</h3><p>公网地址：<a href="http://www.webxml.com.cn/zh_cn/index.aspx" target="_blank" rel="external">http://www.webxml.com.cn/zh_cn/index.aspx</a><br>手机号码归属地查询WSDL：<a href="http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx?wsdl" target="_blank" rel="external">http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx?wsdl</a></p>
-<p>在CMD中输入命令：wsimport -s . <a href="http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx?wsdl生成公网的调用代码，将代码复制到工程中" target="_blank" rel="external">http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx?wsdl生成公网的调用代码，将代码复制到工程中</a></p>
-<h3 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;cxf-rt-frontend-jaxws&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;cxf.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;cxf-rt-frontend-jaxrs&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;cxf.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;cxf-rt-transports-http&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;cxf.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.cxf&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;cxf&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;cxf.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-core&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-web&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h3 id="服务接口"><a href="#服务接口" class="headerlink" title="服务接口"></a>服务接口</h3><p>这里与jaxws不同的是只要在服务接口类上添加@WebService注解既可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 基于jaxws开发的SEI</div><div class="line"> * 天气查询接口</div><div class="line"> */</div><div class="line">@WebService(targetNamespace = &quot;http://service.wqh.com&quot;,</div><div class="line">name = &quot;PhoneQueryInterface&quot;,</div><div class="line">portName = &quot;PhoneQueryInterfacePort&quot;,</div><div class="line">serviceName = &quot;PhoneQueryInterfaceService&quot;)</div><div class="line">@BindingType(javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)//发布soap1.2</div><div class="line">public interface PhoneQueryInterface &#123;</div><div class="line">    String getMobileCodeInfo (String mobileCode);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="接口实现类"><a href="#接口实现类" class="headerlink" title="接口实现类"></a>接口实现类</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class PhoneQueryInterfaceImpl implements PhoneQueryInterface &#123;</div><div class="line"></div><div class="line">    /*公网的号码归属地查询对象*/</div><div class="line">    private MobileCodeWSSoap mobileCodeWSSoap;</div><div class="line"></div><div class="line">    public String getMobileCodeInfo(String mobileCode) &#123;</div><div class="line">        String codeInfo = mobileCodeWSSoap.getMobileCodeInfo(mobileCode, null);</div><div class="line">        return codeInfo;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public MobileCodeWSSoap getMobileCodeWSSoap() &#123;</div><div class="line">        return mobileCodeWSSoap;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMobileCodeWSSoap(MobileCodeWSSoap mobileCodeWSSoap) &#123;</div><div class="line">        this.mobileCodeWSSoap = mobileCodeWSSoap;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="添加配置信息"><a href="#添加配置信息" class="headerlink" title="添加配置信息"></a>添加配置信息</h3><p>applicationContext.xml：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&lt;!-- 配置发布webservice服务 --&gt;</div><div class="line">&lt;jaxws:server address=&quot;/mobil&quot; serviceClass=&quot;com.wqh.cxf.service.PhoneQueryInterface&quot;&gt;</div><div class="line">    &lt;jaxws:serviceBean&gt;</div><div class="line">        &lt;ref bean=&quot;phoneQuery&quot;&gt;&lt;/ref&gt;</div><div class="line">    &lt;/jaxws:serviceBean&gt;</div><div class="line">&lt;/jaxws:server&gt;</div><div class="line">&lt;!--</div><div class="line">配置公网号码归属地查询的客户端</div><div class="line">address：公网归属地的地址</div><div class="line">--&gt;</div><div class="line">&lt;jaxws:client id=&quot;mobileCodeWSSoap&quot; serviceClass=&quot;cn.com.webxml.MobileCodeWSSoap&quot;</div><div class="line">              address=&quot;http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx&quot;/&gt;</div><div class="line">&lt;!--归属地查询的bean--&gt;</div><div class="line">&lt;bean id=&quot;phoneQuery&quot; class=&quot;com.wqh.cxf.service.PhoneQueryInterfaceImpl&quot;&gt;</div><div class="line">    &lt;property name=&quot;mobileCodeWSSoap&quot; ref=&quot;mobileCodeWSSoap&quot;&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
-<p>web.xml</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 加载spring容器 --&gt;</div><div class="line">&lt;context-param&gt;</div><div class="line">    &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;</div><div class="line">    &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;</div><div class="line">&lt;/context-param&gt;</div><div class="line">&lt;listener&gt;</div><div class="line">    &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;</div><div class="line">&lt;/listener&gt;</div><div class="line">&lt;servlet&gt;</div><div class="line">    &lt;description&gt;Apache CXF Endpoint&lt;/description&gt;</div><div class="line">    &lt;display-name&gt;cxf&lt;/display-name&gt;</div><div class="line">    &lt;servlet-name&gt;cxf&lt;/servlet-name&gt;</div><div class="line">    &lt;servlet-class&gt;org.apache.cxf.transport.servlet.CXFServlet&lt;/servlet-class&gt;</div><div class="line">    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;</div><div class="line">&lt;/servlet&gt;</div><div class="line">&lt;servlet-mapping&gt;</div><div class="line">    &lt;servlet-name&gt;cxf&lt;/servlet-name&gt;</div><div class="line">    &lt;url-pattern&gt;/ws/*&lt;/url-pattern&gt;</div><div class="line">&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure>
-<p>启动服务器</p>
-<h3 id="查看wsdl"><a href="#查看wsdl" class="headerlink" title="查看wsdl"></a>查看wsdl</h3><p>在浏览器地址栏输入：<br><a href="http://127.0.0.1:8080/｛项目名｝/ws/mobil?wsdl" target="_blank" rel="external">http://127.0.0.1:8080/｛项目名｝/ws/mobil?wsdl</a></p>
-<h3 id="编写客户端"><a href="#编写客户端" class="headerlink" title="编写客户端"></a>编写客户端</h3><p>这里客户端可以使用前面介绍的wsimiport命令，也可以使用wsdl2java命令。如果使用wsdl2java命令需要在系统中添加cxf的环境变量。</p>
-<p>下载CXF <a href="http://cxf.apache.org/download.html" target="_blank" rel="external">http://cxf.apache.org/download.html</a></p>
-<p>解压下载的文件，将bin目录添加到环境变量中。<br>然后使用命令：wsdl2java –d . –frontend jaxws21 <a href="http://127.0.0.1:8080/｛项目名｝/ws/mobil?wsdl" target="_blank" rel="external">http://127.0.0.1:8080/｛项目名｝/ws/mobil?wsdl</a></p>
-<p>注意：这里加上了–frontend jaxws21。原因是因为：cxf需要JAX-WS API 2.2而jdk6的jax-ws是2.1 版本，需要wsdl2java 使用“-frontend jaxws21”</p>
-<p>代码与jaxws方式一样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//创建服务视图</div><div class="line">PhoneQueryInterfaceService phoneQueryInterfaceService = new PhoneQueryInterfaceService();</div><div class="line">//通过服务视图得到服务端点</div><div class="line">PhoneQueryInterface phoneQueryInterfaceServicePort = phoneQueryInterfaceService.getPort(PhoneQueryInterface.class);</div><div class="line">//调用webservice服务方法</div><div class="line">String result1 = phoneQueryInterfaceServicePort.getMobileCodeInfo(&quot;号码&quot;);</div><div class="line">System.out.println(result1);</div></pre></td></tr></table></figure>
-<h2 id="CXF实现rest服务"><a href="#CXF实现rest服务" class="headerlink" title="CXF实现rest服务"></a>CXF实现rest服务</h2><h3 id="什么是rest服务"><a href="#什么是rest服务" class="headerlink" title="什么是rest服务"></a>什么是rest服务</h3><p>REST 是一种软件架构模式，只是一种风格，rest服务采用HTTP 做传输协议，REST 对于HTTP 的利用分为以下两种：资源定位和资源操作。</p>
-<ul>
-<li><p>资源定位：</p>
-<blockquote>
-<p>Rest要求对资源定位更加准确，如下：<br>非rest方式：<a href="http://ip:port/queryUser.action?userType=student&amp;id=001" target="_blank" rel="external">http://ip:port/queryUser.action?userType=student&amp;id=001</a><br>Rest方式：<a href="http://ip:port/user/student/001" target="_blank" rel="external">http://ip:port/user/student/001</a><br>Rest方式表示互联网上的资源更加准确，但是也有缺点，可能目录的层级较多不容易理解。</p>
-</blockquote>
-</li>
-<li><p>资源操作：</p>
-<blockquote>
-<p>利用HTTP 的GET、POST、PUT、DELETE 四种操作来表示数据库操作的SELECT、UPDATE、INSERT、DELETE 操作。<br>比如：<br>查询学生方法：<br>设置Http的请求方法为GET，url如下：<a href="http://ip:port/user/student/001" target="_blank" rel="external">http://ip:port/user/student/001</a><br>添加学生方法：<br>设置http的请求方法为PUT，url如下：<a href="http://ip:port/user/student/001/张三/" target="_blank" rel="external">http://ip:port/user/student/001/张三/</a>……</p>
-</blockquote>
-</li>
-</ul>
-<p>Rest常用于资源定位，资源操作方式较少使用。</p>
-<p>REST 是一种软件架构理念，现在被移植到Web 服务上，那么在开发Web 服务上，偏于面向资源的服务适用于REST，REST 简单易用，效率高，SOAP 成熟度较高，安全性较好。<br>注意：REST 不等于WebService，JAX-RS 只是将REST 设计风格应用到Web 服务开发上。<br>参考：<a href="http://www.ruanyifeng.com/blog/2011/09/restful" title="理解RESTful架构" target="_blank" rel="external">理解RESTful架构</a></p>
-<h3 id="rest服务发布"><a href="#rest服务发布" class="headerlink" title="rest服务发布"></a>rest服务发布</h3><h4 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h4><p>发布查询学生信息的服务，返回的数据格式为json和xml</p>
-<h4 id="服务接口-1"><a href="#服务接口-1" class="headerlink" title="服务接口"></a>服务接口</h4><p>pojo：在pojo类上使用@XmlRootElement注解，是该类对象可以装换成xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@XmlRootElement(name = &quot;student&quot;)</div><div class="line">public class Student &#123;</div><div class="line"></div><div class="line">	private long id;</div><div class="line">	private String name;</div><div class="line">	private Date birthday;</div><div class="line">	//getset</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>服务类接口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@WebService</div><div class="line">@Path(&quot;/student&quot;)</div><div class="line">@BindingType(javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)//发布soap1.2</div><div class="line">public interface StudentService &#123;</div><div class="line">	</div><div class="line">	//查询学生信息</div><div class="line">	@GET //http的get方法</div><div class="line">	@Path(&quot;/query/&#123;id&#125;&quot;)//id参数通过url传递</div><div class="line">	@Produces(MediaType.APPLICATION_XML)//设置媒体类型xml格式</div><div class="line">    Student queryStudent(@PathParam(&quot;id&quot;)long id);</div><div class="line">	</div><div class="line">	</div><div class="line">	//查询学生列表</div><div class="line">	@GET //http的get方法</div><div class="line">	@Path(&quot;/querylist/&#123;type&#125;&quot;)</div><div class="line">	@Produces(&#123;&quot;application/json;charset=utf-8&quot;,MediaType.APPLICATION_XML&#125;)//设置媒体类型xml格式和json格式</div><div class="line">	//如果想让rest返回xml需要在rest的url后边添加?_type=xml，默认为xml</div><div class="line">	//如果想让rest返回json需要在rest的url后边添加?_type=json</div><div class="line">	List&lt;Student&gt; queryStudentList(@PathParam(&quot;type&quot;) String type);</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>接口实现类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">public class StudentServiceImpl implements StudentService &#123;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public Student queryStudent(long id) &#123;</div><div class="line">		// 使用静态数据</div><div class="line">		Student student = new Student();</div><div class="line">		student.setId(id);</div><div class="line">		student.setName(&quot;张三&quot;);</div><div class="line">		student.setBirthday(new Date());</div><div class="line">		return student;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	@Override</div><div class="line">	public List&lt;Student&gt; queryStudentList(String type) &#123;</div><div class="line">		List&lt;Student&gt; list = new ArrayList&lt;Student&gt;();</div><div class="line">		Student student1 = new Student();</div><div class="line">		student1.setId(1234);</div><div class="line">		student1.setName(&quot;张三&quot;);</div><div class="line">		student1.setBirthday(new Date());</div><div class="line">        </div><div class="line">		Student student2 = new Student();</div><div class="line">        student2.setId(2345);</div><div class="line">        student2.setName(&quot;李四&quot;);</div><div class="line">        student2.setBirthday(new Date());</div><div class="line"></div><div class="line"></div><div class="line">        Student student3 = new Student();</div><div class="line">        student3.setId(3456);</div><div class="line">        student3.setName(&quot;王五&quot;);</div><div class="line">        student3.setBirthday(new Date());</div><div class="line"></div><div class="line">        list.add(student1);</div><div class="line">		list.add(student2);</div><div class="line">		list.add(student3);</div><div class="line">		return list;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="发布服务"><a href="#发布服务" class="headerlink" title="发布服务"></a>发布服务</h4><p>1、使用java代码发布，如果直接使用程序发布，需要导入cxf.jaxrsde<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//使用jaxrsServerFactoryBean发布rest服务</div><div class="line">JAXRSServerFactoryBean jaxrsServerFactoryBean = new JAXRSServerFactoryBean();</div><div class="line">//设置rest的服务地址</div><div class="line">jaxrsServerFactoryBean.setAddress(&quot;http://127.0.0.1:12345/rest&quot;);</div><div class="line">//设置服务对象</div><div class="line">jaxrsServerFactoryBean.setServiceBean(new StudentServiceImpl());</div><div class="line">//设置资源 对象，如果有多个pojo资源 对象中间以半角逗号隔开</div><div class="line">jaxrsServerFactoryBean.setResourceClasses(StudentServiceImpl.class);</div><div class="line">//发布rest服务</div><div class="line">jaxrsServerFactoryBean.create();</div></pre></td></tr></table></figure></p>
-<p>2、整合spring发布，在applicationContext.xml中配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;!-- service --&gt;</div><div class="line">&lt;bean id=&quot;studentService&quot; class=&quot;com.wqh.ws.cxf.rest.service.StudentServiceImpl&quot;/&gt;</div><div class="line"></div><div class="line">&lt;!-- 发布rest服务</div><div class="line">使用jaxws:server和jaxws:endpoint可以发布服务</div><div class="line">webservice地址=tomcat地址+cxf servlet的路径+/rest</div><div class="line"></div><div class="line">这里与之前不同的是，不需要添加serviceClass</div><div class="line"> --&gt;</div><div class="line">&lt;jaxrs:server address=&quot;/rest&quot;&gt;</div><div class="line">	&lt;jaxrs:serviceBeans&gt;</div><div class="line">	   &lt;ref bean=&quot;studentService&quot;/&gt;</div><div class="line">	&lt;/jaxrs:serviceBeans&gt;</div><div class="line">&lt;/jaxrs:server&gt;</div></pre></td></tr></table></figure></p>
-<p>这里rest服务是生成wadl说明文档，查看wadl在地址栏输入：<a href="http://localhost:8080/webcxf/ws/rest?_wadl" target="_blank" rel="external">http://localhost:8080/webcxf/ws/rest?_wadl</a><br><img src="http://i.imgur.com/JOt5ubZ.png" alt=""><br>这里能看到一些发布的信息，然后在地址栏中请求发布的服务：<br><a href="http://localhost:8080/webcxf/ws/rest/student/query/1323" target="_blank" rel="external">http://localhost:8080/webcxf/ws/rest/student/query/1323</a></p>
-<p><img src="http://i.imgur.com/tLQzzPQ.png" alt=""></p>
-<p>查看json格式数据：_type指定要返回的数据格式<br><a href="http://localhost:8080/webcxf/ws/rest/student/querylist/1323?_type=json" target="_blank" rel="external">http://localhost:8080/webcxf/ws/rest/student/querylist/1323?_type=json</a></p>
-<p><img src="http://i.imgur.com/HGBkyCK.png" alt=""></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>WebService是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序。WebService的发也有很多种方式，比如常见的jax-ws和CXF。对于jax-ws开发，感觉比较简单与方便，不需要添加太多的jar依赖；但是有一定的局限性。而对于CXF，jar包依赖太过复杂，使用maven添加需要更加注意。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">webservice</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">classloader</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/08/23/cxf/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/08/26/classload/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          深入分析ClassLoader工作机制
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/08/21/webservice2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">WebService知识点</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是CXF"><span class="toc-number">1.</span> <span class="toc-text">什么是CXF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CXF与Spring整合"><span class="toc-number">2.</span> <span class="toc-text">CXF与Spring整合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需求"><span class="toc-number">2.1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#导入公网的接口"><span class="toc-number">2.2.</span> <span class="toc-text">导入公网的接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加依赖"><span class="toc-number">2.3.</span> <span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务接口"><span class="toc-number">2.4.</span> <span class="toc-text">服务接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口实现类"><span class="toc-number">2.5.</span> <span class="toc-text">接口实现类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加配置信息"><span class="toc-number">2.6.</span> <span class="toc-text">添加配置信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看wsdl"><span class="toc-number">2.7.</span> <span class="toc-text">查看wsdl</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编写客户端"><span class="toc-number">2.8.</span> <span class="toc-text">编写客户端</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CXF实现rest服务"><span class="toc-number">3.</span> <span class="toc-text">CXF实现rest服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是rest服务"><span class="toc-number">3.1.</span> <span class="toc-text">什么是rest服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rest服务发布"><span class="toc-number">3.2.</span> <span class="toc-text">rest服务发布</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#需求-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#服务接口-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">服务接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发布服务"><span class="toc-number">3.2.3.</span> <span class="toc-text">发布服务</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
+    
 
 
           </div>
@@ -390,9 +237,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
