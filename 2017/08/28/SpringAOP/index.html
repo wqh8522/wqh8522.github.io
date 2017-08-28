@@ -6,22 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>WebService知识点 | wanqh的个人博客</title>
+  <title>SpringAOP的使用 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="三要素SOAPSOAP:简单对象访问协议（Simple Object Access Protocal），是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息，简单理解为soap=http+xml。Soap协议版本主要使用soap1.1、soap1.2">
-<meta name="keywords" content="webservice">
+  <meta name="description" content="什么是AOPAOP（Aspect Oriented Programming 面向切面编程），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。 常用">
+<meta name="keywords" content="sprong,AOP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="WebService知识点">
-<meta property="og:url" content="http://www.wanqhblog.top/2017/08/21/webservice2/index.html">
+<meta property="og:title" content="SpringAOP的使用">
+<meta property="og:url" content="http://www.wanqhblog.top/2017/08/28/SpringAOP/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="三要素SOAPSOAP:简单对象访问协议（Simple Object Access Protocal），是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息，简单理解为soap=http+xml。Soap协议版本主要使用soap1.1、soap1.2">
+<meta property="og:description" content="什么是AOPAOP（Aspect Oriented Programming 面向切面编程），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。 常用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i.imgur.com/Oy0c8Ll.png">
-<meta property="og:updated_time" content="2017-08-26T07:24:31.891Z">
+<meta property="og:image" content="http://i.imgur.com/NNwG4Yz.png">
+<meta property="og:image" content="http://i.imgur.com/z8MbDIP.png">
+<meta property="og:image" content="http://i.imgur.com/uGg9KUl.png">
+<meta property="og:image" content="http://i.imgur.com/fXL2qhm.png">
+<meta property="og:image" content="http://i.imgur.com/1QRixjd.png">
+<meta property="og:image" content="http://i.imgur.com/Zrr0oSB.png">
+<meta property="og:image" content="http://i.imgur.com/0vLHPrw.png">
+<meta property="og:image" content="http://i.imgur.com/znG9krq.png">
+<meta property="og:updated_time" content="2017-08-28T02:12:39.717Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WebService知识点">
-<meta name="twitter:description" content="三要素SOAPSOAP:简单对象访问协议（Simple Object Access Protocal），是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息，简单理解为soap=http+xml。Soap协议版本主要使用soap1.1、soap1.2">
-<meta name="twitter:image" content="http://i.imgur.com/Oy0c8Ll.png">
+<meta name="twitter:title" content="SpringAOP的使用">
+<meta name="twitter:description" content="什么是AOPAOP（Aspect Oriented Programming 面向切面编程），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。 常用">
+<meta name="twitter:image" content="http://i.imgur.com/NNwG4Yz.png">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -167,105 +174,98 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-webservice2" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-SpringAOP" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      WebService知识点
+      SpringAOP的使用
     </h1>
   
 
         
-        <a href="/2017/08/21/webservice2/" class="archive-article-date">
-  	<time datetime="2017-08-21T06:47:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-21</time>
+        <a href="/2017/08/28/SpringAOP/" class="archive-article-date">
+  	<time datetime="2017-08-28T02:10:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="三要素"><a href="#三要素" class="headerlink" title="三要素"></a>三要素</h2><h3 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h3><p>SOAP:简单对象访问协议（Simple Object Access Protocal），是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息，简单理解为soap=http+xml。Soap协议版本主要使用soap1.1、soap1.2<a id="more"></a></p>
-<h4 id="SOAP是什么"><a href="#SOAP是什么" class="headerlink" title="SOAP是什么"></a>SOAP是什么</h4><ul>
-<li>SOAP 是一种网络通信协议</li>
-<li>SOAP即Simple Object Access Protocol简易对象访问协议</li>
-<li>SOAP 用于跨平台应用程序之间的通信</li>
-<li>SOAP 被设计用来通过因特网(http)进行通信</li>
-<li>SOAP ＝ HTTP+XML，其实就是通过HTTP发xml数据</li>
-<li>SOAP 很简单并可扩展支持面向对象</li>
-<li>SOAP 允许您跨越防火墙</li>
-<li>SOAP 将被作为 W3C 标准来发展</li>
+        <h2 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP"></a>什么是AOP</h2><p>AOP（Aspect Oriented Programming 面向切面编程），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。</p>
+<p>常用于日志记录，性能统计，安全控制，事务处理，异常处理等等。</p>
+<h2 id="定义AOP术语"><a href="#定义AOP术语" class="headerlink" title="定义AOP术语"></a>定义AOP术语</h2><a id="more"></a>
+<p>切面（Aspect）：切面是一个关注点的模块化，这个关注点可能是横切多个对象；</p>
+<p>连接点（Join Point）：连接点是指在程序执行过程中某个特定的点，比如某方法调用的时候或者处理异常的时候；</p>
+<p>通知（Advice）：指在切面的某个特定的连接点上执行的动作。Spring切面可以应用5中通知：</p>
+<ul>
+<li>前置通知（Before）:在目标方法或者说连接点被调用前执行的通知；</li>
+<li>后置通知（After）：指在某个连接点完成后执行的通知；</li>
+<li>返回通知（After-returning）：指在某个连接点成功执行之后执行的通知；</li>
+<li>异常通知（After-throwing）：指在方法抛出异常后执行的通知；</li>
+<li>环绕通知（Around）：指包围一个连接点通知，在被通知的方法调用之前和之后执行自定义的方法。</li>
 </ul>
-<h4 id="SOAP语法格式"><a href="#SOAP语法格式" class="headerlink" title="SOAP语法格式"></a>SOAP语法格式</h4><h5 id="构建模块"><a href="#构建模块" class="headerlink" title="构建模块"></a>构建模块</h5><ul>
-<li>必需的Envelope 元素，此元素将整个 XML 文档标识为一条 SOAP 消息</li>
-<li>可选的Header 元素，包含头部信息</li>
-<li>必需的Body 元素，包含所有的调用和响应信息 </li>
-<li>可选的 Fault 元素，提供有关在处理此消息所发生错误的信息</li>
-</ul>
-<h5 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h5><ul>
-<li>SOAP 消息必须用 XML 来编码</li>
-<li>SOAP 消息必须使用 SOAP Envelope 命名空间</li>
-<li>SOAP 消息必须使用 SOAP Encoding 命名空间</li>
-<li>SOAP 消息不能包含 DTD 引用</li>
-<li>SOAP 消息不能包含 XML 处理指令</li>
-</ul>
-<h5 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h5><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=<span class="string">"1.0"</span>?&gt;</div><div class="line">&lt;soap:Envelope</div><div class="line">xmlns:soap=<span class="string">"http://www.w3.org/2001/12/soap-envelope"</span></div><div class="line">soap:encodingStyle=<span class="string">"http://www.w3.org/2001/12/soap-encoding"</span>&gt;</div><div class="line"></div><div class="line">&lt;soap:Header&gt;</div><div class="line">...</div><div class="line">&lt;/soap:Header&gt;</div><div class="line"></div><div class="line">&lt;soap:Body&gt;</div><div class="line">...</div><div class="line">  &lt;soap:Fault&gt;</div><div class="line">  ...</div><div class="line">  &lt;/soap:Fault&gt;</div><div class="line">&lt;/soap:Body&gt;</div><div class="line"></div><div class="line">&lt;/soap:Envelope&gt;</div></pre></td></tr></table></figure>
-<h3 id="WSDL"><a href="#WSDL" class="headerlink" title="WSDL"></a>WSDL</h3><p>WSDL 是基于 XML 的用于描述Web Service及其函数、参数和返回值。通俗理解Wsdl是webservice的使用说明书。</p>
-<h4 id="wsdl是什么"><a href="#wsdl是什么" class="headerlink" title="wsdl是什么"></a>wsdl是什么</h4><ul>
-<li>WSDL 指网络服务描述语言(Web Services Description Language)。</li>
-<li>WSDL是一种使用 XML 编写的文档。这种文档可描述某个 Web service。它可规定服务的位置，以及此服务提供的操作（或方法）。</li>
-<li>WSDL 是一种 XML 文档</li>
-<li>WSDL 用于描述网络服务</li>
-<li>WSDL 也可用于定位网络服务</li>
-</ul>
-<h4 id="wsdl结构"><a href="#wsdl结构" class="headerlink" title="wsdl结构"></a>wsdl结构</h4><ol>
-<li><code>&lt;service&gt;</code>    服务视图，webservice的服务结点，它包括了服务端点</li>
-<li><code>&lt;binding&gt;</code>     为每个服务端点定义消息格式和协议细节</li>
-<li><code>&lt;portType&gt;</code>   服务端点，描述 web service可被执行的操作方法，以及相关的消息，通过binding指向portType</li>
-<li><code>&lt;message&gt;</code>  定义一个操作（方法）的数据参数(可有多个参数)</li>
-<li><code>&lt;types&gt;</code>       定义 web service 使用的全部数据类型</li>
+<p>切点（Pointcut）：指匹配连接点的断言。通知与一个切入点表达式关联，并在满足这个切入的连接点上运行，例如：当执行某个特定的名称的方法。</p>
+<p>引入（Introduction）：引入也被称为内部类型声明，声明额外的方法或者某个类型的字段。</p>
+<p>目标对象（Target Object）：目标对象是被一个或者多个切面所通知的对象。</p>
+<p>AOP代理（AOP Proxy）：AOP代理是指AOP框架创建的对对象，用来实现切面契约（包括通知方法等功能）</p>
+<p>织入（Wearving）：指把切面连接到其他应用出程序类型或者对象上，并创建一个被通知的对象。或者说形成代理对象的方法的过程。</p>
+<p><img src="http://i.imgur.com/NNwG4Yz.png" alt=""></p>
+<h2 id="Spring对AOP的支持"><a href="#Spring对AOP的支持" class="headerlink" title="Spring对AOP的支持"></a>Spring对AOP的支持</h2><ol>
+<li>基于代理的经典SpringAOP；</li>
+<li>纯POJO切面；</li>
+<li>@AspectJ注解驱动的切面；</li>
+<li>注入式AspectJ切面（适用于Spring各版本）；</li>
 </ol>
-<h4 id="wsdl说明书阅读"><a href="#wsdl说明书阅读" class="headerlink" title="wsdl说明书阅读"></a>wsdl说明书阅读</h4><p>从下往上读，先找到服务视图，通过binging找到protType，找到了protType就找到了我们要调用的webservice方法。<br><img src="http://i.imgur.com/Oy0c8Ll.png" alt=""></p>
-<h3 id="UDDI"><a href="#UDDI" class="headerlink" title="UDDI"></a>UDDI</h3><p>UDDI 是一种目录服务，企业可以使用它对 Web services 进行注册和搜索。<br>UDDI，英文为 “Universal Description, Discovery and Integration”，可译为”通用描述、发现与集成服务”。</p>
-<p>UDDI 是一个独立于平台的框架，用于通过使用 Internet 来描述服务，发现企业，并对企业服务进行集成。</p>
-<ul>
-<li>UDDI 指的是通用描述、发现与集成服务</li>
-<li>UDDI 是一种用于存储有关 web services 的信息的目录。</li>
-<li>UDDI 是一种由 WSDL 描述的 web services 界面的目录。</li>
-<li>UDDI 经由 SOAP 进行通信</li>
-<li>UDDI 被构建入了微软的 .NET 平台</li>
-</ul>
-<h2 id="常用注解"><a href="#常用注解" class="headerlink" title="常用注解"></a>常用注解</h2><h3 id="WebService"><a href="#WebService" class="headerlink" title="@WebService"></a>@WebService</h3><p>@WebService-定义服务，在public class上边，可选参数：</p>
-<ul>
-<li>targetNamespace：指定命名空间</li>
-<li>name：portType的名称</li>
-<li>portName：port的名称</li>
-<li>serviceName：服务名称</li>
-<li>endpointInterface：SEI接口地址，如果一个服务类实现了多个接口，只需要发布一个接口的方法，可通过此注解指定要发布服务的接口。</li>
-</ul>
-<h3 id="WebMethod"><a href="#WebMethod" class="headerlink" title="@WebMethod"></a>@WebMethod</h3><p>@WebMethod-定义方法，在公开方法上边，可选参数：</p>
-<ul>
-<li>operationName：方法名</li>
-<li>exclude：设置为true表示此方法不是webservice方法，反之则表示webservice方法</li>
-<li>action：此操作的动作。 对于 SOAP 绑定，此方法可确定 soap 动作的值。 </li>
-</ul>
-<h3 id="WebResult"><a href="#WebResult" class="headerlink" title="@WebResult"></a>@WebResult</h3><p>@WebResult-定义返回值，在方法返回值前边，可选参数:</p>
-<ul>
-<li>name：返回结果值的名称</li>
-<li>partName：表示此返回值的 wsdl:part 的名称。此名称只在操作是 rpc 样式，或者操作是文档样式且参数样式为 BARE 时使用。 </li>
-<li>targetNamespace：返回值的 XML 名称空间。只在操作是文档样式或者返回值映射到某一个头时使用。如果目标名称空间被设置为 “”，则此名称空间表示空名称空间。</li>
-<li>header：如果为 true，则结果是从消息头而不是消息正文获取的。 </li>
-</ul>
-<h3 id="WebParam"><a href="#WebParam" class="headerlink" title="@WebParam"></a>@WebParam</h3><p>@WebParam-定义参数，在方法参数前边，可选参数：</p>
-<ul>
-<li>name：指定参数的名称</li>
-<li>partName：表示此返回值的 wsdl:part 的名称。此名称只在操作是 rpc 样式，或者操作是文档样式且参数样式为 BARE 时使用。 </li>
-<li>targetNamespace：返回值的 XML 名称空间。只在操作是文档样式或者返回值映射到某一个头时使用。如果目标名称空间被设置为 “”，则此名称空间表示空名称空间。</li>
-<li>header：如果为 true，则结果是从消息头而不是消息正文获取的。 </li>
-<li>mode：参数的流向（IN、OUT 或 INOUT 之一）。OUT 和 INOUT 模式只是为那些符合 Holder 类型定义（JAX-WS 2.0 [5] 的第 2.3.3 节）的参数类型所指定的。Holder 类型的参数必须为 OUT 或 INOUT。 </li>
-</ul>
+<p>前三种都是SpringAOP实现的变体，SpringAOP构建在动态代理基础之上，因此，Spring对AOP的支持局限于方法的拦截。</p>
+<h2 id="切入点表达式"><a href="#切入点表达式" class="headerlink" title="切入点表达式"></a>切入点表达式</h2><p><img src="http://i.imgur.com/z8MbDIP.png" alt=""></p>
+<h2 id="使用SpringAOP"><a href="#使用SpringAOP" class="headerlink" title="使用SpringAOP"></a>使用SpringAOP</h2><p>SpringAOP的支持必须呀导入spring-aspects的jar包<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-aspects&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;4.3.5.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="使用注解定义切面"><a href="#使用注解定义切面" class="headerlink" title="使用注解定义切面"></a>使用注解定义切面</h3><p>采用注解的方式定义切面以及通知</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Audience</span> </span>&#123;</div><div class="line">    <span class="comment">//使用@Pointcut注解声明频繁使用的切入点表达式</span></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.wqh.concert.Performance.perform(..))"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performance</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Before</span>(<span class="string">"performance()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silenceCellPhones</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Sillencing cell phones"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Before</span>(<span class="string">"performance()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">takeSeats</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Task Seat"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@AfterReturning</span>(<span class="string">"performance()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">applause</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"CLAP CLAP CLAP"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@AfterThrowing</span>(<span class="string">"performance()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demandRefund</span><span class="params">()</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"Demand a Refund"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外需要在applicationContext.xml也就是spring的配置文件中添加配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;!--启用AspectJ的自动代理--&gt;</div><div class="line">&lt;aop:aspectj-autoproxy/&gt;</div><div class="line">&lt;!--声明bean--&gt;</div><div class="line">&lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.wqh.concert.Audience"</span>/&gt;</div></pre></td></tr></table></figure>
+<h3 id="在XML中声明切面"><a href="#在XML中声明切面" class="headerlink" title="在XML中声明切面"></a>在XML中声明切面</h3><p>定义pojo类，这里只是把上面定义的注解全public class AudienceXML {<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">silenceCellPhones</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"Sillencing cell phones"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">takeSeats</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"Task Seat"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">applause</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"CLAP CLAP CLAP"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demandRefund</span><span class="params">()</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"Demand a Refund"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>applicationContext.xml配置<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;!--声明bean--&gt;</div><div class="line">&lt;bean name=<span class="string">"audienceXML"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.wqh.concert.AudienceXML"</span>/&gt;</div><div class="line">&lt;aop:config&gt;</div><div class="line">    &lt;!--引入bean--&gt;</div><div class="line">    &lt;aop:aspect ref=<span class="string">"audienceXML"</span>&gt;</div><div class="line">        &lt;!--定义切点--&gt;</div><div class="line">        &lt;aop:pointcut id=<span class="string">"perform"</span></div><div class="line">                      expression=<span class="string">"execution(* com.wqh.concert.Performance.perform(..))"</span>/&gt;</div><div class="line">        &lt;!--定义通知</div><div class="line">            method：通知，也就是具体的方法</div><div class="line">            pointcut-ref：引用的切点</div><div class="line">            pointcut：切点--&gt;</div><div class="line">        &lt;aop:before method=<span class="string">"silenceCellPhones"</span></div><div class="line">                    pointcut-ref=<span class="string">"perform"</span>/&gt;</div><div class="line"></div><div class="line">        &lt;aop:before method=<span class="string">"takeSeats"</span> pointcut-ref=<span class="string">"perform"</span>/&gt;</div><div class="line">        &lt;aop:after-returning method=<span class="string">"applause"</span> pointcut-ref=<span class="string">"perform"</span>/&gt;</div><div class="line"></div><div class="line">        &lt;aop:after-throwing method=<span class="string">"demandRefund"</span></div><div class="line">                            pointcut=<span class="string">"execution(* com.wqh.concert.Performance.perform(..))"</span>/&gt;</div><div class="line">    &lt;/aop:aspect&gt;</div><div class="line">&lt;/aop:config&gt;</div></pre></td></tr></table></figure></p>
+<p><img src="http://i.imgur.com/uGg9KUl.png" alt=""></p>
+<h2 id="环绕通知"><a href="#环绕通知" class="headerlink" title="环绕通知"></a>环绕通知</h2><p>在springAOP中有五种通知，环绕通知是最为强大的通知。它能够让你编写的逻辑将被通知的目标方法完全包装起来。实际上就像在一个通知方法中同时编写前置通知和后置通知。<br>本片文章具体讲解环绕通知的使用。</p>
+<h3 id="使用注解"><a href="#使用注解" class="headerlink" title="使用注解"></a>使用注解</h3><p>使用环绕通知定义切面：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AudienceAround</span> </span>&#123;</div><div class="line">    <span class="comment">//使用@Pointcut注解声明频繁使用的切入点表达式</span></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.wqh.concert.Performance.perform(..))"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">performance</span><span class="params">()</span></span>&#123;&#125;</div><div class="line"></div><div class="line">    <span class="meta">@Around</span>(<span class="string">"performance()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">watchPerformance</span><span class="params">(ProceedingJoinPoint joinPoint)</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.out.println(<span class="string">"Silencing cell phones"</span>);</div><div class="line">            System.out.println(<span class="string">"Taking seats"</span>);</div><div class="line">            joinPoint.proceed();</div><div class="line">            System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable throwable) &#123;</div><div class="line">            throwable.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到在上面的代码中，定义通知的时候在通知方法中添加了入参：ProceedingJoinPoint。在创建环绕通知的时候，这个参数是必须写的。因为在需要在通知中使用ProceedingJoinPoint.proceed()方法调用被通知的方法。</p>
+<p>另外，如果忘记调用proceed()方法，那么通知实际上会阻塞对被通知方法的调用。</p>
+<h3 id="在XML中定义"><a href="#在XML中定义" class="headerlink" title="在XML中定义"></a>在XML中定义</h3><p>首先去掉上面类的所有注解：这里为了区别就重新创建一个类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AudienceAroundXML</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">watchPerformance</span><span class="params">(ProceedingJoinPoint joinPoint)</span></span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.out.println(<span class="string">"Silencing cell phones"</span>);</div><div class="line">            System.out.println(<span class="string">"Taking seats"</span>);</div><div class="line">            joinPoint.proceed();</div><div class="line">            System.out.println(<span class="string">"Demanding a refund"</span>);</div><div class="line"></div><div class="line">        &#125; <span class="keyword">catch</span> (Throwable throwable) &#123;</div><div class="line">            throwable.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>配置：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!--声明bean--&gt;</div><div class="line">&lt;bean name=<span class="string">"audienceAroundXML"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.wqh.concert.AudienceAroundXML"</span>/&gt;</div><div class="line">	&lt;!--配置切面及通知--&gt;</div><div class="line">&lt;aop:config&gt;</div><div class="line">    &lt;aop:aspect ref=<span class="string">"audienceAroundXML"</span>&gt;</div><div class="line">        &lt;aop:pointcut id=<span class="string">"performance"</span></div><div class="line">                      expression=<span class="string">"execution(* com.wqh.concert.Performance.perform(..))"</span>/&gt;</div><div class="line">        &lt;aop:around method=<span class="string">"watchPerformance"</span> pointcut-ref=<span class="string">"performance"</span>/&gt;</div><div class="line">    &lt;/aop:aspect&gt;</div><div class="line">&lt;/aop:config&gt;</div></pre></td></tr></table></figure>
+<h2 id="处理通知中的参数"><a href="#处理通知中的参数" class="headerlink" title="处理通知中的参数"></a>处理通知中的参数</h2><h3 id="Spring借助AspectJ的切点表达式语言来定义Spring切面"><a href="#Spring借助AspectJ的切点表达式语言来定义Spring切面" class="headerlink" title="Spring借助AspectJ的切点表达式语言来定义Spring切面"></a>Spring借助AspectJ的切点表达式语言来定义Spring切面</h3><p><img src="http://i.imgur.com/fXL2qhm.png" alt=""></p>
+<p>在spring中尝试使用其他指示器时，会抛出IllegalArgument-Exception异常。</p>
+<p>如上的这些指示器，只有exception指示器是实际执行匹配的，而其他都是用来限制匹配的。</p>
+<h3 id="切面表达式分析"><a href="#切面表达式分析" class="headerlink" title="切面表达式分析"></a>切面表达式分析</h3><p>带参数的切点表达式分解</p>
+<p><img src="http://i.imgur.com/1QRixjd.png" alt=""></p>
+<p>在该切点表达式中使用了args(trackNumber)限定符。表示传递给playTrack()方法的int类型参数也会传递到通知中去。参数名trackNumber也与切点方法签名中的参数相匹配。</p>
+<h3 id="创建切面"><a href="#创建切面" class="headerlink" title="创建切面"></a>创建切面</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrackCounter</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.wqh.aop.CompactDisc.playTrack(int))&amp;&amp;args(trackNumber)"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">trackPlayder</span><span class="params">(<span class="keyword">int</span> trackNumber)</span></span>&#123;&#125;</div><div class="line"></div><div class="line">    <span class="meta">@Before</span>(<span class="string">"trackPlayder(trackNumber)"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">countTrack</span><span class="params">(<span class="keyword">int</span> trackNumber)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"前置通知:targetNumber="</span> + trackNumber);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="连接点类"><a href="#连接点类" class="headerlink" title="连接点类"></a>连接点类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CompactDisc</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">playTrack</span><span class="params">(<span class="keyword">int</span> trackNumber)</span></span>&#123;</div><div class="line">        System.out.println(<span class="string">"trackNumber ="</span> + trackNumber);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="XML配置"><a href="#XML配置" class="headerlink" title="XML配置"></a>XML配置</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!--启用AspectJ的自动代理--&gt;</div><div class="line">&lt;aop:aspectj-autoproxy/&gt;</div><div class="line"></div><div class="line">&lt;!--声明bean--&gt;</div><div class="line">	&lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.wqh.aop.TrackCounter"</span>/&gt;</div><div class="line">	&lt;!--自动扫描包下的类--&gt;</div><div class="line">&lt;context:component-scan base-<span class="keyword">package</span>=<span class="string">"com.wqh.aop"</span>/&gt;</div></pre></td></tr></table></figure>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testT</span><span class="params">()</span></span>&#123;</div><div class="line">    ApplicationContext applicationContext =</div><div class="line">            <span class="keyword">new</span> ClassPathXmlApplicationContext(</div><div class="line">                    <span class="keyword">new</span> String[]&#123;<span class="string">"classpath:/spring/applicationContext.xml"</span>&#125;);</div><div class="line">    CompactDisc compactDisc = (CompactDisc) applicationContext.getBean(<span class="string">"compactDisc"</span>);</div><div class="line">    compactDisc.playTrack(<span class="number">12</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面给指定方法传入的参数是12，在通知中获取到了该参数</p>
+<p><img src="http://i.imgur.com/Zrr0oSB.png" alt=""></p>
+<p>另外：在xml中配置切面来处理通知中的参数，其实也差不多，只是把切点表达式放到了XML配置文件中。</p>
+<h2 id="给类添加新的功能"><a href="#给类添加新的功能" class="headerlink" title="给类添加新的功能"></a>给类添加新的功能</h2><h3 id="引入Spring实战中的知识"><a href="#引入Spring实战中的知识" class="headerlink" title="引入Spring实战中的知识"></a>引入Spring实战中的知识</h3><p>在SpringAOP中，我们可以为Bean引入新的方法。代理拦截器调用并委托给实现该方法的其他对象。<br><img src="http://i.imgur.com/0vLHPrw.png" alt=""></p>
+<p>当引入接口的方法被调用时，代理会把此调用委托给实现了新接口的某给其他对象。</p>
+<h3 id="使用注解方式引入"><a href="#使用注解方式引入" class="headerlink" title="使用注解方式引入"></a>使用注解方式引入</h3><h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>首先是连接点的接口及其实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">say</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChinesePerson</span> <span class="keyword">implements</span> <span class="title">Person</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"说中文"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建需要添加的功能，这里个人类扩展一个吃的功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Food</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChineseFood</span> <span class="keyword">implements</span> <span class="title">Food</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"吃中餐"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="编写切面"><a href="#编写切面" class="headerlink" title="编写切面"></a>编写切面</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">addFuction</span> </span>&#123;</div><div class="line">    <span class="meta">@DeclareParents</span>(value = <span class="string">"com.wqh.addfunction.Person+"</span>,defaultImpl = ChineseFood.class)</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Food food;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意这里的表达式使用的式@DeclareParents注解；该注解所标注的静态属性指明了要引入的接口。<br>注解中使用的value属性指定哪种类型的bean要引入该接口，这里Person后后面的“+”号表示所有子类型，而不是该类的本身。defaultImpl，指定了为引入功能提供实现的类。</p>
+<p>使用XML配置bean：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!--启用AspectJ的自动代理--&gt;</div><div class="line">&lt;aop:aspectj-autoproxy/&gt;</div><div class="line"></div><div class="line">&lt;!--声明bean--&gt;</div><div class="line">&lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.wqh.addfunction.addFuction"</span>/&gt;</div><div class="line">&lt;bean name=<span class="string">"chinesePerson"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.wqh.addfunction.ChinesePerson"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="测试-1"><a href="#测试-1" class="headerlink" title="测试"></a>测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span></span>&#123;</div><div class="line">    ApplicationContext applicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(</div><div class="line">            <span class="string">"classpath:spring/applicationContext.xml"</span>);</div><div class="line">    Person person = (Person) applicationContext.getBean(<span class="string">"chinesePerson"</span>);</div><div class="line">    person.say();</div><div class="line">    <span class="comment">//这里可以将chinesePerson bean转换为Food类，所以添加成功</span></div><div class="line">    Food food = (Food) applicationContext.getBean(<span class="string">"chinesePerson"</span>);</div><div class="line">    food.eat();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/znG9krq.png" alt=""></p>
+<h3 id="在XML中引入"><a href="#在XML中引入" class="headerlink" title="在XML中引入"></a>在XML中引入</h3><p>首先将上面的addFuction注解全部删除，其他不变；然后在xml中添加相应的配置：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!--启用AspectJ的自动代理--&gt;</div><div class="line">&lt;aop:aspectj-autoproxy/&gt;</div><div class="line">&lt;!--声明bean--&gt;</div><div class="line">&lt;bean name=<span class="string">"chinesePerson"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.wqh.addfunction.ChinesePerson"</span>/&gt;</div><div class="line"></div><div class="line"> &lt;aop:config&gt;</div><div class="line">     &lt;aop:aspect&gt;</div><div class="line">         &lt;aop:declare-parents types-matching=<span class="string">"com.wqh.addfunction.Person+"</span></div><div class="line">                              implement-<span class="class"><span class="keyword">interface</span></span>=<span class="string">"com.wqh.addfunction.Food"</span></div><div class="line">         <span class="keyword">default</span>-impl=<span class="string">"com.wqh.addfunction.ChineseFood"</span>/&gt;</div><div class="line">     &lt;/aop:aspect&gt;</div><div class="line"> &lt;/aop:config&gt;</div></pre></td></tr></table></figure></p>
+<p>这里的types-matching与上面的vale作用一样;<br><br>default-impl与defaultImpl作用一样，这也可以使用delegate-ref；当然如果使用delegate-ref则是要引用SpringBean；<br><br>implement-interface则是要引入的接口</p>
 
       
 
@@ -279,13 +279,28 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">webservice</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">sprong</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">AOP</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/spring/" class="article-tag-list-link color2">spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -335,7 +350,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2017/08/21/webservice2/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2017/08/28/SpringAOP/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -349,18 +364,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/08/23/cxf/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          WebService之CXF
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/08/21/webservice1/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">WebService入门介绍</div>
+    <a href="/2017/08/26/classload/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">分析ClassLoader工作机制</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -387,7 +393,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#三要素"><span class="toc-number">1.</span> <span class="toc-text">三要素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SOAP"><span class="toc-number">1.1.</span> <span class="toc-text">SOAP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SOAP是什么"><span class="toc-number">1.1.1.</span> <span class="toc-text">SOAP是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SOAP语法格式"><span class="toc-number">1.1.2.</span> <span class="toc-text">SOAP语法格式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#构建模块"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">构建模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#语法规则"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">语法规则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#基本结构"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">基本结构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WSDL"><span class="toc-number">1.2.</span> <span class="toc-text">WSDL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#wsdl是什么"><span class="toc-number">1.2.1.</span> <span class="toc-text">wsdl是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wsdl结构"><span class="toc-number">1.2.2.</span> <span class="toc-text">wsdl结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wsdl说明书阅读"><span class="toc-number">1.2.3.</span> <span class="toc-text">wsdl说明书阅读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDDI"><span class="toc-number">1.3.</span> <span class="toc-text">UDDI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用注解"><span class="toc-number">2.</span> <span class="toc-text">常用注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WebService"><span class="toc-number">2.1.</span> <span class="toc-text">@WebService</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebMethod"><span class="toc-number">2.2.</span> <span class="toc-text">@WebMethod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebResult"><span class="toc-number">2.3.</span> <span class="toc-text">@WebResult</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebParam"><span class="toc-number">2.4.</span> <span class="toc-text">@WebParam</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是AOP"><span class="toc-number">1.</span> <span class="toc-text">什么是AOP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义AOP术语"><span class="toc-number">2.</span> <span class="toc-text">定义AOP术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring对AOP的支持"><span class="toc-number">3.</span> <span class="toc-text">Spring对AOP的支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切入点表达式"><span class="toc-number">4.</span> <span class="toc-text">切入点表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用SpringAOP"><span class="toc-number">5.</span> <span class="toc-text">使用SpringAOP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用注解定义切面"><span class="toc-number">5.1.</span> <span class="toc-text">使用注解定义切面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在XML中声明切面"><span class="toc-number">5.2.</span> <span class="toc-text">在XML中声明切面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环绕通知"><span class="toc-number">6.</span> <span class="toc-text">环绕通知</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用注解"><span class="toc-number">6.1.</span> <span class="toc-text">使用注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在XML中定义"><span class="toc-number">6.2.</span> <span class="toc-text">在XML中定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#处理通知中的参数"><span class="toc-number">7.</span> <span class="toc-text">处理通知中的参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring借助AspectJ的切点表达式语言来定义Spring切面"><span class="toc-number">7.1.</span> <span class="toc-text">Spring借助AspectJ的切点表达式语言来定义Spring切面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#切面表达式分析"><span class="toc-number">7.2.</span> <span class="toc-text">切面表达式分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建切面"><span class="toc-number">7.3.</span> <span class="toc-text">创建切面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接点类"><span class="toc-number">7.4.</span> <span class="toc-text">连接点类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML配置"><span class="toc-number">7.5.</span> <span class="toc-text">XML配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-number">7.6.</span> <span class="toc-text">测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#给类添加新的功能"><span class="toc-number">8.</span> <span class="toc-text">给类添加新的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#引入Spring实战中的知识"><span class="toc-number">8.1.</span> <span class="toc-text">引入Spring实战中的知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用注解方式引入"><span class="toc-number">8.2.</span> <span class="toc-text">使用注解方式引入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#代码"><span class="toc-number">8.2.1.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编写切面"><span class="toc-number">8.2.2.</span> <span class="toc-text">编写切面</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试-1"><span class="toc-number">8.3.</span> <span class="toc-text">测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在XML中引入"><span class="toc-number">8.4.</span> <span class="toc-text">在XML中引入</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
