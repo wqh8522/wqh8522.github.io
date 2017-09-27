@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>wanqh的个人博客</title>
+  <title>Oeacle常见的日期处理 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="努力思考中...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wanqh的个人博客">
-<meta property="og:url" content="http://www.wanqhblog.top/index.html">
+  <meta name="description" content="日期处理常用函数 sysdate：当前日期和时间； to_char()：将数值型或日期型转换为字符型； to_date()：日期转换函数，例：to_date(‘2017-09-27 10:00:00’, ‘yyyy-mm-dd hh24:mi:ss’)； last_day(sysdate)：返回日期所在月的最后一天； trunc(number[,decimals])：指定元素格式截去一部分日期值；">
+<meta name="keywords" content="oracle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oeacle常见的日期处理">
+<meta property="og:url" content="http://www.wanqhblog.top/2017/09/27/Oeacle日期/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="努力思考中...">
+<meta property="og:description" content="日期处理常用函数 sysdate：当前日期和时间； to_char()：将数值型或日期型转换为字符型； to_date()：日期转换函数，例：to_date(‘2017-09-27 10:00:00’, ‘yyyy-mm-dd hh24:mi:ss’)； last_day(sysdate)：返回日期所在月的最后一天； trunc(number[,decimals])：指定元素格式截去一部分日期值；">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-27T12:32:33.254Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wanqh的个人博客">
-<meta name="twitter:description" content="努力思考中...">
+<meta name="twitter:title" content="Oeacle常见的日期处理">
+<meta name="twitter:description" content="日期处理常用函数 sysdate：当前日期和时间； to_char()：将数值型或日期型转换为字符型； to_date()：日期转换函数，例：to_date(‘2017-09-27 10:00:00’, ‘yyyy-mm-dd hh24:mi:ss’)； last_day(sysdate)：返回日期所在月的最后一天； trunc(number[,decimals])：指定元素格式截去一部分日期值；">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -163,16 +165,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Oeacle日期" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Oeacle日期" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/27/Oeacle日期/">Oeacle常见的日期处理</a>
+    <h1 class="article-title" itemprop="name">
+      Oeacle常见的日期处理
     </h1>
   
 
@@ -191,10 +191,16 @@
 <li>to_date()：日期转换函数，例：to_date(‘2017-09-27 10:00:00’, ‘yyyy-mm-dd hh24:mi:ss’)；</li>
 <li>last_day(sysdate)：返回日期所在月的最后一天；</li>
 <li>trunc(number[,decimals])：指定元素格式截去一部分日期值；</li>
-<li>add_months(D,N)：返回日期D加N月后对应的日期时间，N为正时则表示D之后；N为负时则表示为D之前；N为小数则会自动先删除小数部分，而用整数部分;
-        
-          <a class="article-more-a" href="/2017/09/27/Oeacle日期/#more">more >></a>
-        
+<li>add_months(D,N)：返回日期D加N月后对应的日期时间，N为正时则表示D之后；N为负时则表示为D之前；N为小数则会自动先删除小数部分，而用整数部分;<a id="more"></a></li>
+<li>decode(条件,值1,翻译值1,值2,翻译值2,…值n,翻译值n,缺省值)：根据条件返回相应的值；</li>
+<li>ceil(n)：取大于等于数值n的最小整数；</li>
+<li>floor(n)：取小于等于数值n的最大整数；</li>
+<li>dbtimezone()：返回时区；</li>
+<li>……<h2 id="常见操作"><a href="#常见操作" class="headerlink" title="常见操作"></a>常见操作</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--得到当前的日期</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">sysdate</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--取得当前日期是本月的第几周</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'YYYYMMDD HH24:MI:SS W'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'w'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--取得当前日期是一个星期中的第几天,注意星期日是第一天 返回的是number 1开始星期天</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'d'</span>) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'yyyy'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得年</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'q'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得季度</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'mm'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得月份</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'dd'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得日期</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'ddd'</span>) <span class="keyword">from</span> dual;<span class="comment">-- 一年中的第几天</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'ww'</span>) <span class="keyword">from</span> dual; <span class="comment">-- 年中的第几个星期</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'w'</span>) <span class="keyword">from</span> dual;  <span class="comment">-- 该月的第几个信息</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'day'</span>) <span class="keyword">from</span> dual; <span class="comment">--星期几</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'hh'</span>) <span class="keyword">from</span> dual; <span class="comment">--小时 12小时制</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'hh24'</span>) <span class="keyword">from</span> dual; <span class="comment">--小时 24小时制</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'MI'</span>) <span class="keyword">from</span> dual; <span class="comment">--分</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'ss'</span>) <span class="keyword">from</span> dual; <span class="comment">--秒</span></div><div class="line">  </div><div class="line"><span class="comment">--得到当天凌晨0点0分0秒的日期</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual;</div><div class="line">  </div><div class="line"><span class="comment">--得到这天的最后一秒</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">0.99999</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--得到小时的具体数值</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">1</span>/<span class="number">24</span> <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">7</span>/<span class="number">24</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--得到明天凌晨0点0分0秒的日期</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>+<span class="number">1</span>) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">1</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--本月一日的日期</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,<span class="string">'mm'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--下月一日的日期</span></div><div class="line"><span class="keyword">select</span> trunc(add_months(<span class="keyword">sysdate</span>, <span class="number">1</span>),<span class="string">'mm'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--返回当前月的最后一天</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">last_day</span>(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> <span class="keyword">last_day</span>(trunc(<span class="keyword">sysdate</span>)) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">last_day</span>(<span class="keyword">sysdate</span>)) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(add_months(<span class="keyword">sysdate</span>,<span class="number">1</span>),<span class="string">'mm'</span>) - <span class="number">1</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--得到一年的每一天</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,<span class="string">'yyyy'</span>)+ rn <span class="number">-1</span> date0 <span class="keyword">from</span></div><div class="line">(<span class="keyword">select</span> <span class="keyword">rownum</span> rn <span class="keyword">from</span> all_objects</div><div class="line"><span class="keyword">where</span> <span class="keyword">rownum</span>&lt;<span class="number">366</span>);</div><div class="line"></div><div class="line"><span class="comment">--给现有的日期加上2年</span></div><div class="line"><span class="keyword">select</span> add_months(<span class="keyword">sysdate</span>,<span class="number">24</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--判断某一日子所在年分是否为润年</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">decode</span>(to_char(<span class="keyword">last_day</span>(trunc(<span class="keyword">sysdate</span>,<span class="string">'y'</span>)+<span class="number">31</span>),<span class="string">'dd'</span>),<span class="string">'29'</span>,<span class="string">'闰年'</span>,<span class="string">'平年'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--判断两年后是否为润年</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">decode</span>(to_char(<span class="keyword">last_day</span>(trunc(add_months(<span class="keyword">sysdate</span>,<span class="number">24</span>),<span class="string">'y'</span>)+<span class="number">31</span>),<span class="string">'dd'</span>),<span class="string">'29'</span>,<span class="string">'闰年'</span>,<span class="string">'平年'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--查询当前日期的季度</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">ceil</span>(to_number(to_char(<span class="keyword">sysdate</span>,<span class="string">'mm'</span>))/<span class="number">3</span>) <span class="keyword">from</span> dual;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>根据时间以及用户id计算该用户本周、本日、本月记录的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">-- 本日 </div><div class="line">select y.create_by,count(y.create_date),u.name from t_bdc_yw y,sys_user u</div><div class="line"> where to_date(y.create_date)=to_date(sysdate) and y.create_by=u.id</div><div class="line">group by y.create_by,u.name;</div><div class="line"></div><div class="line">--本周</div><div class="line">select create_by,count(create_date)</div><div class="line">from t_bdc_yw</div><div class="line">where to_date(create_date)&gt;=to_date(sysdate-to_number(to_char(sysdate-1,&apos;D&apos;))) and slzt=&apos;1&apos;</div><div class="line">group by create_by;</div><div class="line"></div><div class="line">--本月</div><div class="line">select to_char(create_date,&apos;yyyy-mm&apos;),create_by,count(create_date) from t_bdc_yw</div><div class="line">where to_date(create_date)&gt;=to_date(trunc(sysdate,&apos;mm&apos;)) and to_date(create_date)&lt;=to_date(last_day(sysdate))</div><div class="line">group by to_char(create_date,&apos;yyyy-mm&apos;),create_by;</div></pre></td></tr></table></figure></p>
+
       
 
       
@@ -216,16 +222,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/27/Oeacle日期/">阅读全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2017/09/27/Oeacle日期/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/28/SpringAOP/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SpringAOP的使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -240,357 +305,41 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SpringAOP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/28/SpringAOP/">SpringAOP的使用</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/28/SpringAOP/" class="archive-article-date">
-  	<time datetime="2017-08-28T02:10:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP"></a>什么是AOP</h2><p>AOP（Aspect Oriented Programming 面向切面编程），通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。</p>
-<p>常用于日志记录，性能统计，安全控制，事务处理，异常处理等等。</p>
-<h2 id="定义AOP术语"><a href="#定义AOP术语" class="headerlink" title="定义AOP术语"></a>定义AOP术语</h2>
-        
-          <a class="article-more-a" href="/2017/08/28/SpringAOP/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">spring</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">AOP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/spring/" class="article-tag-list-link color2">spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/28/SpringAOP/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#日期处理常用函数"><span class="toc-number">1.</span> <span class="toc-text">日期处理常用函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见操作"><span class="toc-number">2.</span> <span class="toc-text">常见操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例"><span class="toc-number">3.</span> <span class="toc-text">案例</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
 
-  
-    <article id="post-classload" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/26/classload/">分析ClassLoader工作机制</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/26/classload/" class="archive-article-date">
-  	<time datetime="2017-08-26T03:54:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ClassLoader：类加载器，作用：</p>
-<ol>
-<li>负责将Class加载到JVM中；</li>
-<li>审查每个类应该又谁来加载，是一个父优先的等级加载机制；</li>
-<li>将Class字节码重新解析成JVM统一要求的对象格式<h2 id="ClassLoader类结构分析"><a href="#ClassLoader类结构分析" class="headerlink" title="ClassLoader类结构分析"></a>ClassLoader类结构分析</h2>
-        
-          <a class="article-more-a" href="/2017/08/26/classload/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">classloader</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/java/" class="article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/26/classload/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
 
   
-    <article id="post-cxf" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/23/cxf/">WebService之CXF</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/23/cxf/" class="archive-article-date">
-  	<time datetime="2017-08-23T03:52:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是CXF"><a href="#什么是CXF" class="headerlink" title="什么是CXF"></a>什么是CXF</h2><p>Apache CXF = Celtix + XFire，开始叫 Apache CeltiXfire，后来更名为 Apache CXF 了，以下简称为 CXF。CXF 继承了 Celtix 和 XFire 两大开源项目的精华，提供了对 JAX-WS 全面的支持，并且提供了多种 Binding 、DataBinding、Transport 以及各种 Format 的支持，并且可以根据实际项目的需要，采用代码优先（Code First）或者 WSDL 优先（WSDL First）来轻松地实现 Web Services 的发布和使用。Apache CXF已经是一个正式的Apache顶级项目。</p>
-        
-          <a class="article-more-a" href="/2017/08/23/cxf/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">webservice</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/23/cxf/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
 
   
-    <article id="post-webservice2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/21/webservice2/">WebService知识点</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/21/webservice2/" class="archive-article-date">
-  	<time datetime="2017-08-21T06:47:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="三要素"><a href="#三要素" class="headerlink" title="三要素"></a>三要素</h2><h3 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h3><p>SOAP:简单对象访问协议（Simple Object Access Protocal），是一种简单的基于 XML 的协议，它使应用程序通过 HTTP 来交换信息，简单理解为soap=http+xml。Soap协议版本主要使用soap1.1、soap1.2
-        
-          <a class="article-more-a" href="/2017/08/21/webservice2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">webservice</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/21/webservice2/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
 
   
+  <div id="SOHUCS" sid="Oeacle常见的日期处理" style="padding: 0px 30px 0px 46px;"></div>
+<script type="text/javascript">
+(function(){
+var appid = "cytbAtNIL";
+var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+
   
 
 
@@ -623,8 +372,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
