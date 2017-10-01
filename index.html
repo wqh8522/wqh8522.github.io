@@ -186,11 +186,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>1.首先我们可以用scott用户以sysdba的身份登录oracle.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　conn scott/tiger as sysdba</div></pre></td></tr></table></figure></p>
-<p>2.然后我就可以来创建用户了.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">create</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="keyword">name</span>;</div><div class="line">```&lt;!--more--&gt;</div><div class="line">3.修改用户的密码. </div><div class="line">```sql</div><div class="line">　　<span class="keyword">alter</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="keyword">password</span>;</div></pre></td></tr></table></figure></p>
-<p>4.创建一个表空间.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">create</span> <span class="keyword">tablespace</span> tablespacename <span class="keyword">datafile</span> <span class="string">'path'</span> <span class="keyword">size</span> <span class="number">200</span>M;</div></pre></td></tr></table></figure></p>
-<p>5.创建好表空间,还需要将表空间分配给用户.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">alter</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">default</span> <span class="keyword">tablespace</span> tablespacename;</div></pre></td></tr></table></figure></p>
-<p>6.给用户分配了表空间,用户还不能登陆（没有登录权限）,因此还需要为用户分配权限<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">session</span>,<span class="keyword">create</span> <span class="keyword">table</span>,<span class="keyword">create</span> <span class="keyword">view</span>,<span class="keyword">create</span> <span class="keyword">sequence</span>,<span class="keyword">unlimited</span> <span class="keyword">tablespace</span> <span class="keyword">to</span> tablespacename;</div></pre></td></tr></table></figure></p>
-
+<p>2.然后我就可以来创建用户了.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">create</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="keyword">name</span>;</div></pre></td></tr></table></figure></p>
+<p>3.修改用户的密码.
+        
+          <a class="article-more-a" href="/2017/10/01/oracle新建用户/#more">more >></a>
+        
       
 
       
@@ -696,11 +696,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -712,11 +712,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
               </li>
              
               <li class="article-tag-list-item">
