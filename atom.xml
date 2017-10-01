@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2017-09-27T12:36:51.644Z</updated>
+  <updated>2017-10-01T01:25:51.883Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Oracle新建用户</title>
+    <link href="http://www.wanqhblog.top/2017/10/01/oracle%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
+    <id>http://www.wanqhblog.top/2017/10/01/oracle新建用户/</id>
+    <published>2017-10-01T01:22:39.000Z</published>
+    <updated>2017-10-01T01:25:51.883Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.首先我们可以用scott用户以sysdba的身份登录oracle.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　conn scott/tiger as sysdba</div></pre></td></tr></table></figure></p>
+<p>2.然后我就可以来创建用户了.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">create</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="keyword">name</span>;</div><div class="line">```&lt;!--more--&gt;</div><div class="line">3.修改用户的密码. </div><div class="line">```sql</div><div class="line">　　<span class="keyword">alter</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="keyword">password</span>;</div></pre></td></tr></table></figure></p>
+<p>4.创建一个表空间.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">create</span> <span class="keyword">tablespace</span> tablespacename <span class="keyword">datafile</span> <span class="string">'path'</span> <span class="keyword">size</span> <span class="number">200</span>M;</div></pre></td></tr></table></figure></p>
+<p>5.创建好表空间,还需要将表空间分配给用户.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">alter</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">default</span> <span class="keyword">tablespace</span> tablespacename;</div></pre></td></tr></table></figure></p>
+<p>6.给用户分配了表空间,用户还不能登陆（没有登录权限）,因此还需要为用户分配权限<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">　　<span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">session</span>,<span class="keyword">create</span> <span class="keyword">table</span>,<span class="keyword">create</span> <span class="keyword">view</span>,<span class="keyword">create</span> <span class="keyword">sequence</span>,<span class="keyword">unlimited</span> <span class="keyword">tablespace</span> <span class="keyword">to</span> tablespacename;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;1.首先我们可以用scott用户以sysdba的身份登录oracle.&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/
+    
+    </summary>
+    
+    
+      <category term="oracle" scheme="http://www.wanqhblog.top/tags/oracle/"/>
+    
+  </entry>
   
   <entry>
     <title>Oeacle常见的日期处理</title>
