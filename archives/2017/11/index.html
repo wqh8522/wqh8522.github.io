@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>SpringBoot入门及数据持久化 | wanqh的个人博客</title>
+  <title>Archives: 2017/11 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Spring中常用注解声明Bean的注解 @Component：声明类为组件，没有明确的角色； @Service：声明该类在业务逻辑层（service层）使用； @Reponsitory：在数据访问层（dao层）使用； @Controller：表现层（MVC-&amp;gt;SpringMVC）使用；注入Bean的注解 @Autowired:自动装配，Spring提供的注解；默认按类型装配，默认情况下必须">
-<meta name="keywords" content="SpringBooot">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot入门及数据持久化">
-<meta property="og:url" content="http://www.wanqhblog.top/2017/10/04/SpringBoot入门及数据持久化/index.html">
+  <meta name="description" content="努力思考中...">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wanqh的个人博客">
+<meta property="og:url" content="http://www.wanqhblog.top/archives/2017/11/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="Spring中常用注解声明Bean的注解 @Component：声明类为组件，没有明确的角色； @Service：声明该类在业务逻辑层（service层）使用； @Reponsitory：在数据访问层（dao层）使用； @Controller：表现层（MVC-&amp;gt;SpringMVC）使用；注入Bean的注解 @Autowired:自动装配，Spring提供的注解；默认按类型装配，默认情况下必须">
+<meta property="og:description" content="努力思考中...">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-04T02:17:22.564Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot入门及数据持久化">
-<meta name="twitter:description" content="Spring中常用注解声明Bean的注解 @Component：声明类为组件，没有明确的角色； @Service：声明该类在业务逻辑层（service层）使用； @Reponsitory：在数据访问层（dao层）使用； @Controller：表现层（MVC-&amp;gt;SpringMVC）使用；注入Bean的注解 @Autowired:自动装配，Spring提供的注解；默认按类型装配，默认情况下必须">
+<meta name="twitter:title" content="wanqh的个人博客">
+<meta name="twitter:description" content="努力思考中...">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -165,186 +163,76 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-SpringBoot入门及数据持久化" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      SpringBoot入门及数据持久化
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/11/22/websocket/" class="archive-article-date">
+  	<time datetime="2017-11-22T12:13:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/11/22/websocket/">SpringMvc使用websocket做消息推送</a>
     </h1>
   
 
-        
-        <a href="/2017/10/04/SpringBoot入门及数据持久化/" class="archive-article-date">
-  	<time datetime="2017-10-04T01:40:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Spring中常用注解"><a href="#Spring中常用注解" class="headerlink" title="Spring中常用注解"></a>Spring中常用注解</h2><h3 id="声明Bean的注解"><a href="#声明Bean的注解" class="headerlink" title="声明Bean的注解"></a>声明Bean的注解</h3><ul>
-<li><strong>@Component：</strong>声明类为组件，没有明确的角色；</li>
-<li><strong>@Service：</strong>声明该类在业务逻辑层（service层）使用；</li>
-<li><strong>@Reponsitory：</strong>在数据访问层（dao层）使用；</li>
-<li><strong>@Controller：</strong>表现层（MVC-&gt;SpringMVC）使用；<h3 id="注入Bean的注解"><a href="#注入Bean的注解" class="headerlink" title="注入Bean的注解"></a>注入Bean的注解</h3></li>
-<li><strong>@Autowired:</strong>自动装配，Spring提供的注解；默认按类型装配，默认情况下必须要求依赖对象必须存在，如果要允许null 值，可以设置它的required属性为false，如：@Autowired(required=false) ，如果我们想使用名称装配可以结合@Qualifier注解进行使用</li>
-<li><strong>@Resource：</strong>默认安照名称进行装配，名称可以通过name属性进行指定，<br>如果没有指定name属性，当注解写在字段上时，默认取字段名进行按照名称查找，如果注解写在setter方法上默认取属性名进行装配。 当找不到与名称匹配的bean时才按照类型进行装配。但是需要注意的是，如果name属性一旦指定，就只会按照名称进行装配。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringBooot</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">springmvc</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">websocket</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Spring/" class="article-tag-list-link color2">Spring</a>
+        			<a href="/categories/websocket/" class="article-tag-list-link color5">websocket</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2017/10/04/SpringBoot入门及数据持久化/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
   
   
-    <a href="/2017/10/01/oracle新建用户/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Oracle新建用户</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring中常用注解"><span class="toc-number">1.</span> <span class="toc-text">Spring中常用注解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#声明Bean的注解"><span class="toc-number">1.1.</span> <span class="toc-text">声明Bean的注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注入Bean的注解"><span class="toc-number">1.2.</span> <span class="toc-text">注入Bean的注解</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
+    </div></section>
   
 
-  
+    
 
-  
-  <div id="SOHUCS" sid="SpringBoot入门及数据持久化" style="padding: 0px 30px 0px 46px;"></div>
-<script type="text/javascript">
-(function(){
-var appid = "cytbAtNIL";
-var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
-var width = window.innerWidth || document.documentElement.clientWidth;
-if (width < 960) {
-window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
-  
-
-  
 
 
           </div>
@@ -377,8 +265,8 @@ window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="tex
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
@@ -447,11 +335,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -463,6 +347,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">classloader</a>
               </li>
              
@@ -471,7 +363,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Data-Jpa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hibernate</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,7 +383,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
+                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">springmvc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">websocket</a>
               </li>
             
             <div class="clearfix"></div>
