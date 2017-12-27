@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2017/12/27/FastDFS%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2017-12-27T07:42:45.907Z</lastmod>
+    <data>
+        <display>
+        <title>FastDFS系统的搭建</title>
+        <pubTime>2017-12-27T03:41:58.000Z</pubTime>
+        
+        <tag>分布式文件系统</tag>
+         
+         
+           
+             
+              <breadCrumb title="FastDFS" url="http://www.wanqhblog.top/categories/FastDFS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2017/12/26/SpringBoot%E4%BD%BF%E7%94%A8Redis%E5%81%9A%E7%BC%93%E5%AD%98/</loc>
     <lastmod>2017-12-27T03:30:02.132Z</lastmod>
     <data>
