@@ -6,20 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>SpringBoot持久化层操作 | wanqh的个人博客</title>
+  <title>Archives: 2017/12 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="使用Spring Data Jpa操作数据库要使用Spring Data Jpa必须先添加相应的依赖1234&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-data-jpa&amp;lt;/artifactId&amp;gt;">
-<meta name="keywords" content="SpringBoot,Data-Jpa,mybatis,hibernate">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot持久化层操作">
-<meta property="og:url" content="http://www.wanqhblog.top/2017/10/05/SpringBoot持久化层/index.html">
+  <meta name="description" content="努力思考中...">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wanqh的个人博客">
+<meta property="og:url" content="http://www.wanqhblog.top/archives/2017/12/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="使用Spring Data Jpa操作数据库要使用Spring Data Jpa必须先添加相应的依赖1234&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-data-jpa&amp;lt;/artifactId&amp;gt;">
+<meta property="og:description" content="努力思考中...">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-06T01:35:24.670Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot持久化层操作">
-<meta name="twitter:description" content="使用Spring Data Jpa操作数据库要使用Spring Data Jpa必须先添加相应的依赖1234&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;org.springframework.boot&amp;lt;/groupId&amp;gt;    &amp;lt;artifactId&amp;gt;spring-boot-starter-data-jpa&amp;lt;/artifactId&amp;gt;">
+<meta name="twitter:title" content="wanqh的个人博客">
+<meta name="twitter:description" content="努力思考中...">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -172,57 +170,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-SpringBoot持久化层" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      SpringBoot持久化层操作
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/26/SpringBoot使用Redis做缓存/" class="archive-article-date">
+  	<time datetime="2017-12-26T15:26:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-26</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/26/SpringBoot使用Redis做缓存/">SpringBoot使用Redis做缓存</a>
     </h1>
   
 
-        
-        <a href="/2017/10/05/SpringBoot持久化层/" class="archive-article-date">
-  	<time datetime="2017-10-05T14:26:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用Spring-Data-Jpa操作数据库"><a href="#使用Spring-Data-Jpa操作数据库" class="headerlink" title="使用Spring Data Jpa操作数据库"></a>使用Spring Data Jpa操作数据库</h2><p>要使用Spring Data Jpa必须先添加相应的依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>数据库配置信息，使用yml的配置文件，个人感觉这种配置结构更清晰<a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">spring:</div><div class="line">  #数据库的配置</div><div class="line">  datasource:</div><div class="line">    driver-class-name: com.mysql.jdbc.Driver</div><div class="line">    url: jdbc:mysql://127.0.0.1:3306/springbootjpa</div><div class="line">    username: root</div><div class="line">    password: 1234</div><div class="line">  #配置jpa</div><div class="line">  jpa:</div><div class="line">    hibernate:</div><div class="line">      ddl-auto: update #设置数据库的行为</div><div class="line">    show-sql: true</div></pre></td></tr></table></figure></p>
-<p>添加实体类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Entity</span><span class="comment">//数据库表的映射</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Id</span></div><div class="line">    <span class="meta">@GeneratedValue</span><span class="comment">//设置为自增主键</span></div><div class="line">    <span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String age;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</div><div class="line">    &#125;	</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(String age)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>添加完实体类之后就可以启动项目，启动项目会自动创建User表。</p>
-<h3 id="CRUD操作"><a href="#CRUD操作" class="headerlink" title="CRUD操作"></a>CRUD操作</h3><p>在Spring-Data-Jpa 中提供了一种类似于声明式编程的方式，开发者只需要编写数据访问接口（称为Repository），Spring Data JPA就能基于接口中的方法命名自动地生成实现。<br>定义 UserRepository 接口，继承JpaRepository，此接口是 Spring-Data-Jpa 内部定义好的泛型接口，第一个参数实体类，第二个参数是ID。已经帮我们实现了基本的增删改查的功能，现在只要持有 UserRepository 就能操作数据表<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Repository</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserRepository</span>  <span class="keyword">extends</span> <span class="title">JpaRepository</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>进入源码查看接口的继承结构发现 JpaRepository继承自PagingAndSortingRepository继承自CrudRepository继承自Repository。</p>
-<h4 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a>Repository</h4><p> 泛型接口，第一个参数是实体类，第二个参数是实体类ID，最顶层接口，不包含任何方法，目的是为了统一所有的 Repository 的类型，且能让组件扫描的时候自动识别<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Repository</span>&lt;<span class="title">T</span>, <span class="title">ID</span> <span class="keyword">extends</span> <span class="title">Serializable</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="CrudRepository"><a href="#CrudRepository" class="headerlink" title="CrudRepository"></a>CrudRepository</h4><p>Repository的子接口，封装数据表的 CRUD 方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CrudRepository</span>&lt;<span class="title">T</span>, <span class="title">ID</span> <span class="keyword">extends</span> <span class="title">Serializable</span>&gt; <span class="keyword">extends</span> <span class="title">Repository</span>&lt;<span class="title">T</span>, <span class="title">ID</span>&gt; </span>&#123;</div><div class="line">  &lt;S extends T&gt; <span class="function">S <span class="title">save</span><span class="params">(S var1)</span></span>;<span class="comment">//存储一条数据实体</span></div><div class="line"></div><div class="line">  &lt;S extends T&gt; <span class="function">Iterable&lt;S&gt; <span class="title">save</span><span class="params">(Iterable&lt;S&gt; var1)</span></span>;<span class="comment">//批量存储数据</span></div><div class="line"></div><div class="line">  <span class="function">T <span class="title">findOne</span><span class="params">(ID var1)</span></span>;<span class="comment">//根据id查询一条数据实体</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">boolean</span> <span class="title">exists</span><span class="params">(ID var1)</span></span>;<span class="comment">//判断指定id是否存在</span></div><div class="line"></div><div class="line">  <span class="function">Iterable&lt;T&gt; <span class="title">findAll</span><span class="params">()</span></span>;<span class="comment">//查询所有的数据</span></div><div class="line"></div><div class="line">  <span class="function">Iterable&lt;T&gt; <span class="title">findAll</span><span class="params">(Iterable&lt;ID&gt; var1)</span></span>;<span class="comment">//根据一组id批量查询实体</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">long</span> <span class="title">count</span><span class="params">()</span></span>;<span class="comment">//返回数据的条数</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(ID var1)</span></span>;<span class="comment">//根据id删除数据</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(T var1)</span></span>;<span class="comment">//删除数据</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(Iterable&lt;? extends T&gt; var1)</span></span>;<span class="comment">//批量删除数据</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">deleteAll</span><span class="params">()</span></span>;<span class="comment">//删除所有数据</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="PagingAndSortingRepository"><a href="#PagingAndSortingRepository" class="headerlink" title="PagingAndSortingRepository"></a>PagingAndSortingRepository</h4><p>CrudRepository的子接口，扩展了分页和排序功能。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PagingAndSortingRepository</span>&lt;<span class="title">T</span>, <span class="title">ID</span> <span class="keyword">extends</span> <span class="title">Serializable</span>&gt; <span class="keyword">extends</span> <span class="title">CrudRepository</span>&lt;<span class="title">T</span>, <span class="title">ID</span>&gt; </span>&#123;</div><div class="line">  <span class="function">Iterable&lt;T&gt; <span class="title">findAll</span><span class="params">(Sort var1)</span></span>;<span class="comment">//根据某个排序获取所有数据</span></div><div class="line">  <span class="function">Page&lt;T&gt; <span class="title">findAll</span><span class="params">(Pageable var1)</span></span>;<span class="comment">//根据分页信息获取某一页的数据</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="JpaRepository"><a href="#JpaRepository" class="headerlink" title="JpaRepository"></a>JpaRepository</h4><p>PagingAndSortingRepository的子接口，增加一些实用的功能, 如批量操作<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">JpaRepository</span>&lt;<span class="title">T</span>, <span class="title">ID</span> <span class="keyword">extends</span> <span class="title">Serializable</span>&gt; <span class="keyword">extends</span> <span class="title">PagingAndSortingRepository</span>&lt;<span class="title">T</span>, <span class="title">ID</span>&gt; </span>&#123;</div><div class="line">  <span class="function">List&lt;T&gt; <span class="title">findAll</span><span class="params">()</span></span>; <span class="comment">//获取所有数据，以List的方式返回</span></div><div class="line"></div><div class="line">  <span class="function">List&lt;T&gt; <span class="title">findAll</span><span class="params">(Sort var1)</span></span>; <span class="comment">//根据某个排序获取所有数据，以List的方式返回</span></div><div class="line"></div><div class="line">  <span class="function">List&lt;T&gt; <span class="title">findAll</span><span class="params">(Iterable&lt;ID&gt; var1)</span></span>; <span class="comment">//根据一组id返回对应的对象，以List的方式返回</span></div><div class="line"></div><div class="line">  &lt;S extends T&gt; <span class="function">List&lt;S&gt; <span class="title">save</span><span class="params">(Iterable&lt;S&gt; var1)</span></span>; <span class="comment">//将一组对象持久化到数据库中，以List的方式返回</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span></span>; <span class="comment">//将修改更新到数据库</span></div><div class="line"></div><div class="line">  &lt;S extends T&gt; <span class="function">S <span class="title">saveAndFlush</span><span class="params">(S var1)</span></span>; <span class="comment">//保存数据并将修改更新到数据库</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">deleteInBatch</span><span class="params">(Iterable&lt;T&gt; var1)</span></span>; <span class="comment">//批量删除数据</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">deleteAllInBatch</span><span class="params">()</span></span>; <span class="comment">//批量删除所有数据</span></div><div class="line"></div><div class="line">  <span class="function">T <span class="title">getOne</span><span class="params">(ID var1)</span></span>; <span class="comment">//根据id查找并返回一个对象</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="自定义查询"><a href="#自定义查询" class="headerlink" title="自定义查询"></a>自定义查询</h3><p>Spring Data 会识别出find…By, read…By和get…By这样的前缀，从后面的命名中解析出查询的条件。方法命名的的第一个By表示查询条件的开始，多个条件可以通过And和Or来连接。</p>
-<h2 id="事务处理"><a href="#事务处理" class="headerlink" title="事务处理"></a>事务处理</h2><p>在SpringData中事务的处理只需要在Service所需要加事务的方法上添加注解<strong>@Transactional</strong>，前提是使用基于组件扫描。如果使用基于注注解的配置包扫描，则需要在配置类上使用<strong>@EnableTransactionManagement</strong>来开启对事务的支持。</p>
-<h2 id="SpringBoot整合Mybatis"><a href="#SpringBoot整合Mybatis" class="headerlink" title="SpringBoot整合Mybatis"></a>SpringBoot整合Mybatis</h2><p>首先需要添加mybatis-Spring的依赖：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.43<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>配置文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#配置数据源</div><div class="line">spring:</div><div class="line">  datasource:</div><div class="line">      driver-class-name: com.mysql.jdbc.Driver</div><div class="line">      url: jdbc:mysql://127.0.0.1:3306/springbootjpa?useUnicode=true&amp;characterEncoding=utf-8</div><div class="line">      username: root</div><div class="line">      password: 1234</div><div class="line">#mybatis的配置</div><div class="line">mybatis:</div><div class="line">  type-aliases-package: com.wqh.springbootmybatis.domain</div></pre></td></tr></table></figure></p>
-<p>Maper<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Repository</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span></span>&#123;</div><div class="line">    <span class="meta">@Select</span>(<span class="string">"select * from user"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;UserEntity&gt; <span class="title">findAll</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="meta">@Insert</span>(<span class="string">"insert into user(name,age) values(#&#123;name&#125;,#&#123;age&#125;)"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveUser</span><span class="params">(UserEntity user)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这里使用的注解形式，如果需要使用xml配置方式，可以在配置文件中加入相应配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">config-location:   //配置文件的地址</div><div class="line">mapper-locations:  //Mapper配置文件的地址</div></pre></td></tr></table></figure></p>
-<p>配置类：这里如果不使用第三方数据源（如：druid）可以不用该类；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="comment">//指明了扫描dao层，并且给dao层注入指定的SqlSessionTemplate</span></div><div class="line"><span class="meta">@MapperScan</span>(basePackages = <span class="string">"com.wqh.dao"</span>, sqlSessionTemplateRef = <span class="string">"sqlSessionTemplate"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.driver-class-name&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String driverClass;</div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.url&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String url;</div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.username&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String uasername;</div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.password&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String password;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span>(name = <span class="string">"dataSource"</span>)</div><div class="line">    <span class="meta">@Primary</span><span class="comment">//多数据源时，指定该Bean为主</span></div><div class="line">    <span class="function"><span class="keyword">public</span> DataSource <span class="title">dataSource</span><span class="params">()</span> </span>&#123;</div><div class="line">    	<span class="comment">//使用Druid数据源</span></div><div class="line">        DruidDataSource druidDataSource = <span class="keyword">new</span> DruidDataSource();</div><div class="line">        druidDataSource.setDriverClassName(driverClass);</div><div class="line">        druidDataSource.setUrl(url);</div><div class="line">        druidDataSource.setUsername(uasername);</div><div class="line">        druidDataSource.setPassword(password);</div><div class="line">        <span class="keyword">return</span> druidDataSource;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span>(name = <span class="string">"sqlSessionFactory"</span>)</div><div class="line">    <span class="meta">@Primary</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">(@Qualifier(<span class="string">"dataSource"</span>)</span> DataSource dataSource) <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        SqlSessionFactoryBean sqlSessionFactoryBean = <span class="keyword">new</span> SqlSessionFactoryBean();</div><div class="line">        sqlSessionFactoryBean.setDataSource(dataSource);</div><div class="line">        <span class="keyword">return</span> sqlSessionFactoryBean.getObject();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span>(name = <span class="string">"dataSourceTransactionManager"</span>)</div><div class="line">    <span class="meta">@Primary</span></div><div class="line">    <span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">dataSourceTransactionManager</span><span class="params">(@Qualifier(<span class="string">"dataSource"</span>)</span> DataSource dataSource) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(dataSource);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span>(name = <span class="string">"sqlSessionTemplate"</span>)</div><div class="line">    <span class="meta">@Primary</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SqlSessionTemplate <span class="title">sqlSessionTemplate</span><span class="params">(@Qualifier(<span class="string">"sqlSessionFactory"</span>)</span> SqlSessionFactory sqlSessionFactory) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> SqlSessionTemplate(sqlSessionFactory);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>测试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</div><div class="line"><span class="meta">@SpringBootTest</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> UserService userService;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveUser</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        UserEntity u = <span class="keyword">new</span> UserEntity();</div><div class="line">        u.setName(<span class="string">"wqh"</span>);</div><div class="line">        u.setAge(<span class="string">"23"</span>);</div><div class="line">        userService.saveUser(u);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>参考：</p>
-<ul>
-<li><a href="http://www.jianshu.com/p/ff4839931c54" target="_blank" rel="external">http://www.jianshu.com/p/ff4839931c54</a></li>
-<li><a href="http://www.ityouknow.com/springboot" target="_blank" rel="external">springboot(六)：如何优雅的使用mybatis</a></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -232,162 +209,37 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Data-Jpa</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hibernate</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Spring/" class="article-tag-list-link color2">Spring</a>
+        			<a href="/categories/SpringBoot/" class="article-tag-list-link color1">SpringBoot</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2017/10/05/SpringBoot持久化层/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/11/22/websocket/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          SpringMVC使用websocket做消息推送
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/10/05/SpringBoot入门/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">SpringBoot入门</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Spring-Data-Jpa操作数据库"><span class="toc-number">1.</span> <span class="toc-text">使用Spring Data Jpa操作数据库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CRUD操作"><span class="toc-number">1.1.</span> <span class="toc-text">CRUD操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分析"><span class="toc-number">1.2.</span> <span class="toc-text">分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Repository"><span class="toc-number">1.2.1.</span> <span class="toc-text">Repository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CrudRepository"><span class="toc-number">1.2.2.</span> <span class="toc-text">CrudRepository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PagingAndSortingRepository"><span class="toc-number">1.2.3.</span> <span class="toc-text">PagingAndSortingRepository</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JpaRepository"><span class="toc-number">1.2.4.</span> <span class="toc-text">JpaRepository</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义查询"><span class="toc-number">1.3.</span> <span class="toc-text">自定义查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务处理"><span class="toc-number">2.</span> <span class="toc-text">事务处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBoot整合Mybatis"><span class="toc-number">3.</span> <span class="toc-text">SpringBoot整合Mybatis</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
+    </div></section>
   
 
-  
+    
 
-  
-  <div id="SOHUCS" sid="SpringBoot持久化层操作" style="padding: 0px 30px 0px 46px;"></div>
-<script type="text/javascript">
-(function(){
-var appid = "cytbAtNIL";
-var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
-var width = window.innerWidth || document.documentElement.clientWidth;
-if (width < 960) {
-window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
-  
-
-  
 
 
           </div>
@@ -420,8 +272,8 @@ window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="tex
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
