@@ -6,18 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>Category: websocket | wanqh的个人博客</title>
+  <title>关于SpringBoot上传图片的几种方式 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="努力思考中...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wanqh的个人博客">
-<meta property="og:url" content="http://www.wanqhblog.top/categories/websocket/index.html">
+  <meta name="description" content="网站上传图片、文件等，最常见的就是直接上传到服务器的webapp目录下，或者直接上传服务的一个指定的文件夹下面。这种方式对于简单的单机应用确实是很方便、简单，出现的问题也会比较少。但是对于分布式项目，直接上传到项目路径的方式显然是不可靠的，而且随着业务量的增加，文件也会增加，对服务器的压力自然就增加了。这里简单的介绍自己所了解的几种方式保存文件。  直接上传到指定的服务器路径； 上传到第三方内容存">
+<meta name="keywords" content="图片上传,FastDFS,七牛云">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于SpringBoot上传图片的几种方式">
+<meta property="og:url" content="http://www.wanqhblog.top/2017/12/28/关于SpringBoot上传图片的几种方式/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="努力思考中...">
+<meta property="og:description" content="网站上传图片、文件等，最常见的就是直接上传到服务器的webapp目录下，或者直接上传服务的一个指定的文件夹下面。这种方式对于简单的单机应用确实是很方便、简单，出现的问题也会比较少。但是对于分布式项目，直接上传到项目路径的方式显然是不可靠的，而且随着业务量的增加，文件也会增加，对服务器的压力自然就增加了。这里简单的介绍自己所了解的几种方式保存文件。  直接上传到指定的服务器路径； 上传到第三方内容存">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/13570974.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/33998744.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/48469105.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/31217645.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/45678677.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/69622466.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/66830677.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/76790561.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/19209895.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/71671941.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/23800686.jpg">
+<meta property="og:updated_time" content="2017-12-28T08:37:36.608Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wanqh的个人博客">
-<meta name="twitter:description" content="努力思考中...">
+<meta name="twitter:title" content="关于SpringBoot上传图片的几种方式">
+<meta name="twitter:description" content="网站上传图片、文件等，最常见的就是直接上传到服务器的webapp目录下，或者直接上传服务的一个指定的文件夹下面。这种方式对于简单的单机应用确实是很方便、简单，出现的问题也会比较少。但是对于分布式项目，直接上传到项目路径的方式显然是不可靠的，而且随着业务量的增加，文件也会增加，对服务器的压力自然就增加了。这里简单的介绍自己所了解的几种方式保存文件。  直接上传到指定的服务器路径； 上传到第三方内容存">
+<meta name="twitter:image" content="http://oy09glbzm.bkt.clouddn.com/17-12-28/13570974.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -170,75 +184,214 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-关于SpringBoot上传图片的几种方式" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/22/websocket/" class="archive-article-date">
-  	<time datetime="2017-11-22T12:13:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/22/websocket/">SpringMVC使用websocket做消息推送</a>
+    <h1 class="article-title" itemprop="name">
+      关于SpringBoot上传图片的几种方式
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/12/28/关于SpringBoot上传图片的几种方式/" class="archive-article-date">
+  	<time datetime="2017-12-28T12:30:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>网站上传图片、文件等，最常见的就是直接上传到服务器的webapp目录下，或者直接上传服务的一个指定的文件夹下面。这种方式对于简单的单机应用确实是很方便、简单，出现的问题也会比较少。但是对于分布式项目，直接上传到项目路径的方式显然是不可靠的，而且随着业务量的增加，文件也会增加，对服务器的压力自然就增加了。这里简单的介绍自己所了解的几种方式保存文件。</p>
+<ol>
+<li>直接上传到指定的服务器路径；</li>
+<li>上传到第三方内容存储器，这里介绍将图片保存到七牛云</li>
+<li>自己搭建文件存储服务器，如：FastDFS<h2 id="最简单的上传"><a href="#最简单的上传" class="headerlink" title="最简单的上传"></a>最简单的上传</h2>首先说明，该项目结构是SpringBoot+mybatis。因为项目使用jar形式打包，所以这里将图片保存到一个指定的目录下。<a id="more"></a><br>添加WebAppConfig配置类<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebAppConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 在配置文件中配置的文件保存路径</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;img.location&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String location;</div><div class="line"></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> MultipartConfigElement <span class="title">multipartConfigElement</span><span class="params">()</span></span>&#123;</div><div class="line">        MultipartConfigFactory factory = <span class="keyword">new</span> MultipartConfigFactory();</div><div class="line">        <span class="comment">//文件最大KB,MB</span></div><div class="line">        factory.setMaxFileSize(<span class="string">"2MB"</span>);</div><div class="line">        <span class="comment">//设置总上传数据总大小</span></div><div class="line">        factory.setMaxRequestSize(<span class="string">"10MB"</span>);</div><div class="line">        <span class="keyword">return</span> factory.createMultipartConfig();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>文件上传的方法,这个方法有些参数可能需要做简单的修改，大致就是文件先做文件保存路径的处理，然后保存文件到该路径，最后返回文件上传信息<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@PutMapping</span>(<span class="string">"/article/img/upload"</span>)</div><div class="line">   <span class="function"><span class="keyword">public</span> MarkDVo <span class="title">uploadImg</span><span class="params">(@RequestParam(<span class="string">"editormd-image-file"</span>)</span> MultipartFile multipartFile)  </span>&#123;</div><div class="line">       <span class="keyword">if</span> (multipartFile.isEmpty() || StringUtils.isBlank(multipartFile.getOriginalFilename())) &#123;</div><div class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> BusinessException(ResultEnum.IMG_NOT_EMPTY);</div><div class="line">       &#125;</div><div class="line">       String contentType = multipartFile.getContentType();</div><div class="line">       <span class="keyword">if</span> (!contentType.contains(<span class="string">""</span>)) &#123;</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> BusinessException(ResultEnum.IMG_FORMAT_ERROR);</div><div class="line">       &#125;</div><div class="line">       String root_fileName = multipartFile.getOriginalFilename();</div><div class="line">       logger.info(<span class="string">"上传图片:name=&#123;&#125;,type=&#123;&#125;"</span>, root_fileName, contentType);</div><div class="line">       <span class="comment">//处理图片</span></div><div class="line">       User currentUser = userService.getCurrentUser();</div><div class="line">       <span class="comment">//获取路径</span></div><div class="line">       String return_path = ImageUtil.getFilePath(currentUser);</div><div class="line">       String filePath = location + return_path;</div><div class="line">       logger.info(<span class="string">"图片保存路径=&#123;&#125;"</span>, filePath);</div><div class="line">       String file_name = <span class="keyword">null</span>;</div><div class="line">       <span class="keyword">try</span> &#123;</div><div class="line">           file_name = ImageUtil.saveImg(multipartFile, filePath);</div><div class="line">           MarkDVo markDVo = <span class="keyword">new</span> MarkDVo();</div><div class="line">           markDVo.setSuccess(<span class="number">0</span>);</div><div class="line">           <span class="keyword">if</span>(StringUtils.isNotBlank(file_name))&#123;</div><div class="line">               markDVo.setSuccess(<span class="number">1</span>);</div><div class="line">               markDVo.setMessage(<span class="string">"上传成功"</span>);</div><div class="line">               markDVo.setUrl(return_path+File.separator+file_name);</div><div class="line">               markDVo.setCallback(callback);</div><div class="line">           &#125;</div><div class="line">           logger.info(<span class="string">"返回值：&#123;&#125;"</span>,markDVo);</div><div class="line">           <span class="keyword">return</span> markDVo;</div><div class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> BusinessException(ResultEnum.SAVE_IMG_ERROE);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>文件保存类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">   * 保存文件，直接以multipartFile形式</span></div><div class="line"><span class="comment">   * <span class="doctag">@param</span> multipartFile</span></div><div class="line"><span class="comment">   * <span class="doctag">@param</span> path 文件保存绝对路径</span></div><div class="line"><span class="comment">   * <span class="doctag">@return</span> 返回文件名</span></div><div class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></div><div class="line"><span class="comment">   */</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">saveImg</span><span class="params">(MultipartFile multipartFile,String path)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">      File file = <span class="keyword">new</span> File(path);</div><div class="line">      <span class="keyword">if</span> (!file.exists()) &#123;</div><div class="line">          file.mkdirs();</div><div class="line">      &#125;</div><div class="line">      FileInputStream fileInputStream = (FileInputStream) multipartFile.getInputStream();</div><div class="line">      String fileName = Constants.getUUID() + <span class="string">".png"</span>;</div><div class="line">      BufferedOutputStream bos = <span class="keyword">new</span> BufferedOutputStream(<span class="keyword">new</span> FileOutputStream(path + File.separator + fileName));</div><div class="line">      <span class="keyword">byte</span>[] bs = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">      <span class="keyword">int</span> len;</div><div class="line">      <span class="keyword">while</span> ((len = fileInputStream.read(bs)) != -<span class="number">1</span>) &#123;</div><div class="line">          bos.write(bs, <span class="number">0</span>, len);</div><div class="line">      &#125;</div><div class="line">      bos.flush();</div><div class="line">      bos.close();</div><div class="line">      <span class="keyword">return</span> fileName;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>配置文件保存路径<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/13570974.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>测试：直接使用postman上传<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/33998744.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/48469105.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>下面需要访问预览该上传的图片<br>在配置文件中添加对静态资源的配置。SpringBoot对静态的的处理，<a href="http://blog.csdn.net/zsl129/article/details/52906762" target="_blank" rel="external">Springboot 之 静态资源路径配置</a><br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/31217645.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>然后在浏览器链接栏输入：此处应该忽略图片<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/45678677.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h2 id="上传到七牛云"><a href="#上传到七牛云" class="headerlink" title="上传到七牛云"></a>上传到七牛云</h2><p>这里首先要在七牛云中注册一个账号，并开通对象存储空间，免费用户有10G的存储空间。教程：<a href="http://jiantuku.com/help/faq.html?src=settings_head" target="_blank" rel="external">http://jiantuku.com/help/faq.html?src=settings_head</a></p>
+<p>然后在自己的项目中搭建环境：使用maven导包<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.qiniu&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;qiniu-java-sdk&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;[7.2.0, 7.2.99]&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<p>然后再刚才找到刚才创建密钥，复制出来保存保存在项目资源文件中<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/69622466.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>这里的bucket就是上面的存储空间名称，然后path是域名。<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/66830677.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>上传工具类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QiniuUtil</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(QiniuUtil.class);</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;qiniu.accessKey&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String accessKey;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;qiniu.secretKey&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String secretKey;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;qiniu.bucket&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String bucket;</div><div class="line"></div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;qiniu.path&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String path;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 将图片上传到七牛云</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> file</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> key 保存在空间中的名字，如果为空会使用文件的hash值为文件名</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span>  String <span class="title">uploadImg</span><span class="params">(FileInputStream file, String key)</span> </span>&#123;</div><div class="line">        <span class="comment">//构造一个带指定Zone对象的配置类</span></div><div class="line">        Configuration cfg = <span class="keyword">new</span> Configuration(Zone.zone1());</div><div class="line"><span class="comment">//...其他参数参考类注释</span></div><div class="line">        UploadManager uploadManager = <span class="keyword">new</span> UploadManager(cfg);</div><div class="line"><span class="comment">//...生成上传凭证，然后准备上传</span></div><div class="line"><span class="comment">//        String bucket = "oy09glbzm.bkt.clouddn.com";</span></div><div class="line">        <span class="comment">//默认不指定key的情况下，以文件内容的hash值作为文件名</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Auth auth = Auth.create(accessKey, secretKey);</div><div class="line">            String upToken = auth.uploadToken(bucket);</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                Response response = uploadManager.put(file, key, upToken, <span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line">                <span class="comment">//解析上传成功的结果</span></div><div class="line">                DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);</div><div class="line"><span class="comment">//                DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);</span></div><div class="line"><span class="comment">//                System.out.println(putRet.key);</span></div><div class="line"><span class="comment">//                System.out.println(putRet.hash);</span></div><div class="line">                String return_path = path+<span class="string">"/"</span>+putRet.key;</div><div class="line">                logger.info(<span class="string">"保存地址=&#123;&#125;"</span>,return_path);</div><div class="line">                <span class="keyword">return</span> return_path;</div><div class="line">            &#125; <span class="keyword">catch</span> (QiniuException ex) &#123;</div><div class="line">                Response r = ex.response;</div><div class="line">                System.err.println(r.toString());</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    System.err.println(r.bodyString());</div><div class="line">                &#125; <span class="keyword">catch</span> (QiniuException ex2) &#123;</div><div class="line">                    <span class="comment">//ignore</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上传接口方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">   * 上传文件到七牛云存储</span></div><div class="line"><span class="comment">   * <span class="doctag">@param</span> multipartFile</span></div><div class="line"><span class="comment">   * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></div><div class="line"><span class="comment">   */</span></div><div class="line">  <span class="meta">@PutMapping</span>(<span class="string">"/article/img/qiniu"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">uploadImgQiniu</span><span class="params">(@RequestParam(<span class="string">"editormd-image-file"</span>)</span> MultipartFile multipartFile) <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">      FileInputStream inputStream = (FileInputStream) multipartFile.getInputStream();</div><div class="line">      User currentUser = userService.getCurrentUser();</div><div class="line">      String path = qiniuUtil.uploadImg(inputStream, currentUser.getUsername()+<span class="string">"_"</span>+Constants.getUUID());</div><div class="line">      <span class="keyword">return</span> path;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>测试<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/76790561.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/19209895.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h2 id="上传文件到FastDFS"><a href="#上传文件到FastDFS" class="headerlink" title="上传文件到FastDFS"></a>上传文件到FastDFS</h2><p>首先需要搭建FastDFS服务器，这里就不介绍了。传送门：<a href="http://www.wanqhblog.top/2017/12/27/FastDFS%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%90%AD%E5%BB%BA/">Linux下FastDFS系统的搭建</a><br>依赖<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!--FastDFS存储图片 start--&gt;</div><div class="line"> &lt;dependency&gt;</div><div class="line">     &lt;groupId&gt;com.github.tobato&lt;/groupId&gt;</div><div class="line">     &lt;artifactId&gt;fastdfs-client&lt;/artifactId&gt;</div><div class="line">     &lt;version&gt;1.25.4-RELEASE&lt;/version&gt;</div><div class="line"> &lt;/dependency&gt;</div><div class="line"> &lt;!--FastDFS存储图片 end--&gt;</div></pre></td></tr></table></figure></p>
+<p>添加配置信息</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/71671941.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/I0Y2MEIyOA==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p>FastDFS配置类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ComponentScan</span>(value = <span class="string">"com.github.tobato.fastdfs.service"</span>)</div><div class="line"><span class="meta">@Import</span>(FdfsClientConfig.class)</div><div class="line"><span class="meta">@EnableMBeanExport</span>(registration = RegistrationPolicy.IGNORE_EXISTING)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FastDfsConfig</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里对于FastDFS文件的操作只处理上传，上传文件类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">  <span class="meta">@Autowired</span></div><div class="line">  <span class="keyword">private</span> FastFileStorageClient storageClient;</div><div class="line"></div><div class="line">  <span class="meta">@Autowired</span></div><div class="line">  <span class="keyword">private</span> FdfsWebServer fdfsWebServer;</div><div class="line"></div><div class="line"><span class="meta">@PutMapping</span>(<span class="string">"/article/img/fdfs"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">uploadImgfdfs</span><span class="params">(@RequestParam(value = <span class="string">"editormd-image-file"</span>)</span> MultipartFile multipartFile) <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">      StorePath storePath= storageClient.uploadFile(multipartFile.getInputStream(), multipartFile.getSize(), <span class="string">"png"</span>, <span class="keyword">null</span>);</div><div class="line">      String path = storePath.getFullPath();</div><div class="line">      logger.info(<span class="string">"保存路径=&#123;&#125;"</span>,path);</div><div class="line">      <span class="keyword">return</span> path;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<p>测试：<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-28/23800686.jpg" alt=""></p>
+<hr>
+<p>参考：</p>
+<ul>
+<li><a href="http://blog.csdn.net/zsl129/article/details/52906762" target="_blank" rel="external">Springboot 之 静态资源路径配置</a></li>
+<li><a href="https://www.jianshu.com/p/fcc7dc5f8be0" target="_blank" rel="external">Springboot 之 多文件上传-知识林</a></li>
+<li><a href="http://www.bijishequ.com/detail/527312" target="_blank" rel="external">springboot和fastdfs实现文件ajax上传</a></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">springmvc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">图片上传</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">websocket</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">FastDFS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">七牛云</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/websocket/" class="article-tag-list-link color5">websocket</a>
+        			<a href="/categories/SpringBoot/" class="article-tag-list-link color1">SpringBoot</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2017/12/28/关于SpringBoot上传图片的几种方式/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/12/27/FastDFS系统的搭建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux下FastDFS系统的搭建</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#最简单的上传"><span class="toc-number">1.</span> <span class="toc-text">最简单的上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传到七牛云"><span class="toc-number">2.</span> <span class="toc-text">上传到七牛云</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上传文件到FastDFS"><span class="toc-number">3.</span> <span class="toc-text">上传文件到FastDFS</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
   
 
-    
+  
+
+  
+  <div id="SOHUCS" sid="关于SpringBoot上传图片的几种方式" style="padding: 0px 30px 0px 46px;"></div>
+<script type="text/javascript">
+(function(){
+var appid = "cytbAtNIL";
+var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+  
+
+  
 
 
           </div>
@@ -271,10 +424,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
