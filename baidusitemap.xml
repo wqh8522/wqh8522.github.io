@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2017/12/29/%E4%BD%BF%E7%94%A8nginx%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AEFastDFS%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6/</loc>
+    <lastmod>2017-12-29T06:35:36.375Z</lastmod>
+    <data>
+        <display>
+        <title>使用nginx代理访问FastDFS上传的文件</title>
+        <pubTime>2017-12-29T01:12:24.000Z</pubTime>
+        
+        <tag>Nginx</tag>
+         
+        <tag>FastDFS</tag>
+         
+         
+           
+             
+              <breadCrumb title="FastDFS" url="http://www.wanqhblog.top/categories/FastDFS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2017/11/25/CentOS%E4%B8%8BNginx%E7%9A%84%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85/</loc>
     <lastmod>2017-12-29T02:49:51.302Z</lastmod>
     <data>
@@ -26,28 +48,6 @@
 
     
   <url>
-    <loc>http://www.wanqhblog.top/2017/12/29/%E4%BD%BF%E7%94%A8nginx%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AEFastDFS%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6/</loc>
-    <lastmod>2017-12-29T01:16:13.895Z</lastmod>
-    <data>
-        <display>
-        <title>使用nginx代理访问FastDFS上传的文件</title>
-        <pubTime>2017-12-29T01:12:24.000Z</pubTime>
-        
-        <tag>Nginx</tag>
-         
-        <tag>FastDFS</tag>
-         
-         
-           
-             
-              <breadCrumb title="FastDFS" url="http://www.wanqhblog.top/categories/FastDFS/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.wanqhblog.top/2017/12/28/%E5%85%B3%E4%BA%8ESpringBoot%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/</loc>
     <lastmod>2017-12-28T08:37:36.608Z</lastmod>
     <data>
@@ -55,9 +55,9 @@
         <title>关于SpringBoot上传图片的几种方式</title>
         <pubTime>2017-12-28T12:30:59.000Z</pubTime>
         
-        <tag>FastDFS</tag>
-         
         <tag>图片上传</tag>
+         
+        <tag>FastDFS</tag>
          
         <tag>七牛云</tag>
          
