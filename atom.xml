@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2017-12-28T08:37:36.608Z</updated>
+  <updated>2017-12-29T01:16:13.895Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用nginx代理访问FastDFS上传的文件</title>
+    <link href="http://www.wanqhblog.top/2017/12/29/%E4%BD%BF%E7%94%A8nginx%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AEFastDFS%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6/"/>
+    <id>http://www.wanqhblog.top/2017/12/29/使用nginx代理访问FastDFS上传的文件/</id>
+    <published>2017-12-29T01:12:24.000Z</published>
+    <updated>2017-12-29T01:16:13.895Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-27/58813378.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/500/fill/I0VGRUZFRg==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://oy09glbzm.bkt.clouddn.com/17-12-27/58813378.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/f
+    
+    </summary>
+    
+      <category term="FastDFS" scheme="http://www.wanqhblog.top/categories/FastDFS/"/>
+    
+    
+      <category term="Nginx" scheme="http://www.wanqhblog.top/tags/Nginx/"/>
+    
+      <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
+    
+  </entry>
   
   <entry>
     <title>关于SpringBoot上传图片的几种方式</title>
@@ -65,9 +90,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
-    
       <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
+    
+      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
     
       <category term="七牛云" scheme="http://www.wanqhblog.top/tags/%E4%B8%83%E7%89%9B%E4%BA%91/"/>
     
@@ -220,6 +245,57 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/tags/SpringBoot/"/>
     
       <category term="Redis" scheme="http://www.wanqhblog.top/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS下Nginx的配置安装</title>
+    <link href="http://www.wanqhblog.top/2017/11/25/CentOS%E4%B8%8BNginx%E7%9A%84%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85/"/>
+    <id>http://www.wanqhblog.top/2017/11/25/CentOS下Nginx的配置安装/</id>
+    <published>2017-11-25T01:15:26.000Z</published>
+    <updated>2017-12-29T02:49:51.302Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote>
+<p>Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。在高连接并发的情况下，Nginx是Apache服务器不错的替代品。<br>NGINX是一个免费的开源高性能的HTTP服务器和反向代理，以及一个IMAP / POP3代理服务器。NGINX以其高性能，稳定性，丰富的功能集，简单的配置和低资源消耗而闻名。<br>NGINX是为解决C10K问题而编写的一些服务器之一。与传统的服务器不同，NGINX不依赖线程来处理请求。相反，它使用了一个更具可扩展性的事件驱动（异步）体系结构。这种体系结构使用很小但更重要的是，在负载下可预测的内存量。即使您不希望同时处理数千个请求，您仍然可以从NGINX的高性能和小内存占用中受益。NGINX在所有方向都可以扩展：从最小的VPS一直到大型的服务器集群。<a id="more"></a></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>nginx使用编译安装，所以需要确定系统已经安装编译工具以及库文件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel</div></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装PCRE"><a href="#安装PCRE" class="headerlink" title="安装PCRE"></a>安装PCRE</h3><p>PCRE的作用是使nginx支持Rewrite功能。<a href="https://sourceforge.net/projects/pcre/files/" target="_blank" rel="external">https://sourceforge.net/projects/pcre/files/</a></p>
+<ol>
+<li><p>下载，保存目录<code>/usr/local/nginx</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# wget https://sourceforge.net/projects/pcre/files/pcre/8.41/pcre-8.41.tar.gz</div></pre></td></tr></table></figure>
+</li>
+<li><p>解压，解压之后进入目录</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# tar -zvxf pcre-8.41.tar.gz </div><div class="line"></div><div class="line">[root@localhost nginx]# cd pcre-8.41/</div></pre></td></tr></table></figure>
+</li>
+<li><p>编译安装</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost pcre2-10.30]# ./configure </div><div class="line">[root@localhost pcre2-10.30]# make</div><div class="line">[root@localhost pcre2-10.30]# make install</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看版本<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/3951804.jpg" alt=""></p>
+<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><p>如果nginx还需支持SSL则还需要安装http_ssl_module模块，这里就不介绍了。<br>下载，<a href="http://nginx.org/download/" target="_blank" rel="external">http://nginx.org/download/</a>选择对应的版本，这里使用1.9.0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# wget http://nginx.org/download/nginx-1.9.0.tar.gz</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下载完成后，同样是要解压编译安装.<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# tar -zvxf nginx-1.9.0.tar.gz </div><div class="line">[root@localhost nginx]# cd nginx-1.9.0/</div><div class="line">[root@localhost nginx-1.9.0]# ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-pcre=/usr/local/nginx/pcre-8.41</div><div class="line">[root@localhost nginx-1.9.0]# make</div><div class="line">[root@localhost nginx-1.9.0]# make install</div></pre></td></tr></table></figure></p>
+<p>查看nginx版本<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/14426767.jpg" alt=""><br>配置文件路径：<code>/usr/local/webserver/nginx/conf/nginx.conf</code>，使用vim编辑配置文件，添加location：</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/30992423.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h3 id="启动测试"><a href="#启动测试" class="headerlink" title="启动测试"></a>启动测试</h3><p>在测试之前先运行一个tomcat服务器，使用8080端口：<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/92166265.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>然后启动nginx服务器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost apache-tomcat-8.0.48]# /usr/local/webserver/nginx/sbin/nginx</div></pre></td></tr></table></figure></p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/85044529.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>上面我们配置了转发<code>/test</code>:</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/95715631.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。在高连接并发的情况下，Nginx是Apache服务器不错的替代品。&lt;br&gt;NGINX是一个免费的开源高性能的HTTP服务器和反向代理，以及一个IMAP / POP3代理服务器。NGINX以其高性能，稳定性，丰富的功能集，简单的配置和低资源消耗而闻名。&lt;br&gt;NGINX是为解决C10K问题而编写的一些服务器之一。与传统的服务器不同，NGINX不依赖线程来处理请求。相反，它使用了一个更具可扩展性的事件驱动（异步）体系结构。这种体系结构使用很小但更重要的是，在负载下可预测的内存量。即使您不希望同时处理数千个请求，您仍然可以从NGINX的高性能和小内存占用中受益。NGINX在所有方向都可以扩展：从最小的VPS一直到大型的服务器集群。
+    
+    </summary>
+    
+      <category term="Nginx" scheme="http://www.wanqhblog.top/categories/Nginx/"/>
+    
+    
+      <category term="Nginx" scheme="http://www.wanqhblog.top/tags/Nginx/"/>
+    
+      <category term="CentOS" scheme="http://www.wanqhblog.top/tags/CentOS/"/>
     
   </entry>
   
