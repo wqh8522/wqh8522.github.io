@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>Tag: javamail | wanqh的个人博客</title>
+  <title>SpringBoot使用AOP+注解实现简单的权限验证 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="努力思考中...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wanqh的个人博客">
-<meta property="og:url" content="http://www.wanqhblog.top/tags/javamail/index.html">
+  <meta name="description" content="SpringAOP的介绍：传送门 demo介绍主要通过自定义注解，使用SpringAOP的环绕通知拦截请求，判断该方法是否有自定义注解，然后判断该用户是否有该权限。这里做的比较简单，只有两个权限：一个普通用户、一个管理员。 项目搭建这里是基于SpringBoot的，对于SpringBoot项目的搭建就不说了。在项目中添加AOP的依赖：12345&amp;lt;!--AOP包--&amp;gt;&amp;lt;depend">
+<meta name="keywords" content="AOP,注解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot使用AOP+注解实现简单的权限验证">
+<meta property="og:url" content="http://www.wanqhblog.top/2018/01/02/SpringBoot使用AOP-注解实现简单的权限验证/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="努力思考中...">
+<meta property="og:description" content="SpringAOP的介绍：传送门 demo介绍主要通过自定义注解，使用SpringAOP的环绕通知拦截请求，判断该方法是否有自定义注解，然后判断该用户是否有该权限。这里做的比较简单，只有两个权限：一个普通用户、一个管理员。 项目搭建这里是基于SpringBoot的，对于SpringBoot项目的搭建就不说了。在项目中添加AOP的依赖：12345&amp;lt;!--AOP包--&amp;gt;&amp;lt;depend">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-02T03:23:43.186Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wanqh的个人博客">
-<meta name="twitter:description" content="努力思考中...">
+<meta name="twitter:title" content="SpringBoot使用AOP+注解实现简单的权限验证">
+<meta name="twitter:description" content="SpringAOP的介绍：传送门 demo介绍主要通过自定义注解，使用SpringAOP的环绕通知拦截请求，判断该方法是否有自定义注解，然后判断该用户是否有该权限。这里做的比较简单，只有两个权限：一个普通用户、一个管理员。 项目搭建这里是基于SpringBoot的，对于SpringBoot项目的搭建就不说了。在项目中添加AOP的依赖：12345&amp;lt;!--AOP包--&amp;gt;&amp;lt;depend">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -170,60 +172,189 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-SpringBoot使用AOP-注解实现简单的权限验证" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/20/javamail/" class="archive-article-date">
-  	<time datetime="2017-08-20T09:36:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/20/javamail/">使用JavaMail发送邮件（带附件）</a>
+    <h1 class="article-title" itemprop="name">
+      SpringBoot使用AOP+注解实现简单的权限验证
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/02/SpringBoot使用AOP-注解实现简单的权限验证/" class="archive-article-date">
+  	<time datetime="2018-01-02T02:39:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>SpringAOP的介绍：<a href="http://www.wanqhblog.top/2017/08/28/SpringAOP/">传送门</a></p>
+<h2 id="demo介绍"><a href="#demo介绍" class="headerlink" title="demo介绍"></a>demo介绍</h2><p>主要通过自定义注解，使用SpringAOP的环绕通知拦截请求，判断该方法是否有自定义注解，然后判断该用户是否有该权限。这里做的比较简单，只有两个权限：一个普通用户、一个管理员。</p>
+<h2 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h2><p>这里是基于SpringBoot的，对于SpringBoot项目的搭建就不说了。在项目中添加AOP的依赖：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;!--AOP包--&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="自定义注解及解析"><a href="#自定义注解及解析" class="headerlink" title="自定义注解及解析"></a>自定义注解及解析</h2><p>在方法上添加该注解，说明该方法需要管理员权限才能访问。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.METHOD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Permission &#123;</div><div class="line"></div><div class="line">      <span class="function">String <span class="title">authorities</span><span class="params">()</span> <span class="keyword">default</span> "ADMIN"</span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>解析类：通过AOP的环绕通知获取方法上的注解，判断是否有Permission注解，返回注解的值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationParse</span> </span>&#123;</div><div class="line">    <span class="comment">/***</span></div><div class="line"><span class="comment">     * 解析权限注解</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> 返回注解的authorities值</span></div><div class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">privilegeParse</span><span class="params">(Method method)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//获取该方法</span></div><div class="line">        <span class="keyword">if</span>(method.isAnnotationPresent(Permission.class))&#123;</div><div class="line">            Permission annotation = method.getAnnotation(Permission.class);</div><div class="line">            <span class="keyword">return</span> annotation.authorities();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="SpringAOP环绕通知"><a href="#SpringAOP环绕通知" class="headerlink" title="SpringAOP环绕通知"></a>SpringAOP环绕通知</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">@Aspect</div><div class="line">@Component</div><div class="line">public class ControllerAspect &#123;</div><div class="line"></div><div class="line">    private final static Logger logger = LoggerFactory.getLogger(ControllerAspect.class);</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private UserService userService;</div><div class="line">    /**</div><div class="line">     * 定义切点</div><div class="line">     */</div><div class="line">    @Pointcut(&quot;execution(public * com.wqh.blog.controller.*.*(..))&quot;)</div><div class="line">    public void privilege()&#123;&#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 权限环绕通知</div><div class="line">     * @param joinPoint</div><div class="line">     * @throws Throwable</div><div class="line">     */</div><div class="line">    @ResponseBody</div><div class="line">    @Around(&quot;privilege()&quot;)</div><div class="line">    public Object isAccessMethod(ProceedingJoinPoint joinPoint) throws Throwable &#123;</div><div class="line">        //获取访问目标方法</div><div class="line">        MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();</div><div class="line">        Method targetMethod = methodSignature.getMethod();</div><div class="line">        //得到方法的访问权限</div><div class="line">        final String methodAccess = AnnotationParse.privilegeParse(targetMethod);</div><div class="line"></div><div class="line">        //如果该方法上没有权限注解，直接调用目标方法</div><div class="line">        if(StringUtils.isBlank(methodAccess))&#123;</div><div class="line">            return joinPoint.proceed();</div><div class="line">        &#125;else &#123;</div><div class="line">            //获取当前用户的权限,这里是自定义的发那个发</div><div class="line">            User currentUser = userService.getCurrentUser();</div><div class="line">            logger.info(&quot;访问用户，&#123;&#125;&quot;,currentUser.toString());</div><div class="line">            if(currentUser == null)&#123;</div><div class="line">                throw new LoginException(ResultEnum.LOGIN_ERROR);</div><div class="line">            &#125;</div><div class="line">            if(methodAccess.equals(currentUser.getRole().toString()))&#123;</div><div class="line">               return joinPoint.proceed();</div><div class="line">            &#125;else &#123;</div><div class="line">                throw new BusinessException(ResultEnum.ROLE_ERROR);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>只需要在需要验证的方法上添加自定义注解:<code>@Permission</code>既可</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">javamail</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">AOP</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">注解</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringBoot/" class="article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2018/01/02/SpringBoot使用AOP-注解实现简单的权限验证/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/12/29/使用nginx代理访问FastDFS上传的文件/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用nginx代理访问FastDFS上传的文件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#demo介绍"><span class="toc-number">1.</span> <span class="toc-text">demo介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目搭建"><span class="toc-number">2.</span> <span class="toc-text">项目搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义注解及解析"><span class="toc-number">3.</span> <span class="toc-text">自定义注解及解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringAOP环绕通知"><span class="toc-number">4.</span> <span class="toc-text">SpringAOP环绕通知</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">5.</span> <span class="toc-text">使用</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
   
 
-    
+  
+
+  
+  <div id="SOHUCS" sid="SpringBoot使用AOP+注解实现简单的权限验证" style="padding: 0px 30px 0px 46px;"></div>
+<script type="text/javascript">
+(function(){
+var appid = "cytbAtNIL";
+var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+  
+
+  
 
 
           </div>
@@ -256,9 +387,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

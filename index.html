@@ -172,6 +172,101 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringBoot使用AOP-注解实现简单的权限验证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/02/SpringBoot使用AOP-注解实现简单的权限验证/">SpringBoot使用AOP+注解实现简单的权限验证</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/02/SpringBoot使用AOP-注解实现简单的权限验证/" class="archive-article-date">
+  	<time datetime="2018-01-02T02:39:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>SpringAOP的介绍：<a href="http://www.wanqhblog.top/2017/08/28/SpringAOP/">传送门</a></p>
+<h2 id="demo介绍"><a href="#demo介绍" class="headerlink" title="demo介绍"></a>demo介绍</h2><p>主要通过自定义注解，使用SpringAOP的环绕通知拦截请求，判断该方法是否有自定义注解，然后判断该用户是否有该权限。这里做的比较简单，只有两个权限：一个普通用户、一个管理员。</p>
+<h2 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h2><p>这里是基于SpringBoot的，对于SpringBoot项目的搭建就不说了。在项目中添加AOP的依赖：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;!--AOP包--&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="自定义注解及解析"><a href="#自定义注解及解析" class="headerlink" title="自定义注解及解析"></a>自定义注解及解析</h2><p>在方法上添加该注解，说明该方法需要管理员权限才能访问。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.METHOD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Documented</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Permission &#123;</div><div class="line"></div><div class="line">      <span class="function">String <span class="title">authorities</span><span class="params">()</span> <span class="keyword">default</span> "ADMIN"</span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>解析类：通过AOP的环绕通知获取方法上的注解，判断是否有Permission注解，返回注解的值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnotationParse</span> </span>&#123;</div><div class="line">    <span class="comment">/***</span></div><div class="line"><span class="comment">     * 解析权限注解</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span> 返回注解的authorities值</span></div><div class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">privilegeParse</span><span class="params">(Method method)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//获取该方法</span></div><div class="line">        <span class="keyword">if</span>(method.isAnnotationPresent(Permission.class))&#123;</div><div class="line">            Permission annotation = method.getAnnotation(Permission.class);</div><div class="line">            <span class="keyword">return</span> annotation.authorities();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="SpringAOP环绕通知"><a href="#SpringAOP环绕通知" class="headerlink" title="SpringAOP环绕通知"></a>SpringAOP环绕通知</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">@Aspect</div><div class="line">@Component</div><div class="line">public class ControllerAspect &#123;</div><div class="line"></div><div class="line">    private final static Logger logger = LoggerFactory.getLogger(ControllerAspect.class);</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    private UserService userService;</div><div class="line">    /**</div><div class="line">     * 定义切点</div><div class="line">     */</div><div class="line">    @Pointcut(&quot;execution(public * com.wqh.blog.controller.*.*(..))&quot;)</div><div class="line">    public void privilege()&#123;&#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 权限环绕通知</div><div class="line">     * @param joinPoint</div><div class="line">     * @throws Throwable</div><div class="line">     */</div><div class="line">    @ResponseBody</div><div class="line">    @Around(&quot;privilege()&quot;)</div><div class="line">    public Object isAccessMethod(ProceedingJoinPoint joinPoint) throws Throwable &#123;</div><div class="line">        //获取访问目标方法</div><div class="line">        MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();</div><div class="line">        Method targetMethod = methodSignature.getMethod();</div><div class="line">        //得到方法的访问权限</div><div class="line">        final String methodAccess = AnnotationParse.privilegeParse(targetMethod);</div><div class="line"></div><div class="line">        //如果该方法上没有权限注解，直接调用目标方法</div><div class="line">        if(StringUtils.isBlank(methodAccess))&#123;</div><div class="line">            return joinPoint.proceed();</div><div class="line">        &#125;else &#123;</div><div class="line">            //获取当前用户的权限,这里是自定义的发那个发</div><div class="line">            User currentUser = userService.getCurrentUser();</div><div class="line">            logger.info(&quot;访问用户，&#123;&#125;&quot;,currentUser.toString());</div><div class="line">            if(currentUser == null)&#123;</div><div class="line">                throw new LoginException(ResultEnum.LOGIN_ERROR);</div><div class="line">            &#125;</div><div class="line">            if(methodAccess.equals(currentUser.getRole().toString()))&#123;</div><div class="line">               return joinPoint.proceed();</div><div class="line">            &#125;else &#123;</div><div class="line">                throw new BusinessException(ResultEnum.ROLE_ERROR);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>只需要在需要验证的方法上添加自定义注解:<code>@Permission</code>既可</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">AOP</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">注解</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringBoot/" class="article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/02/SpringBoot使用AOP-注解实现简单的权限验证/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-使用nginx代理访问FastDFS上传的文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -542,98 +637,6 @@
 
 
   
-    <article id="post-CentOS下Nginx的配置安装" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/25/CentOS下Nginx的配置安装/">CentOS下Nginx的配置安装</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/25/CentOS下Nginx的配置安装/" class="archive-article-date">
-  	<time datetime="2017-11-25T01:15:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。在高连接并发的情况下，Nginx是Apache服务器不错的替代品。<br>NGINX是一个免费的开源高性能的HTTP服务器和反向代理，以及一个IMAP / POP3代理服务器。NGINX以其高性能，稳定性，丰富的功能集，简单的配置和低资源消耗而闻名。<br>NGINX是为解决C10K问题而编写的一些服务器之一。与传统的服务器不同，NGINX不依赖线程来处理请求。相反，它使用了一个更具可扩展性的事件驱动（异步）体系结构。这种体系结构使用很小但更重要的是，在负载下可预测的内存量。即使您不希望同时处理数千个请求，您仍然可以从NGINX的高性能和小内存占用中受益。NGINX在所有方向都可以扩展：从最小的VPS一直到大型的服务器集群。
-        
-          <a class="article-more-a" href="/2017/11/25/CentOS下Nginx的配置安装/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nginx</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CentOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Nginx/" class="article-tag-list-link color1">Nginx</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/25/CentOS下Nginx的配置安装/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -650,7 +653,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 Wan QingHua
+    		&copy; 2018 Wan QingHua
     	</div>
       <span id="busuanzi_container_site_uv">
           本站访客数<span id="busuanzi_value_site_uv"></span>人次
@@ -753,23 +756,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">AOP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">注解</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -789,6 +788,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
@@ -801,7 +808,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
               </li>
              
               <li class="article-tag-list-item">
