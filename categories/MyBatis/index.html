@@ -6,29 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>分析ClassLoader工作机制 | wanqh的个人博客</title>
+  <title>Category: MyBatis | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="ClassLoader：类加载器，作用：  负责将Class加载到JVM中； 审查每个类应该又谁来加载，是一个父优先的等级加载机制； 将Class字节码重新解析成JVM统一要求的对象格式ClassLoader类结构分析">
-<meta name="keywords" content="classloader,jvm">
-<meta property="og:type" content="article">
-<meta property="og:title" content="分析ClassLoader工作机制">
-<meta property="og:url" content="http://www.wanqhblog.top/2017/08/26/classload/index.html">
+  <meta name="description" content="努力思考中...">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wanqh的个人博客">
+<meta property="og:url" content="http://www.wanqhblog.top/categories/MyBatis/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="ClassLoader：类加载器，作用：  负责将Class加载到JVM中； 审查每个类应该又谁来加载，是一个父优先的等级加载机制； 将Class字节码重新解析成JVM统一要求的对象格式ClassLoader类结构分析">
+<meta property="og:description" content="努力思考中...">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i.imgur.com/R5tC01a.png">
-<meta property="og:image" content="http://i.imgur.com/bFjiI1f.png">
-<meta property="og:image" content="http://i.imgur.com/zX6j3RL.png">
-<meta property="og:image" content="http://i.imgur.com/vKXgX4K.png">
-<meta property="og:image" content="http://i.imgur.com/26dQrro.png">
-<meta property="og:image" content="http://i.imgur.com/k8Ri1H5.png">
-<meta property="og:image" content="http://i.imgur.com/N7lLSTQ.png">
-<meta property="og:image" content="http://i.imgur.com/8Q2U44B.png">
-<meta property="og:updated_time" content="2017-08-26T09:25:30.794Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分析ClassLoader工作机制">
-<meta name="twitter:description" content="ClassLoader：类加载器，作用：  负责将Class加载到JVM中； 审查每个类应该又谁来加载，是一个父优先的等级加载机制； 将Class字节码重新解析成JVM统一要求的对象格式ClassLoader类结构分析">
-<meta name="twitter:image" content="http://i.imgur.com/R5tC01a.png">
+<meta name="twitter:title" content="wanqh的个人博客">
+<meta name="twitter:description" content="努力思考中...">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -181,236 +170,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-classload" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      分析ClassLoader工作机制
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/01/04/MyBatis使用自定义拦截器进行分页/" class="archive-article-date">
+  	<time datetime="2018-01-04T07:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/01/04/MyBatis使用自定义拦截器进行分页/">MyBatis拦截器实现分页</a>
     </h1>
   
 
-        
-        <a href="/2017/08/26/classload/" class="archive-article-date">
-  	<time datetime="2017-08-26T03:54:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>ClassLoader：类加载器，作用：</p>
-<ol>
-<li>负责将Class加载到JVM中；</li>
-<li>审查每个类应该又谁来加载，是一个父优先的等级加载机制；</li>
-<li>将Class字节码重新解析成JVM统一要求的对象格式<h2 id="ClassLoader类结构分析"><a href="#ClassLoader类结构分析" class="headerlink" title="ClassLoader类结构分析"></a>ClassLoader类结构分析</h2><a id="more"></a>
-<img src="http://i.imgur.com/R5tC01a.png" alt=""></li>
-</ol>
-<ul>
-<li><p>defineClass：可以将byte字节流解析成JVM能够识别的Class对象，这样我们也可以通过这个字节码直接创建Class对象形式的实例化对象</p>
-<p>  api中的介绍<br>  <img src="http://i.imgur.com/bFjiI1f.png" alt=""></p>
-</li>
-<li>findClass：使用指定的二进制名称查找类，此方法在ClassLoader的实现类中应该被重写，从而取得要加载类的字节码。该方法通常与defineClass一起使用，使用该方法加载字节码之后，然后调用defineClass方法生成类的Class对象。</li>
-<li>loadClass：使用指定的二进制名称来加载类，如果只想在运行时能够加载自己指定的一个类，则可以使用this.getClass().getClassLoader().loadClass(“classname”)获取这个类的class对象。<br><img src="http://i.imgur.com/zX6j3RL.png" alt=""></li>
-<li>resolveClass：链接指定的类。如果想在类被加载到JVM中时就被链接，则可以使用该方法</li>
-</ul>
-<p>查看源码可以发现ClassLoader是一个抽象类。如果要实现自己的ClassLoader，一般继承URLClassLoader。另外在ClassLoader中还有一些辅助方法：<br><img src="http://i.imgur.com/vKXgX4K.png" alt=""></p>
-<h2 id="ClassLoader的等级加载机制"><a href="#ClassLoader的等级加载机制" class="headerlink" title="ClassLoader的等级加载机制"></a>ClassLoader的等级加载机制</h2><p>整个JVM提供了三层    ClassLoader，可以分为两种类型。</p>
-<ol>
-<li>BootStrap ClassLoader：启动类加载器。该类仅仅是一个类记载工具，既没有更高一级的父加载器，也没有子加载器。该类加载器并不属于JVM的类等级层次，因为BootStrap ClassLoader并没有遵守ClassLoader的加载规则，所以该加载器并没有子类。</li>
-<li>ExtClassLoader：扩展类加载器。该类JVM自身的一部分，如果一个类既不是JVM内部的类，也不用户定义的类，将会由这个类来加载。加载System.getProperty(“java.ext.dirs”)所指定的路径或jar。打印主要加载目录</li>
-</ol>
-<p><img src="http://i.imgur.com/26dQrro.png" alt=""></p>
-<ol>
-<li>AppClassLoader：系统类加载器。它是ExtClassLoader的子类。加载System.getProperty(“java.class.path”)所指定的路径或jar，这个目录就是我们常用到的classpath。除了System.getProperty(“java.ext.dirs”)目录下的类由ExtClassLoader加载，其他类都由AppClassLoader加载。</li>
-</ol>
-<p>类加载器的等级结构图：</p>
-<p><img src="http://i.imgur.com/k8Ri1H5.png" alt=""></p>
-<p>ClassLoader的类层次结构，参考深入分析JavaWeb技术内幕</p>
-<p><img src="http://i.imgur.com/N7lLSTQ.png" alt=""></p>
-<h2 id="JVM加载Class文件"><a href="#JVM加载Class文件" class="headerlink" title="JVM加载Class文件"></a>JVM加载Class文件</h2><h3 id="加载方式"><a href="#加载方式" class="headerlink" title="加载方式"></a>加载方式</h3><p>JVM加载class文件到内存有两种方式：</p>
-<ul>
-<li>显示加载：在代码中通过ClassLoader来加载需要的类。<br>  显示加载类的方式通常有：<ul>
-<li>Class.forName();</li>
-<li>ClassLoader.loadClass();</li>
-<li>ClassLoader.findSystemClass();</li>
-</ul>
-</li>
-<li>隐式加载：JVM自动加载需要的类到内存。<h3 id="如何加载"><a href="#如何加载" class="headerlink" title="如何加载"></a>如何加载</h3>一般有三个阶段：</li>
-</ul>
-<ol>
-<li>将.class文件包含的字节码加载到内存中。</li>
-<li>字节码验证、Class类等数据结构的分析以及相应的内存分配和最后符号表的链接。</li>
-<li>类中静态属性和初始化赋值，以及静态块的执行。</li>
-</ol>
-<p><img src="http://i.imgur.com/8Q2U44B.png" alt=""></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">classloader</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">jvm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">分页</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/java/" class="article-tag-list-link color5">java</a>
+        			<a href="/categories/MyBatis/" class="article-tag-list-link color3">MyBatis</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2017/08/26/classload/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/08/28/SpringAOP/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          SpringAOP的使用
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/08/23/cxf/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">WebService之CXF</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassLoader类结构分析"><span class="toc-number">1.</span> <span class="toc-text">ClassLoader类结构分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ClassLoader的等级加载机制"><span class="toc-number">2.</span> <span class="toc-text">ClassLoader的等级加载机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM加载Class文件"><span class="toc-number">3.</span> <span class="toc-text">JVM加载Class文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加载方式"><span class="toc-number">3.1.</span> <span class="toc-text">加载方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何加载"><span class="toc-number">3.2.</span> <span class="toc-text">如何加载</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
+    </div></section>
   
 
-  
-
-  
-  <div id="SOHUCS" sid="分析ClassLoader工作机制" style="padding: 0px 30px 0px 46px;"></div>
-<script type="text/javascript">
-(function(){
-var appid = "cytbAtNIL";
-var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
-var width = window.innerWidth || document.documentElement.clientWidth;
-if (width < 960) {
-window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
-  
-
-  
+    
 
 
           </div>
@@ -443,10 +267,10 @@ window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="tex
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
-		isCategory: false,
+		isCategory: true,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
