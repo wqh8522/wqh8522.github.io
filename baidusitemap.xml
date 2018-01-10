@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/01/10/SprngCloudEureka/</loc>
+    <lastmod>2018-01-10T07:06:40.715Z</lastmod>
+    <data>
+        <display>
+        <title>SpringCloud学习之Eureka</title>
+        <pubTime>2018-01-10T07:04:55.000Z</pubTime>
+        
+        <tag>Eureka</tag>
+         
+        <tag>SpringCloud</tag>
+         
+         
+           
+             
+              <breadCrumb title="SpringCloud" url="http://www.wanqhblog.top/categories/SpringCloud/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/04/MyBatis%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%88%86%E9%A1%B5/</loc>
     <lastmod>2018-01-05T01:09:14.336Z</lastmod>
     <data>
@@ -33,9 +55,9 @@
         <title>SpringBoot使用JWT实现登录验证</title>
         <pubTime>2018-01-02T08:46:17.000Z</pubTime>
         
-        <tag>SpringBoot</tag>
-         
         <tag>JWT</tag>
+         
+        <tag>SpringBoot</tag>
          
          
            
@@ -121,9 +143,9 @@
         <title>关于SpringBoot上传图片的几种方式</title>
         <pubTime>2017-12-28T12:30:59.000Z</pubTime>
         
-        <tag>图片上传</tag>
-         
         <tag>FastDFS</tag>
+         
+        <tag>图片上传</tag>
          
         <tag>七牛云</tag>
          
