@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-11T08:53:28.829Z</updated>
+  <updated>2018-01-11T08:55:42.942Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.wanqhblog.top/2018/01/11/springcloudribbon/"/>
     <id>http://www.wanqhblog.top/2018/01/11/springcloudribbon/</id>
     <published>2018-01-11T08:52:36.000Z</published>
-    <updated>2018-01-11T08:53:28.829Z</updated>
+    <updated>2018-01-11T08:55:42.942Z</updated>
     
     <content type="html"><![CDATA[<p>上一篇写到关于SpringCloudEureka的相关知识：<a href="http://www.wanqhblog.top/2018/01/10/SprngCloudEureka/">SpringCloud学习之Eureka</a>。我们实现的服注册中心，以及服务提供者。接下来记录关于服务消费，以及客户端负载均衡器Ribbon的简单使用和配置。在使用Ribbon之前，先看看怎么调用服务吧。</p>
 <h2 id="基础的服务消费"><a href="#基础的服务消费" class="headerlink" title="基础的服务消费"></a>基础的服务消费</h2><h3 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h3><p>在上一篇的基础之上，创建一个<code>service-user</code>的微服务。这个微服我使用了h2数据库来保存数据，所以需要在配置文件中添加关于数据库的配置以及在pom文件中添加依赖，<a id="more"></a><br>application.yml<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">server:</div><div class="line">  port: <span class="number">40000</span></div><div class="line">spring:</div><div class="line">  application:</div><div class="line">    name: user-service</div><div class="line">#===========================================================</div><div class="line">#   数据库配置</div><div class="line">#===========================================================</div><div class="line">  jpa:</div><div class="line">    show-sql: <span class="keyword">true</span></div><div class="line">    hibernate:</div><div class="line">      ddl-auto: none</div><div class="line">    generate-ddl: <span class="keyword">false</span></div><div class="line">  datasource:</div><div class="line">    platform: h2</div><div class="line">    schema: classpath:schema.sql</div><div class="line">    data: classpath:data.sql</div><div class="line">#===========================================================</div><div class="line">#   eureka配置</div><div class="line">#===========================================================</div><div class="line">eureka:</div><div class="line">  client:</div><div class="line">    serviceUrl:</div><div class="line">      defaultZone: http:<span class="comment">//localhost:8888/eureka/</span></div><div class="line">  instance:</div><div class="line">    prefer-ip-address: <span class="keyword">true</span></div><div class="line">    instance-id: $&#123;spring.application.name&#125;:$&#123;server.port&#125;</div></pre></td></tr></table></figure></p>
@@ -64,6 +64,12 @@
     
     </summary>
     
+      <category term="SpringCloud" scheme="http://www.wanqhblog.top/categories/SpringCloud/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://www.wanqhblog.top/tags/SpringCloud/"/>
+    
+      <category term="Ribbon" scheme="http://www.wanqhblog.top/tags/Ribbon/"/>
     
   </entry>
   
@@ -355,9 +361,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
-    
       <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
+    
+      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
     
       <category term="七牛云" scheme="http://www.wanqhblog.top/tags/%E4%B8%83%E7%89%9B%E4%BA%91/"/>
     
