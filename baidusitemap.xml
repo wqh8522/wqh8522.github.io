@@ -4,6 +4,21 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/01/11/springcloudribbon/</loc>
+    <lastmod>2018-01-11T08:53:28.829Z</lastmod>
+    <data>
+        <display>
+        <title>SpringCloud学习之Ribbon</title>
+        <pubTime>2018-01-11T08:52:36.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/10/SprngCloudEureka/</loc>
     <lastmod>2018-01-10T07:06:40.715Z</lastmod>
     <data>
@@ -143,9 +158,9 @@
         <title>关于SpringBoot上传图片的几种方式</title>
         <pubTime>2017-12-28T12:30:59.000Z</pubTime>
         
-        <tag>FastDFS</tag>
-         
         <tag>图片上传</tag>
+         
+        <tag>FastDFS</tag>
          
         <tag>七牛云</tag>
          
