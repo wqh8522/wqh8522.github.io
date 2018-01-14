@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-14T10:30:55.334Z</updated>
+  <updated>2018-01-14T10:34:09.815Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>SpringCloud学习之Hystrix</title>
+    <title>SpringCloud学习之Hystrix（一）</title>
     <link href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://www.wanqhblog.top/2018/01/12/SpringCloud学习之Hystrix（一）/</id>
     <published>2018-01-12T01:57:51.000Z</published>
-    <updated>2018-01-14T10:30:55.334Z</updated>
+    <updated>2018-01-14T10:34:09.815Z</updated>
     
     <content type="html"><![CDATA[<p>与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机制。断路器详细介绍：<a href="https://martinfowler.com/bliki/CircuitBreaker.html" target="_blank" rel="external">断路器</a><a id="more"></a></p>
 <h1 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h1><p>直接使用上一篇：<a href="http://www.wanqhblog.top/2018/01/11/springcloudribbon/">SpringCloud学习之Ribbon</a>，在article-service中添加。<br>pom文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-cloud-starter-hystrix&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
@@ -447,9 +447,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
-    
       <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
+    
+      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
     
       <category term="七牛云" scheme="http://www.wanqhblog.top/tags/%E4%B8%83%E7%89%9B%E4%BA%91/"/>
     
