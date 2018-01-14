@@ -6,18 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>Category: FastDFS | wanqh的个人博客</title>
+  <title>SpringCloud学习之Hystrix | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="努力思考中...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wanqh的个人博客">
-<meta property="og:url" content="http://www.wanqhblog.top/categories/FastDFS/index.html">
+  <meta name="description" content="与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机">
+<meta name="keywords" content="SpringCloud,Hystrix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud学习之Hystrix">
+<meta property="og:url" content="http://www.wanqhblog.top/2018/01/12/SpringCloud学习之Hystrix（一）/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="努力思考中...">
+<meta property="og:description" content="与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-12/30794990.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-12/54302934.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-12/60356591.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/59881600.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/32605320.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/23199083.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
+<meta property="og:updated_time" content="2018-01-14T10:30:55.334Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wanqh的个人博客">
-<meta name="twitter:description" content="努力思考中...">
+<meta name="twitter:title" content="SpringCloud学习之Hystrix">
+<meta name="twitter:description" content="与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机">
+<meta name="twitter:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-12/30794990.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -170,124 +179,243 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-SpringCloud学习之Hystrix（一）" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/29/使用nginx代理访问FastDFS上传的文件/" class="archive-article-date">
-  	<time datetime="2017-12-29T01:12:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/29/使用nginx代理访问FastDFS上传的文件/">使用nginx代理访问FastDFS上传的文件</a>
+    <h1 class="article-title" itemprop="name">
+      SpringCloud学习之Hystrix
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/12/SpringCloud学习之Hystrix（一）/" class="archive-article-date">
+  	<time datetime="2018-01-12T01:57:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机制。断路器详细介绍：<a href="https://martinfowler.com/bliki/CircuitBreaker.html" target="_blank" rel="external">断路器</a><a id="more"></a></p>
+<h1 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h1><p>直接使用上一篇：<a href="http://www.wanqhblog.top/2018/01/11/springcloudribbon/">SpringCloud学习之Ribbon</a>，在article-service中添加。<br>pom文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-cloud-starter-hystrix&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<p>在主类上添加<code>@EnableCircuitBreaker</code>或<code>@EnableHystrix</code>注解开启Hystrix的使用。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@EnableEurekaClient</span></div><div class="line"><span class="meta">@EnableCircuitBreaker</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleApplication</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Bean</span></div><div class="line">	<span class="meta">@LoadBalanced</span></div><div class="line">	<span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		SpringApplication.run(ArticleApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这里也可以使用<code>@SpringCloudApplication</code>注解，该注解已经包含了我们添加的三个注解，所以可以看出SpringCloud的标准应用应该包服务发现和断路器<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-12/30794990.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>然后在ArticleController添加方法，并添加<code>@HystrixCommand</code>定义服务降级，这里的<code>fallbackMethod</code>服务调用失败后调用的方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 使用Hystrix断路器</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> id</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span></span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"fallback"</span>)</div><div class="line"><span class="meta">@GetMapping</span>(<span class="string">"/hystrix/&#123;id&#125;"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">findUserHystrix</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">    <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id).toString();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">fallback</span><span class="params">(Long id)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Error:"</span>+id;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>重启服务，如果没有出现故障，这里是可以正常访问并返回正确的数据。下面将服务接口sleep来模拟网络延迟：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> UserRepository userRepository;</div><div class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/user/&#123;id&#125;"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        Thread.sleep(<span class="number">5000</span>);</div><div class="line">        <span class="keyword">return</span> userRepository.findOne(id);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>访问：<a href="http://localhost:30000/hystrix/3，这里会调用回调函数返回数据。" target="_blank" rel="external">http://localhost:30000/hystrix/3，这里会调用回调函数返回数据。</a></p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-12/54302934.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p>通过上面的使用，发现一个问题：使用这种方法配置服务降级的方式，回调函数的入参和返回值必须与接口函数的一直，不然会抛出异常。</p>
+<h1 id="自定义Hystrix命令"><a href="#自定义Hystrix命令" class="headerlink" title="自定义Hystrix命令"></a>自定义Hystrix命令</h1><p>上面使用注解方式配置非常简单。在Hystrix中我们也可以通过继承<code>HystrixCommand</code>来实现自定义的<code>HystrixCommand</code>，而且还支持同步请求和异步请求两种方式。</p>
+<p>创建UserCommand并继承HystrixCommand，实现run方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserCommand</span> <span class="keyword">extends</span> <span class="title">HystrixCommand</span>&lt;<span class="title">User</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> Logger logger =  LoggerFactory.getLogger(UserCommand.class);</div><div class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</div><div class="line">    <span class="keyword">private</span> Long id;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserCommand</span><span class="params">(Setter setter,RestTemplate restTemplate,Long id)</span></span>&#123;</div><div class="line">        <span class="keyword">super</span>(setter);</div><div class="line">        <span class="keyword">this</span>.restTemplate = restTemplate;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> User <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        logger.info(<span class="string">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;自定义HystrixCommand请求&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;"</span>);</div><div class="line">        <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后添加一个接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> <span class="meta">@GetMapping</span>(<span class="string">"/command/&#123;id&#125;"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">findUserCommand</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</div><div class="line">        com.netflix.hystrix.HystrixCommand.Setter setter = com.netflix.hystrix.HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(<span class="string">""</span>));</div><div class="line">        UserCommand userCommand = <span class="keyword">new</span> UserCommand(setter,restTemplate,id);</div><div class="line">        <span class="comment">//同步调用</span></div><div class="line"><span class="comment">//        User user = userCommand.execute();</span></div><div class="line">        <span class="comment">//异步请求</span></div><div class="line">        Future&lt;User&gt; queue = userCommand.queue();</div><div class="line">        User user = queue.get();</div><div class="line">        <span class="keyword">return</span> user;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p><code>Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(&quot;&quot;))</code>是设置自定义命令的参数。先调用<code>withGroupKye</code>来设置分组，然后通过asKey来设置命令名；因为在Setter的定义中，只有withGroupKye静态函数可以创建Setter实例，所以GroupKey是Setter必需的参数。深入介绍可以查看源码或者看DD大佬的《SpringCloud微服务实战》。查看<code>@HystrixCommand</code>注解源码，可以看到这里也有groupKey、commandKey等参数，这也就是说使用@HystrixCommand注解时是可以配置命令名称、命令分组和线程池划分等参数的。<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-12/60356591.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h1 id="注解实现异步请求"><a href="#注解实现异步请求" class="headerlink" title="注解实现异步请求"></a>注解实现异步请求</h1><p>上面自定义命令中可以实现异步，同样也可以直接使用注解来实现异步请求；</p>
+<ol>
+<li><p>配置<code>HystrixCommandAspect</code>的Bean</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> HystrixCommandAspect <span class="title">hystrixCommandAspect</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> HystrixCommandAspect();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后使用AsyncResult来执行调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@HystrixCommand</span></div><div class="line"> <span class="meta">@GetMapping</span>(<span class="string">"/async/&#123;id&#125;"</span>)</div><div class="line"> <span class="function"><span class="keyword">public</span> Future&lt;User&gt; <span class="title">findUserAsync</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">new</span> AsyncResult&lt;User&gt;() &#123;</div><div class="line">         <span class="meta">@Override</span></div><div class="line">         <span class="function"><span class="keyword">public</span> User <span class="title">invoke</span><span class="params">()</span> </span>&#123;</div><div class="line">             <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">         &#125;</div><div class="line">     &#125;;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h1><h2 id="异常传播"><a href="#异常传播" class="headerlink" title="异常传播"></a>异常传播</h2><p>查看<code>@HystrixCommand</code>注解源码可以发现里面有个<code>ignoreExceptions</code>参数。该参数是定义忽略指定的异常功能。如下代码，当方法抛出<code>NullPointerException</code>时会将异常抛出，而不触发降级服务。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"fallback"</span>,ignoreExceptions = &#123;NullPointerException.class&#125;)</div><div class="line">  <span class="meta">@GetMapping</span>(<span class="string">"/hystrix/&#123;id&#125;"</span>)</div><div class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findUserHystrix</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">      <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="异常获取"><a href="#异常获取" class="headerlink" title="异常获取"></a>异常获取</h2><ol>
+<li>传统的继承方式，在继承了<code>HystrixCommand</code>类中重写<code>getFallback()</code>方法，这里在run方法中添加弄出一个异常<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> User <span class="title">getFallback</span><span class="params">()</span> </span>&#123;</div><div class="line">    Throwable e = getExecutionException();</div><div class="line">    logger.info(<span class="string">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&#123;&#125;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;"</span>,e.getMessage());</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> User(-<span class="number">1L</span>,<span class="string">""</span>,-<span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> User <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    logger.info(<span class="string">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;自定义HystrixCommand请求&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;"</span>);</div><div class="line">    <span class="keyword">int</span> i = <span class="number">1</span>/<span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-14/59881600.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<ol>
+<li>使用注解，在自定义的服务降级方法中可以使用Throwable 获取异常信息，<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"fallback"</span>)</div><div class="line"><span class="meta">@GetMapping</span>(<span class="string">"/hystrix/&#123;id&#125;"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> User <span class="title">findUserHystrix</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">1</span>/<span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> User <span class="title">fallback</span><span class="params">(Long id,Throwable throwable)</span></span>&#123;</div><div class="line">    LoggerFactory.getLogger(ArticleController.class).info(<span class="string">"========&#123;&#125;============="</span>,throwable.getMessage());</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> User();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-14/32605320.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h1 id="请求缓存"><a href="#请求缓存" class="headerlink" title="请求缓存"></a>请求缓存</h1><p>在高并发的场景下，Hystrix中提供了请求缓存的功能，可以方便的开启和使用请求缓存来优化系统，达到减轻高并发时的请求线程消耗、降低请求相应时间。</p>
+<h2 id="继承方式"><a href="#继承方式" class="headerlink" title="继承方式"></a>继承方式</h2><p>在继承了<code>HystrixCommand</code>类中重写<code>getCacheKey()</code>方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> String <span class="title">getCacheKey</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> String.valueOf(id);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">UserCommand</span><span class="params">(RestTemplate restTemplate,Long id)</span></span>&#123;</div><div class="line">    <span class="keyword">super</span>(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(<span class="string">"userGroup"</span>)));</div><div class="line">    <span class="keyword">this</span>.restTemplate = restTemplate;</div><div class="line">    <span class="keyword">this</span>.id = id;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过getCacheKey()方法返回请求的Key值，Hystrix会根据getCacheKey返回的值来区分是否是重复请求，如果cacheKey相同，那么该依赖服务只会在第一个请求达到时被真实的调用，另一个请求则是直接从请求缓存中返回结果。<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-14/23199083.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>修改后的接口类，该方法第一句为初始化HystrixRequestContext，如果不初始化该对象会报错。这里是在测试环境，如果在真正项目中该初始化不应该在指定方法中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@GetMapping</span>(<span class="string">"/command/&#123;id&#125;"</span>)</div><div class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">findUserCommand</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</div><div class="line">       HystrixRequestContext.initializeContext();</div><div class="line">       UserCommand u1 = <span class="keyword">new</span> UserCommand(restTemplate,id);</div><div class="line">       UserCommand u2 = <span class="keyword">new</span> UserCommand(restTemplate,id);</div><div class="line">       UserCommand u3 = <span class="keyword">new</span> UserCommand(restTemplate,id);</div><div class="line">       UserCommand u4 = <span class="keyword">new</span> UserCommand(restTemplate,id);</div><div class="line">       User user1 = u1.execute();</div><div class="line">       System.out.println(<span class="string">"第一次请求"</span>+user1);</div><div class="line">       User user2 = u2.execute();</div><div class="line">       System.out.println(<span class="string">"第二次请求"</span>+user2);</div><div class="line">       User user3 = u3.execute();</div><div class="line">       System.out.println(<span class="string">"第三次请求"</span>+user3);</div><div class="line">       User user4 = u4.execute();</div><div class="line">       System.out.println(<span class="string">"第四次请求"</span>+user4);</div><div class="line">       <span class="keyword">return</span> user1;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<h2 id="注解方式"><a href="#注解方式" class="headerlink" title="注解方式"></a>注解方式</h2><p>在SpringCloudHystrix中与缓存有关的三个注解：</p>
+<ul>
+<li>@CacheResult：用来标记其你去命令的结果应该被缓存，必须与@HystrixCommand注解结合使用；</li>
+<li>@CacheRemove：该注解用来让请求命令的缓存失败，失效的缓存根据定义的Key决定；</li>
+<li>@CacheKey：该注解用来在请求命令的参数上标记，是其作文缓存的Key值，如果没有标注则会使用所有参数。如果同时使用了@CacheResult和 @CacheRemove注解的cacheKeyMethod方法指定缓存Key生成，那么该注解将不会起作用。<br><strong>设置请求缓存</strong>，修改ArticleService方法，<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Service</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleService</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</div><div class="line"></div><div class="line">    <span class="meta">@HystrixCommand</span></div><div class="line">    <span class="meta">@CacheResult</span></div><div class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(Long id)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>添加接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@GetMapping</span>(<span class="string">"/cache/&#123;id&#125;"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> User <span class="title">findUserCache</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">    HystrixRequestContext.initializeContext();</div><div class="line">    User user1  = articleService.getUserById(id);</div><div class="line">    System.out.println(<span class="string">"第一次请求"</span>+user1);</div><div class="line">    User user2 = articleService.getUserById(id);</div><div class="line">    System.out.println(<span class="string">"第二次请求"</span>+user2);</div><div class="line">    User user3 = articleService.getUserById(id);</div><div class="line">    System.out.println(<span class="string">"第三次请求"</span>+user3);</div><div class="line">    User user4 =articleService.getUserById(id);</div><div class="line">    System.out.println(<span class="string">"第四次请求"</span>+user4);</div><div class="line">   <span class="keyword">return</span> articleService.getUserById(id);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>定义缓存的Key</strong></p>
+<ol>
+<li><p>使用@CacheKey，该注解除了可以指定方法参数作为缓存key之外，还可以指定方法参数对象的内不属性作为Key</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@HystrixCommand</span></div><div class="line">   <span class="meta">@CacheResult</span></div><div class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(@CacheKey(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">       <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用@CacheResult和@CacheRemove的cacheKeyMethod属性指定Key，如果与上面的CacheKey注解一起使用，则CacheKey将失效</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@HystrixCommand</span></div><div class="line">    <span class="meta">@CacheResult</span>(cacheKeyMethod = <span class="string">"getCacheKey"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(Long id)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> Long <span class="title">getCacheKey</span><span class="params">(Long id)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> id;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="缓存清理"><a href="#缓存清理" class="headerlink" title="缓存清理"></a>缓存清理</h2><p>上面说通过继承和注解方式都可以将请求保存到缓存，但是当我们更新了数据库的数据，缓存的数据已经是过期数据，这时候再次请求，数据已经失效。所以我们需要更新缓存。在Hystrix中继承和注解都可以实现清除缓存。<br><strong>1. 使用继承方式：</strong>前面介绍使用继承是继承HystrixCommand，然后再run方法中触发请求操作，所以这里创建两个类进程HystrixCommand，一个实现查询，一个实现更新。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GetUserCommand</span>  <span class="keyword">extends</span> <span class="title">HystrixCommand</span>&lt;<span class="title">User</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(GetUserCommand.class);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HystrixCommandKey GETTER_KEY = HystrixCommandKey.Factory.asKey(<span class="string">"CommandKey"</span>);</div><div class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</div><div class="line">    <span class="keyword">private</span> Long id;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">GetUserCommand</span><span class="params">(RestTemplate restTemplate, Long id)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(<span class="string">"userGroup"</span>)));</div><div class="line">        <span class="keyword">this</span>.restTemplate = restTemplate;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> User <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        logger.info(<span class="string">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;查询操作&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;"</span>);</div><div class="line">        <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>, User.class, id);</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> String <span class="title">getCacheKey</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//根据id保存缓存</span></div><div class="line">        <span class="keyword">return</span> String.valueOf(id);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 根据id清理缓存</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">flushCache</span><span class="params">(Long id)</span></span>&#123;</div><div class="line">        logger.info(<span class="string">" &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;GETTER_KEY:&#123;&#125;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;"</span>,GETTER_KEY);</div><div class="line">        HystrixRequestCache.getInstance(GETTER_KEY,</div><div class="line">                HystrixConcurrencyStrategyDefault.getInstance()).clear(String.valueOf(id));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PostUserCommand</span> <span class="keyword">extends</span> <span class="title">HystrixCommand</span>&lt;<span class="title">User</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger =  LoggerFactory.getLogger(UserCommand.class);</div><div class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</div><div class="line">    <span class="keyword">private</span> User user;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PostUserCommand</span><span class="params">(RestTemplate restTemplate,User user)</span></span>&#123;</div><div class="line">        <span class="keyword">super</span>(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(<span class="string">"userGroup"</span>)));</div><div class="line">        <span class="keyword">this</span>.restTemplate = restTemplate;</div><div class="line">        <span class="keyword">this</span>.user = user;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> User <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        logger.info(<span class="string">"&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;更新操作&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;"</span>);</div><div class="line">        User user1 = restTemplate.postForEntity(<span class="string">"http://USER-SERVICE/u/update"</span>, user, User.class).getBody();</div><div class="line">        <span class="comment">//刷新缓存，清理失效的缓存</span></div><div class="line">        GetUserCommand.flushCache(user1.getId());</div><div class="line">        <span class="keyword">return</span> user1;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>添加接口：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@GetMapping</span>(<span class="string">"/getcommand/&#123;id&#125;"</span>)</div><div class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">testGetCommand</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">       GetUserCommand u1 = <span class="keyword">new</span> GetUserCommand(restTemplate,id);</div><div class="line">       GetUserCommand u2 = <span class="keyword">new</span> GetUserCommand(restTemplate,id);</div><div class="line">       GetUserCommand u3 = <span class="keyword">new</span> GetUserCommand(restTemplate,id);</div><div class="line">       GetUserCommand u4 = <span class="keyword">new</span> GetUserCommand(restTemplate,id);</div><div class="line">       User user1 = u1.execute();</div><div class="line">       System.out.println(<span class="string">"第一次请求"</span>+user1);</div><div class="line">       User user2 = u2.execute();</div><div class="line">       System.out.println(<span class="string">"第二次请求"</span>+user2);</div><div class="line">       User user3 = u3.execute();</div><div class="line">       System.out.println(<span class="string">"第三次请求"</span>+user3);</div><div class="line">       User user4 = u4.execute();</div><div class="line">       System.out.println(<span class="string">"第四次请求"</span>+user4);</div><div class="line">       <span class="keyword">return</span> user1;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="meta">@PostMapping</span>(<span class="string">"/postcommand"</span>)</div><div class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">testPostCommand</span><span class="params">(User user)</span></span>&#123;</div><div class="line">       HystrixRequestContext.initializeContext();</div><div class="line">       PostUserCommand u1 = <span class="keyword">new</span> PostUserCommand(restTemplate,user);</div><div class="line">       User execute = u1.execute();</div><div class="line">       <span class="keyword">return</span> execute;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>在上面GetUserCommand方法中添加flushCache的静态方法，该方法通过<code>HystrixRequestCache.getInstance(GETTER_KEY,            HystrixConcurrencyStrategyDefault.getInstance());</code>方法从默认的Hystrix并发策略中根据<code>GETTER_KEY</code>获取到该命令的请求缓存对象HystrixRequestCache，然后再调用clear方法清理key为id的缓存。<br><strong>2. 使用注解方式：</strong>上面提到了<code>@CacheRemove</code>注解是使缓存失效<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@CacheRemove</span>(commandKey = <span class="string">"getUserById"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> User <span class="title">update</span><span class="params">(@CacheKey(<span class="string">"id"</span>)</span>User user)</span>&#123;</div><div class="line">    <span class="keyword">return</span>  restTemplate.postForEntity(<span class="string">"http://USER-SERVICE/u/update"</span>, user, User.class).getBody();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>@CacheRemove</code>的commandKey属性是必须指定的，它用来指明需要使用请求缓存的请求命令，只有通过该属性的配置，Hystrix才能找到正确的请求命令缓存位置。</p>
+<p>使用请求缓存的时候需要注意的是，必须先使用 <code>HystrixRequestContext.initializeContext();</code>，该方法的调用可以放到拦截器中执行，这里因为是测试，所以直接在接口中调用。</p>
+<hr>
+<p>作为SpringCloud学习笔记，可能有很多地方不好。望指出！！！</p>
+<p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9/tree/master/" target="_blank" rel="external">https://gitee.com/wqh3520/spring-cloud-1-9/tree/master/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nginx</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">FastDFS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Hystrix</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/FastDFS/" class="article-tag-list-link color3">FastDFS</a>
+        			<a href="/categories/SpringClou/" class="article-tag-list-link color1">SpringClou</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2018/01/12/SpringCloud学习之Hystrix（一）/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/27/FastDFS系统的搭建/" class="archive-article-date">
-  	<time datetime="2017-12-27T03:41:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-27</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/11/springcloudribbon/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SpringCloud学习之Ribbon</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/27/FastDFS系统的搭建/">Linux下FastDFS系统的搭建</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">分布式文件系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/FastDFS/" class="article-tag-list-link color3">FastDFS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简单使用"><span class="toc-number">1.</span> <span class="toc-text">简单使用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义Hystrix命令"><span class="toc-number">2.</span> <span class="toc-text">自定义Hystrix命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注解实现异步请求"><span class="toc-number">3.</span> <span class="toc-text">注解实现异步请求</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#异常处理"><span class="toc-number">4.</span> <span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异常传播"><span class="toc-number">4.1.</span> <span class="toc-text">异常传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常获取"><span class="toc-number">4.2.</span> <span class="toc-text">异常获取</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求缓存"><span class="toc-number">5.</span> <span class="toc-text">请求缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#继承方式"><span class="toc-number">5.1.</span> <span class="toc-text">继承方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注解方式"><span class="toc-number">5.2.</span> <span class="toc-text">注解方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缓存清理"><span class="toc-number">5.3.</span> <span class="toc-text">缓存清理</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
+        
+    </div>
+</aside>
+
+
+
+
+
   
 
-    
+  
+
+  
+  <div id="SOHUCS" sid="SpringCloud学习之Hystrix" style="padding: 0px 30px 0px 46px;"></div>
+<script type="text/javascript">
+(function(){
+var appid = "cytbAtNIL";
+var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+  
+
+  
 
 
           </div>
@@ -320,10 +448,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",

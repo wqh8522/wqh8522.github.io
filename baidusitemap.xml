@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    <lastmod>2018-01-14T10:30:55.334Z</lastmod>
+    <data>
+        <display>
+        <title>SpringCloud学习之Hystrix</title>
+        <pubTime>2018-01-12T01:57:51.000Z</pubTime>
+        
+        <tag>SpringCloud</tag>
+         
+        <tag>Hystrix</tag>
+         
+         
+           
+             
+              <breadCrumb title="SpringClou" url="http://www.wanqhblog.top/categories/SpringClou/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/11/springcloudribbon/</loc>
-    <lastmod>2018-01-11T08:55:42.942Z</lastmod>
+    <lastmod>2018-01-11T09:01:22.060Z</lastmod>
     <data>
         <display>
         <title>SpringCloud学习之Ribbon</title>
@@ -33,9 +55,9 @@
         <title>SpringCloud学习之Eureka</title>
         <pubTime>2018-01-10T07:04:55.000Z</pubTime>
         
-        <tag>Eureka</tag>
-         
         <tag>SpringCloud</tag>
+         
+        <tag>Eureka</tag>
          
          
            
@@ -165,9 +187,9 @@
         <title>关于SpringBoot上传图片的几种方式</title>
         <pubTime>2017-12-28T12:30:59.000Z</pubTime>
         
-        <tag>FastDFS</tag>
-         
         <tag>图片上传</tag>
+         
+        <tag>FastDFS</tag>
          
         <tag>七牛云</tag>
          
