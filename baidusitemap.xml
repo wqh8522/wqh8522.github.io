@@ -5,11 +5,33 @@
     
   <url>
     <loc>http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
-    <lastmod>2018-01-14T10:34:09.815Z</lastmod>
+    <lastmod>2018-01-15T07:17:44.726Z</lastmod>
     <data>
         <display>
         <title>SpringCloud学习之Hystrix（一）</title>
         <pubTime>2018-01-12T01:57:51.000Z</pubTime>
+        
+        <tag>SpringCloud</tag>
+         
+        <tag>Hystrix</tag>
+         
+         
+           
+             
+              <breadCrumb title="SpringClou" url="http://www.wanqhblog.top/categories/SpringClou/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wanqhblog.top/2018/01/15/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
+    <lastmod>2018-01-15T07:17:40.593Z</lastmod>
+    <data>
+        <display>
+        <title>SpringCloud学习之Hystrix（二）</title>
+        <pubTime>2018-01-15T11:30:20.000Z</pubTime>
         
         <tag>SpringCloud</tag>
          
@@ -355,9 +377,9 @@
         <title>SpringAOP的使用</title>
         <pubTime>2017-08-28T02:10:56.000Z</pubTime>
         
-        <tag>spring</tag>
-         
         <tag>AOP</tag>
+         
+        <tag>spring</tag>
          
          
            
