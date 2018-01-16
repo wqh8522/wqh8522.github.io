@@ -4,21 +4,21 @@
 
     
   <url>
-    <loc>http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
-    <lastmod>2018-01-15T07:17:44.726Z</lastmod>
+    <loc>http://www.wanqhblog.top/2018/01/16/SpringCloud%E5%A3%B0%E6%98%8E%E5%BC%8F%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8Feign/</loc>
+    <lastmod>2018-01-16T07:45:28.604Z</lastmod>
     <data>
         <display>
-        <title>SpringCloud学习之Hystrix（一）</title>
-        <pubTime>2018-01-12T01:57:51.000Z</pubTime>
+        <title>SpringCloud声明式服务调用Feign</title>
+        <pubTime>2018-01-16T01:18:28.000Z</pubTime>
         
         <tag>SpringCloud</tag>
          
-        <tag>Hystrix</tag>
+        <tag>Feign</tag>
          
          
            
              
-              <breadCrumb title="SpringClou" url="http://www.wanqhblog.top/categories/SpringClou/"/>
+              <breadCrumb title="SpringCloud" url="http://www.wanqhblog.top/categories/SpringCloud/"/>
           
         </display>
     </data>
@@ -26,21 +26,21 @@
 
     
   <url>
-    <loc>http://www.wanqhblog.top/2018/01/15/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
-    <lastmod>2018-01-15T07:17:40.593Z</lastmod>
+    <loc>http://www.wanqhblog.top/2018/01/10/SprngCloud%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86Eureka/</loc>
+    <lastmod>2018-01-16T04:05:59.530Z</lastmod>
     <data>
         <display>
-        <title>SpringCloud学习之Hystrix（二）</title>
-        <pubTime>2018-01-15T11:30:20.000Z</pubTime>
+        <title>SpringCloud服务治理Eureka</title>
+        <pubTime>2018-01-10T07:04:55.000Z</pubTime>
         
         <tag>SpringCloud</tag>
          
-        <tag>Hystrix</tag>
+        <tag>Eureka</tag>
          
          
            
              
-              <breadCrumb title="SpringClou" url="http://www.wanqhblog.top/categories/SpringClou/"/>
+              <breadCrumb title="SpringCloud" url="http://www.wanqhblog.top/categories/SpringCloud/"/>
           
         </display>
     </data>
@@ -48,11 +48,11 @@
 
     
   <url>
-    <loc>http://www.wanqhblog.top/2018/01/11/springcloudribbon/</loc>
-    <lastmod>2018-01-11T09:01:22.060Z</lastmod>
+    <loc>http://www.wanqhblog.top/2018/01/11/springcloud%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1ribbon/</loc>
+    <lastmod>2018-01-16T04:05:38.508Z</lastmod>
     <data>
         <display>
-        <title>SpringCloud学习之Ribbon</title>
+        <title>SpringCloud客户端负载均衡Ribbon</title>
         <pubTime>2018-01-11T08:52:36.000Z</pubTime>
         
         <tag>SpringCloud</tag>
@@ -70,21 +70,43 @@
 
     
   <url>
-    <loc>http://www.wanqhblog.top/2018/01/10/SprngCloudEureka/</loc>
-    <lastmod>2018-01-10T07:06:40.715Z</lastmod>
+    <loc>http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AE%B9%E9%94%99%E4%BF%9D%E6%8A%A4Hystrix%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    <lastmod>2018-01-16T04:05:24.312Z</lastmod>
     <data>
         <display>
-        <title>SpringCloud学习之Eureka</title>
-        <pubTime>2018-01-10T07:04:55.000Z</pubTime>
+        <title>SpringCloud容错保护Hystrix（一）</title>
+        <pubTime>2018-01-12T01:57:51.000Z</pubTime>
         
         <tag>SpringCloud</tag>
          
-        <tag>Eureka</tag>
+        <tag>Hystrix</tag>
          
          
            
              
-              <breadCrumb title="SpringCloud" url="http://www.wanqhblog.top/categories/SpringCloud/"/>
+              <breadCrumb title="SpringClou" url="http://www.wanqhblog.top/categories/SpringClou/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wanqhblog.top/2018/01/15/SpringCloud%E5%AE%B9%E9%94%99%E4%BF%9D%E6%8A%A4Hystrix%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
+    <lastmod>2018-01-16T04:04:28.482Z</lastmod>
+    <data>
+        <display>
+        <title>SpringCloud容错保护Hystrix（二）</title>
+        <pubTime>2018-01-15T11:30:20.000Z</pubTime>
+        
+        <tag>SpringCloud</tag>
+         
+        <tag>Hystrix</tag>
+         
+         
+           
+             
+              <breadCrumb title="SpringClou" url="http://www.wanqhblog.top/categories/SpringClou/"/>
           
         </display>
     </data>
@@ -121,9 +143,9 @@
         <title>SpringBoot使用JWT实现登录验证</title>
         <pubTime>2018-01-02T08:46:17.000Z</pubTime>
         
-        <tag>JWT</tag>
-         
         <tag>SpringBoot</tag>
+         
+        <tag>JWT</tag>
          
          
            

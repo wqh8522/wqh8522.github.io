@@ -172,19 +172,112 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-SpringCloud学习之Hystrix（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-SpringCloud声明式服务调用Feign" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/15/SpringCloud学习之Hystrix（二）/">SpringCloud学习之Hystrix（二）</a>
+      <a class="article-title" href="/2018/01/16/SpringCloud声明式服务调用Feign/">SpringCloud声明式服务调用Feign</a>
     </h1>
   
 
         
-        <a href="/2018/01/15/SpringCloud学习之Hystrix（二）/" class="archive-article-date">
+        <a href="/2018/01/16/SpringCloud声明式服务调用Feign/" class="archive-article-date">
+  	<time datetime="2018-01-16T01:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>前面使用了Ribbon做客户端负载均衡，使用Hystrix做容错保护，这两者被作为基础工具类框架被广泛地应用在各个微服务的实现中。SpringCloudFeign是将两者做了更高层次的封装以简化开发。它基于Netfix Feign实现，整合了SpringCloudRibbon和SpringCloudHystrix，除了提供这两者的强大功能外，还提供了一种声明是的Web服务客户端定义的方式。SpringCloudFeign在NetFixFeign的基础上扩展了对SpringMVC注解的支持，在其实现下，我们只需创建一个接口并用注解的方式来配置它，即可完成对服务提供方的接口绑定。简化了SpringCloudRibbon自行封装服务调用客户端的开发量。</p>
+<h1 id="快速使用"><a href="#快速使用" class="headerlink" title="快速使用"></a>快速使用</h1>
+        
+          <a class="article-more-a" href="/2018/01/16/SpringCloud声明式服务调用Feign/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Feign</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringCloud/" class="article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/16/SpringCloud声明式服务调用Feign/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-SpringCloud容错保护Hystrix（二）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/15/SpringCloud容错保护Hystrix（二）/">SpringCloud容错保护Hystrix（二）</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/15/SpringCloud容错保护Hystrix（二）/" class="archive-article-date">
   	<time datetime="2018-01-15T11:30:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
 </a>
         
@@ -195,7 +288,7 @@
         <p>接着上一篇:<a href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/">SpringCloud学习之Hystrix（一）</a></p>
 <h1 id="请求合并"><a href="#请求合并" class="headerlink" title="请求合并"></a>请求合并</h1><p>上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况。请求合并正是Hystrix为解决这两个问题而开发的，以减少通信消耗和线程数的占用。
         
-          <a class="article-more-a" href="/2018/01/15/SpringCloud学习之Hystrix（二）/#more">more >></a>
+          <a class="article-more-a" href="/2018/01/15/SpringCloud容错保护Hystrix（二）/#more">more >></a>
         
       
 
@@ -234,7 +327,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/15/SpringCloud学习之Hystrix（二）/">阅读全文 >></a>
+          <a class="article-more-a" href="/2018/01/15/SpringCloud容错保护Hystrix（二）/">阅读全文 >></a>
         </p>
       
 
@@ -264,19 +357,19 @@
 
 
   
-    <article id="post-SpringCloud学习之Hystrix（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-SpringCloud容错保护Hystrix（一）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/12/SpringCloud学习之Hystrix（一）/">SpringCloud学习之Hystrix（一）</a>
+      <a class="article-title" href="/2018/01/12/SpringCloud容错保护Hystrix（一）/">SpringCloud容错保护Hystrix（一）</a>
     </h1>
   
 
         
-        <a href="/2018/01/12/SpringCloud学习之Hystrix（一）/" class="archive-article-date">
+        <a href="/2018/01/12/SpringCloud容错保护Hystrix（一）/" class="archive-article-date">
   	<time datetime="2018-01-12T01:57:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-12</time>
 </a>
         
@@ -286,7 +379,7 @@
       
         <p>与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机制。断路器详细介绍：<a href="https://martinfowler.com/bliki/CircuitBreaker.html" target="_blank" rel="external">断路器</a>
         
-          <a class="article-more-a" href="/2018/01/12/SpringCloud学习之Hystrix（一）/#more">more >></a>
+          <a class="article-more-a" href="/2018/01/12/SpringCloud容错保护Hystrix（一）/#more">more >></a>
         
       
 
@@ -325,7 +418,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/12/SpringCloud学习之Hystrix（一）/">阅读全文 >></a>
+          <a class="article-more-a" href="/2018/01/12/SpringCloud容错保护Hystrix（一）/">阅读全文 >></a>
         </p>
       
 
@@ -355,19 +448,19 @@
 
 
   
-    <article id="post-springcloudribbon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-springcloud客户端负载均衡ribbon" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/11/springcloudribbon/">SpringCloud学习之Ribbon</a>
+      <a class="article-title" href="/2018/01/11/springcloud客户端负载均衡ribbon/">SpringCloud客户端负载均衡Ribbon</a>
     </h1>
   
 
         
-        <a href="/2018/01/11/springcloudribbon/" class="archive-article-date">
+        <a href="/2018/01/11/springcloud客户端负载均衡ribbon/" class="archive-article-date">
   	<time datetime="2018-01-11T08:52:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-11</time>
 </a>
         
@@ -378,7 +471,7 @@
         <p>上一篇写到关于SpringCloudEureka的相关知识：<a href="http://www.wanqhblog.top/2018/01/10/SprngCloudEureka/">SpringCloud学习之Eureka</a>。我们实现的服注册中心，以及服务提供者。接下来记录关于服务消费，以及客户端负载均衡器Ribbon的简单使用和配置。在使用Ribbon之前，先看看怎么调用服务吧。</p>
 <h2 id="基础的服务消费"><a href="#基础的服务消费" class="headerlink" title="基础的服务消费"></a>基础的服务消费</h2><h3 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h3><p>在上一篇的基础之上，创建一个<code>service-user</code>的微服务。这个微服我使用了h2数据库来保存数据，所以需要在配置文件中添加关于数据库的配置以及在pom文件中添加依赖，
         
-          <a class="article-more-a" href="/2018/01/11/springcloudribbon/#more">more >></a>
+          <a class="article-more-a" href="/2018/01/11/springcloud客户端负载均衡ribbon/#more">more >></a>
         
       
 
@@ -417,7 +510,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/11/springcloudribbon/">阅读全文 >></a>
+          <a class="article-more-a" href="/2018/01/11/springcloud客户端负载均衡ribbon/">阅读全文 >></a>
         </p>
       
 
@@ -447,19 +540,19 @@
 
 
   
-    <article id="post-SprngCloudEureka" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-SprngCloud服务治理Eureka" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/10/SprngCloudEureka/">SpringCloud学习之Eureka</a>
+      <a class="article-title" href="/2018/01/10/SprngCloud服务治理Eureka/">SpringCloud服务治理Eureka</a>
     </h1>
   
 
         
-        <a href="/2018/01/10/SprngCloudEureka/" class="archive-article-date">
+        <a href="/2018/01/10/SprngCloud服务治理Eureka/" class="archive-article-date">
   	<time datetime="2018-01-10T07:04:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
 </a>
         
@@ -470,7 +563,7 @@
         <h2 id="SpringCloud简介"><a href="#SpringCloud简介" class="headerlink" title="SpringCloud简介"></a>SpringCloud简介</h2><p>直接应用官方文档的介绍：<a href="https://springcloud.cc/spring-cloud-dalston.html" target="_blank" rel="external">https://springcloud.cc/spring-cloud-dalston.html</a><br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-10/86331686.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
 <h2 id="SpringCloudEureka简介"><a href="#SpringCloudEureka简介" class="headerlink" title="SpringCloudEureka简介"></a>SpringCloudEureka简介</h2>
         
-          <a class="article-more-a" href="/2018/01/10/SprngCloudEureka/#more">more >></a>
+          <a class="article-more-a" href="/2018/01/10/SprngCloud服务治理Eureka/#more">more >></a>
         
       
 
@@ -509,7 +602,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/10/SprngCloudEureka/">阅读全文 >></a>
+          <a class="article-more-a" href="/2018/01/10/SprngCloud服务治理Eureka/">阅读全文 >></a>
         </p>
       
 
@@ -671,11 +764,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JWT</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JWT</a>
         		</li>
       		
 		</ul>
@@ -819,101 +912,9 @@
 
 
   
-    <article id="post-使用nginx代理访问FastDFS上传的文件" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/29/使用nginx代理访问FastDFS上传的文件/">使用nginx代理访问FastDFS上传的文件</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/29/使用nginx代理访问FastDFS上传的文件/" class="archive-article-date">
-  	<time datetime="2017-12-29T01:12:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上一次介绍了关于FastDFS系统单机版的安装配置以及使用官方测试上传图片：<br><a href="http://www.wanqhblog.top/2017/12/27/FastDFS%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%90%AD%E5%BB%BA/">Linux下FastDFS系统的搭建</a><br>上传成功返回的链接还无法访问，因为FastDFS不支持http协议，所以要想直接访问，还需要使用nginx访问传的图片，文件。</p>
-<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-27/58813378.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/500/fill/I0VGRUZFRg==/dissolve/70/gravity/SouthEast/dx/5/dy/5" alt=""><br>
-        
-          <a class="article-more-a" href="/2017/12/29/使用nginx代理访问FastDFS上传的文件/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Nginx</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">FastDFS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/FastDFS/" class="article-tag-list-link color3">FastDFS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/29/使用nginx代理访问FastDFS上传的文件/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1018,6 +1019,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
               </li>
              
@@ -1026,11 +1035,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1050,63 +1059,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">classloader</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">springmvc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">websocket</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1122,11 +1087,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
+                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">classloader</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">jvm</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">springmvc</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">websocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1135,6 +1128,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
             
             <div class="clearfix"></div>
