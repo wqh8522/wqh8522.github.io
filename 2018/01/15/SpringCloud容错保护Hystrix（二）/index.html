@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
   <title>SpringCloud容错保护Hystrix（二） | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="接着上一篇:SpringCloud学习之Hystrix（一） 请求合并上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况。">
+  <meta name="description" content="接着上一篇:SpringCloud容错保护Hystrix（一） 请求合并上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况">
 <meta name="keywords" content="SpringCloud,Hystrix">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringCloud容错保护Hystrix（二）">
 <meta property="og:url" content="http://www.wanqhblog.top/2018/01/15/SpringCloud容错保护Hystrix（二）/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="接着上一篇:SpringCloud学习之Hystrix（一） 请求合并上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况。">
+<meta property="og:description" content="接着上一篇:SpringCloud容错保护Hystrix（一） 请求合并上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/35566908.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/45378957.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
@@ -24,10 +24,10 @@
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-15/58804496.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-15/45893648.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-15/1821604.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:updated_time" content="2018-01-16T04:04:28.482Z">
+<meta property="og:updated_time" content="2018-01-16T08:07:40.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringCloud容错保护Hystrix（二）">
-<meta name="twitter:description" content="接着上一篇:SpringCloud学习之Hystrix（一） 请求合并上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况。">
+<meta name="twitter:description" content="接着上一篇:SpringCloud容错保护Hystrix（一） 请求合并上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况">
 <meta name="twitter:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/35566908.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
@@ -201,7 +201,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>接着上一篇:<a href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/">SpringCloud学习之Hystrix（一）</a></p>
+        <p>接着上一篇:<a href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/">SpringCloud容错保护Hystrix（一）</a></p>
 <h1 id="请求合并"><a href="#请求合并" class="headerlink" title="请求合并"></a>请求合并</h1><p>上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况。请求合并正是Hystrix为解决这两个问题而开发的，以减少通信消耗和线程数的占用。<a id="more"></a></p>
 <blockquote>
 <p>Hystrix提供HystrixCollapser来实现请求转发，在HystrixCommand之前放置一个合并处理器，将处于一个很短的时间窗（默认为10毫秒）内对同一个依赖服务的多个请求进行整合并以批量方式发起请求，<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-14/35566908.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>HystrixCollapser是一个抽象类，进入源码可以看到，它指定了三个不同的类。</p>
@@ -277,8 +277,8 @@
 <p>最后启动项目，并启动两个article-service，然后添加对 <a href="http://localhost:9998/turbine.stream的监控。" target="_blank" rel="external">http://localhost:9998/turbine.stream的监控。</a><br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-15/1821604.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
 <hr>
 <p>作为SpringCloud学习笔记，有很多地方不好。望指出！！！</p>
-<p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/spring-cloud-1-9</a></p>
-<p>原文地址：<a href="http://www.wanqhblog.top/2018/01/15/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%BA%8C%EF%BC%89/">SpringCloud学习之Hystrix（二）</a></p>
+<p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/</a></p>
+<p>原文地址：<a href="http://www.wanqhblog.top/2018/01/15/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%BA%8C%EF%BC%89/">SpringCloud容错保护Hystrix（二）</a></p>
 
       
 
@@ -546,11 +546,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -562,19 +558,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分页</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">拦截器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -586,19 +586,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
+                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -614,11 +614,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
+                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -630,11 +634,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -646,27 +662,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图片上传</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
             
             <div class="clearfix"></div>

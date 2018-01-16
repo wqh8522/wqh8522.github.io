@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/59881600.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/32605320.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-14/23199083.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:updated_time" content="2018-01-16T04:05:24.312Z">
+<meta property="og:updated_time" content="2018-01-16T08:07:16.960Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringCloud容错保护Hystrix（一）">
 <meta name="twitter:description" content="与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机">
@@ -200,7 +200,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机制。断路器详细介绍：<a href="https://martinfowler.com/bliki/CircuitBreaker.html" target="_blank" rel="external">断路器</a><a id="more"></a></p>
-<h1 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h1><p>直接使用上一篇：<a href="http://www.wanqhblog.top/2018/01/11/springcloudribbon/">SpringCloud学习之Ribbon</a>，在article-service中添加。<br>pom文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-cloud-starter-hystrix&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h1><p>直接使用上一篇：<a href="http://www.wanqhblog.top/2018/01/11/springcloudribbon/">SpringCloud客户端负载均衡Ribbon</a>，在article-service中添加。<br>pom文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-cloud-starter-hystrix&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
 <p>在主类上添加<code>@EnableCircuitBreaker</code>或<code>@EnableHystrix</code>注解开启Hystrix的使用。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@EnableEurekaClient</span></div><div class="line"><span class="meta">@EnableCircuitBreaker</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleApplication</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Bean</span></div><div class="line">	<span class="meta">@LoadBalanced</span></div><div class="line">	<span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		SpringApplication.run(ArticleApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这里也可以使用<code>@SpringCloudApplication</code>注解，该注解已经包含了我们添加的三个注解，所以可以看出SpringCloud的标准应用应该包服务发现和断路器<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-12/30794990.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>然后在ArticleController添加方法，并添加<code>@HystrixCommand</code>定义服务降级，这里的<code>fallbackMethod</code>服务调用失败后调用的方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 使用Hystrix断路器</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> id</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span></span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@HystrixCommand</span>(fallbackMethod = <span class="string">"fallback"</span>)</div><div class="line"><span class="meta">@GetMapping</span>(<span class="string">"/hystrix/&#123;id&#125;"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">findUserHystrix</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>&#123;</div><div class="line">    <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://USER-SERVICE/user/&#123;1&#125;"</span>,User.class,id).toString();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> String <span class="title">fallback</span><span class="params">(Long id)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Error:"</span>+id;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>重启服务，如果没有出现故障，这里是可以正常访问并返回正确的数据。下面将服务接口sleep来模拟网络延迟：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> UserRepository userRepository;</div><div class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/user/&#123;id&#125;"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id) <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">        Thread.sleep(<span class="number">5000</span>);</div><div class="line">        <span class="keyword">return</span> userRepository.findOne(id);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -260,7 +260,7 @@
 <hr>
 <p>作为SpringCloud学习笔记，有很多地方不好。望指出！！！</p>
 <p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9/tree/master/" target="_blank" rel="external">https://gitee.com/wqh3520/spring-cloud-1-9/tree/master/</a></p>
-<p>原文地址：<a href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/">SpringCloud学习之Hystrix（一）</a></p>
+<p>原文地址：<a href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/">SpringCloud容错保护Hystrix（一）</a></p>
 
       
 
@@ -528,11 +528,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -544,19 +540,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">分页</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">拦截器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -568,19 +568,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
+                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -596,11 +596,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
+                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -612,11 +616,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Eureka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -628,27 +644,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">图片上传</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
             
             <div class="clearfix"></div>
