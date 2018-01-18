@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-18T03:49:03.238Z</updated>
+  <updated>2018-01-18T03:50:49.770Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/"/>
     <id>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI网关服务Zuul/</id>
     <published>2018-01-18T08:55:47.000Z</published>
-    <updated>2018-01-18T03:49:03.238Z</updated>
+    <updated>2018-01-18T03:50:49.770Z</updated>
     
-    <content type="html"><![CDATA[<p>SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说，权限管理也是一个不可少的模块，在微服务架构中，系统被拆分，不可能每个模块都去添加一个个权限管理，这样系统代码重复、工作量大、后期维护也难。为了解决这些常见的架构问题，API网关应运而生。SpringCloudZuul是基于Netflix Zuul实现的API网关组件，它实现了请求路由、负载均衡、校验过滤、与服务治理框架的结合、请求转发是的熔断机制和服务的聚合等功能。</p>
+    <content type="html"><![CDATA[<p>SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说，权限管理也是一个不可少的模块，在微服务架构中，系统被拆分，不可能每个模块都去添加一个个权限管理，这样系统代码重复、工作量大、后期维护也难。为了解决这些常见的架构问题，API网关应运而生。SpringCloudZuul是基于Netflix Zuul实现的API网关组件，它实现了请求路由、负载均衡、校验过滤、与服务治理框架的结合、请求转发是的熔断机制和服务的聚合等功能。<a id="more"></a></p>
 <h1 id="快速使用"><a href="#快速使用" class="headerlink" title="快速使用"></a>快速使用</h1><ul>
 <li><p>新建一个SpringBoot项目，这里命名api-gateway，然后导入相关依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-zuul<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -117,7 +117,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说
+      &lt;p&gt;SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说，权限管理也是一个不可少的模块，在微服务架构中，系统被拆分，不可能每个模块都去添加一个个权限管理，这样系统代码重复、工作量大、后期维护也难。为了解决这些常见的架构问题，API网关应运而生。SpringCloudZuul是基于Netflix Zuul实现的API网关组件，它实现了请求路由、负载均衡、校验过滤、与服务治理框架的结合、请求转发是的熔断机制和服务的聚合等功能。
     
     </summary>
     
@@ -779,9 +779,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
-    
       <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
+    
+      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
     
       <category term="七牛云" scheme="http://www.wanqhblog.top/tags/%E4%B8%83%E7%89%9B%E4%BA%91/"/>
     
