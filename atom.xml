@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-16T08:05:28.026Z</updated>
+  <updated>2018-01-18T03:49:03.238Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -14,6 +14,121 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringCloudAPI网关服务Zuul</title>
+    <link href="http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/"/>
+    <id>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI网关服务Zuul/</id>
+    <published>2018-01-18T08:55:47.000Z</published>
+    <updated>2018-01-18T03:49:03.238Z</updated>
+    
+    <content type="html"><![CDATA[<p>SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说，权限管理也是一个不可少的模块，在微服务架构中，系统被拆分，不可能每个模块都去添加一个个权限管理，这样系统代码重复、工作量大、后期维护也难。为了解决这些常见的架构问题，API网关应运而生。SpringCloudZuul是基于Netflix Zuul实现的API网关组件，它实现了请求路由、负载均衡、校验过滤、与服务治理框架的结合、请求转发是的熔断机制和服务的聚合等功能。</p>
+<h1 id="快速使用"><a href="#快速使用" class="headerlink" title="快速使用"></a>快速使用</h1><ul>
+<li><p>新建一个SpringBoot项目，这里命名api-gateway，然后导入相关依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-zuul<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>在主类上使用<code>@EnableZuulProxy</code>注解开启API网关服务功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@EnableZuulProxy</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApigatewayApplication</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		SpringApplication.run(ApigatewayApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在配置文件中添加路由的规则配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">spring:</div><div class="line">  application:</div><div class="line">    name: api-gateway</div><div class="line">server:</div><div class="line">  port: <span class="number">8500</span></div><div class="line">zuul:</div><div class="line">  routes:</div><div class="line">    # 面向服务的路由</div><div class="line">    api-a:</div><div class="line">      path: /api-a<span class="comment">/**</span></div><div class="line"><span class="comment">      serviceId: FEIGN-CONSUMER</span></div><div class="line"><span class="comment">    # 传统的路由</span></div><div class="line"><span class="comment">    api-b-url:</span></div><div class="line"><span class="comment">      path: /api-b-url/**</span></div><div class="line"><span class="comment">      url: http://localhost:30000/</span></div><div class="line"><span class="comment">eureka:</span></div><div class="line"><span class="comment">  client:</span></div><div class="line"><span class="comment">    service-url:</span></div><div class="line"><span class="comment">      defaultZone: http://localhost:8888/eureka/</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这里的代码是接着前面的，启动eureka-server、user-server、feign-consumer、article-server和api-gateway。我没添加了eureka的依赖，所以api-gateway也是服务提供方在注册中心注册：<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-17/64768121.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>然后访问<code>http://localhost:8500/api-a/feign_consumer/find</code>和<code>http://localhost:8500/api-b-url/a/u/1</code></p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-17/70142053.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>在上面的配置文件文件中，使用两种路由规则的配置方法，一种是面向服务的，一种是使用传统的url。所有符合<code>/api-a/**</code>的请求都将转发到feign-consumer，同样所有符合<code>/api-b-url/**</code>的请求都将转发到<code>http://localhost:30000/</code>，也就是前面使用的article-service。两种规则的配置很明显：面向服务的使用serviceId配置服务实例，而传统的直接使用服务的地址。</p>
+<h1 id="请求过滤"><a href="#请求过滤" class="headerlink" title="请求过滤"></a>请求过滤</h1><p>前面也提到网关可以处理微服务的权限问题，在单体架构的时候我们通常会使用拦截器或过滤器对请求进行权限的校验，同样在SpringCloudZuul中也提供了过滤器来进行请求的过滤与拦截，实现方法只要我们继承抽象类<code>ZuulFilter</code>并实现它定义的4个抽象方法。下面定义个拦截器来检查HttpServletRequest中是否带有accessToken参数</p>
+<ul>
+<li><p>创建<code>AccessFilter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccessFilter</span> <span class="keyword">extends</span> <span class="title">ZuulFilter</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(AccessFilter.class);</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">filterType</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"pre"</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">filterOrder</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldFilter</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        RequestContext currentContext = RequestContext.getCurrentContext();</div><div class="line">        HttpServletRequest request = currentContext.getRequest();</div><div class="line">        logger.info(<span class="string">"send&#123;&#125; request to &#123;&#125;"</span>,request.getMethod(),request.getRequestURI().toCharArray());</div><div class="line">        String accessToken = request.getParameter(<span class="string">"accessToken"</span>);</div><div class="line">        <span class="keyword">if</span>(StringUtils.isBlank(accessToken))&#123;</div><div class="line">            logger.warn(<span class="string">"accessToken is empty"</span>);</div><div class="line">            currentContext.setSendZuulResponse(<span class="keyword">false</span>);</div><div class="line">            currentContext.setResponseStatusCode(<span class="number">401</span>);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        logger.info(<span class="string">"accessToken &#123;&#125;"</span> ,accessToken);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后启动相应的服务，访问相应的链接，当不添加accessToken是会抛出401错误。</p>
+<blockquote>
+<p>上面说到我们需要实现抽象类的ZuulFilter的四个抽象方法；</p>
+<ol>
+<li>filterType：过滤器类型，他决定过滤器在请求的哪个生命周期执行。在Zuul中有四种不同的生命周期过滤器：<ul>
+<li>pre：可以在请求被路由之前调用；</li>
+<li>routing：在路由请求是调用；</li>
+<li>post：在routing和error过滤器之后被调用；</li>
+<li>error：处理请求是发生错误是被调用</li>
+</ul>
+</li>
+<li>filterOrder：过滤器的执行顺序，数值越小优先级越高</li>
+<li>shouldFilter：判断过滤器是否需要执行</li>
+<li>run： 过滤器的具体逻辑。上面的run方法中判断请求是否带有accessToken参数，如果没有则是非法请求，使用 <code>currentContext.setSendZuulResponse(false);</code>表示该请求不进行路由。然后设置响应码。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>请求的生命周期具体详解可以参考《SpringCloud微服务实战》</p>
+<h1 id="路由的配置"><a href="#路由的配置" class="headerlink" title="路由的配置"></a>路由的配置</h1><h2 id="传统路由"><a href="#传统路由" class="headerlink" title="传统路由"></a>传统路由</h2><p>在上面的配置中使用了<code>zuul.toutes.&lt;route&gt;.path</code>和<code>zuul.toutes.&lt;route&gt;.url</code>参数的方式配置单实例的路由，而在微服务架构中，为了服务的高可用，一般会将一个服务部署多个。传统的多实例的路由配置，Zuul提供了以下方法：</p>
+<blockquote>
+<p>通过<code>zuul.toutes.&lt;route&gt;.path</code>与<code>zuul.toutes.&lt;route&gt;.serviceId</code>配置，如下：<br><code>zuul.routes.feign-consumer.path=/feign/**</code><br><code>zuul.routes.feign-consumer.serviceId=feign-consumer</code><br><code>robbin.eureka.enable=false</code><br><code>feign-consumer.ribbon.listOfServers=http://localhost:50000/,http://localhost:50001/</code></p>
+</blockquote>
+<p>该配置实现了对符合<code>/feign/**</code>规则的请求转发到<code>http://localhost:50000/,http://localhost:50001/</code>两个实例地址的路由规则。这里的serviceId是有程序员手动命名的服务名称。<code>robbin.eureka.enable=false</code>设置Ribbon不根据服务发现机制来获取配置服务对应的实例清单。</p>
+<h2 id="服务路由"><a href="#服务路由" class="headerlink" title="服务路由"></a>服务路由</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line">  routes:</div><div class="line">    api-a:</div><div class="line">      path: /api-a/**</div><div class="line">      serviceId: feign-consumer</div></pre></td></tr></table></figure>
+<p>该配置实现了对符合<code>/api-a/**</code>规则的请求路径转发到名为<code>feign-consumer</code>的服务实例上去的路由规则。<code>api-a</code>是任意的路由名称。还可以使用一种更加简洁的方法<code>zuul.routes.&lt;serviceId&gt;=&lt;path&gt;</code>,这里serviceId指定具体的服务名，path配置匹配的请求表达式。</p>
+<h2 id="路径匹配规则"><a href="#路径匹配规则" class="headerlink" title="路径匹配规则"></a>路径匹配规则</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">通配符</th>
+<th>含义</th>
+<th>url</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">？</td>
+<td>匹配任意单个字符</td>
+<td>/feign/?</td>
+<td>匹配/feign/之后拼接一个任意字符的路径，如/feign/a</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td>匹配任意数量的字符</td>
+<td>/feign/*</td>
+<td>匹配/feign/之后拼接任意字符的路径，如/feign/aaa</td>
+</tr>
+<tr>
+<td style="text-align:center">**</td>
+<td>匹配任意数量的字符，支持多级目录</td>
+<td>/feign/**</td>
+<td>可以匹配/feign/*包含的内容之外，还可匹配形如/feign/a/b的多级目录</td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h2><ul>
+<li><code>zuul.ignored-services=hello-service：</code>忽略掉一个服务；</li>
+<li><code>zuul.ignored-patterns=/**/feign/**:</code> 忽略/feign接口路由；</li>
+<li><code>zuul.prefix：</code>为路由添加统一前缀；</li>
+<li><code>zuul.add-host-header: true：</code>在请求路由转发前为请求设置Host头信息；</li>
+<li><code>zuul.sensitiveHeaders=</code>：设置全局参数为空来覆盖默认敏感头信息</li>
+<li><code>zuul.routes.&lt;route&gt;.customSensitiveHeaders=true</code>：对指定路由开启自定义敏感头</li>
+<li><code>zuul.routes.&lt;route&gt;.sentiviteHeaders=</code>：将指定路由的敏感头设置为空。</li>
+<li><code>zuul.retryable=false</code>：关闭重试机制</li>
+<li><code>zuul.routes.&lt;route&gt;.retryable=false</code>：指定路由关闭重试机制</li>
+<li><code>zuul.&lt;SimpleClassName&gt;.&lt;fileterType&gt;.disable=true</code>：禁用指定的过滤器，<code>&lt;SimpleClassName&gt;</code>代表过滤器的类名，<code>&lt;fileterType&gt;</code>代表过滤器的类型。</li>
+</ul>
+<p>在Zuul中Hystrix和Ribbon的配置与传统的Hystrix和Ribbon服务的配置一样。</p>
+<hr>
+<p>参考：《SpringCloud微服务实战》</p>
+<p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说
+    
+    </summary>
+    
+      <category term="SpringCloud" scheme="http://www.wanqhblog.top/categories/SpringCloud/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://www.wanqhblog.top/tags/SpringCloud/"/>
+    
+      <category term="Zuul" scheme="http://www.wanqhblog.top/tags/Zuul/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringCloud声明式服务调用Feign</title>
@@ -664,9 +779,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
-    
       <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
+    
+      <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
     
       <category term="七牛云" scheme="http://www.wanqhblog.top/tags/%E4%B8%83%E7%89%9B%E4%BA%91/"/>
     
@@ -1283,79 +1398,6 @@
       <category term="spring" scheme="http://www.wanqhblog.top/tags/spring/"/>
     
       <category term="AOP" scheme="http://www.wanqhblog.top/tags/AOP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分析ClassLoader工作机制</title>
-    <link href="http://www.wanqhblog.top/2017/08/26/classload/"/>
-    <id>http://www.wanqhblog.top/2017/08/26/classload/</id>
-    <published>2017-08-26T03:54:25.000Z</published>
-    <updated>2017-08-26T09:25:30.794Z</updated>
-    
-    <content type="html"><![CDATA[<p>ClassLoader：类加载器，作用：</p>
-<ol>
-<li>负责将Class加载到JVM中；</li>
-<li>审查每个类应该又谁来加载，是一个父优先的等级加载机制；</li>
-<li>将Class字节码重新解析成JVM统一要求的对象格式<h2 id="ClassLoader类结构分析"><a href="#ClassLoader类结构分析" class="headerlink" title="ClassLoader类结构分析"></a>ClassLoader类结构分析</h2><a id="more"></a>
-<img src="http://i.imgur.com/R5tC01a.png" alt=""></li>
-</ol>
-<ul>
-<li><p>defineClass：可以将byte字节流解析成JVM能够识别的Class对象，这样我们也可以通过这个字节码直接创建Class对象形式的实例化对象</p>
-<p>  api中的介绍<br>  <img src="http://i.imgur.com/bFjiI1f.png" alt=""></p>
-</li>
-<li>findClass：使用指定的二进制名称查找类，此方法在ClassLoader的实现类中应该被重写，从而取得要加载类的字节码。该方法通常与defineClass一起使用，使用该方法加载字节码之后，然后调用defineClass方法生成类的Class对象。</li>
-<li>loadClass：使用指定的二进制名称来加载类，如果只想在运行时能够加载自己指定的一个类，则可以使用this.getClass().getClassLoader().loadClass(“classname”)获取这个类的class对象。<br><img src="http://i.imgur.com/zX6j3RL.png" alt=""></li>
-<li>resolveClass：链接指定的类。如果想在类被加载到JVM中时就被链接，则可以使用该方法</li>
-</ul>
-<p>查看源码可以发现ClassLoader是一个抽象类。如果要实现自己的ClassLoader，一般继承URLClassLoader。另外在ClassLoader中还有一些辅助方法：<br><img src="http://i.imgur.com/vKXgX4K.png" alt=""></p>
-<h2 id="ClassLoader的等级加载机制"><a href="#ClassLoader的等级加载机制" class="headerlink" title="ClassLoader的等级加载机制"></a>ClassLoader的等级加载机制</h2><p>整个JVM提供了三层    ClassLoader，可以分为两种类型。</p>
-<ol>
-<li>BootStrap ClassLoader：启动类加载器。该类仅仅是一个类记载工具，既没有更高一级的父加载器，也没有子加载器。该类加载器并不属于JVM的类等级层次，因为BootStrap ClassLoader并没有遵守ClassLoader的加载规则，所以该加载器并没有子类。</li>
-<li>ExtClassLoader：扩展类加载器。该类JVM自身的一部分，如果一个类既不是JVM内部的类，也不用户定义的类，将会由这个类来加载。加载System.getProperty(“java.ext.dirs”)所指定的路径或jar。打印主要加载目录</li>
-</ol>
-<p><img src="http://i.imgur.com/26dQrro.png" alt=""></p>
-<ol>
-<li>AppClassLoader：系统类加载器。它是ExtClassLoader的子类。加载System.getProperty(“java.class.path”)所指定的路径或jar，这个目录就是我们常用到的classpath。除了System.getProperty(“java.ext.dirs”)目录下的类由ExtClassLoader加载，其他类都由AppClassLoader加载。</li>
-</ol>
-<p>类加载器的等级结构图：</p>
-<p><img src="http://i.imgur.com/k8Ri1H5.png" alt=""></p>
-<p>ClassLoader的类层次结构，参考深入分析JavaWeb技术内幕</p>
-<p><img src="http://i.imgur.com/N7lLSTQ.png" alt=""></p>
-<h2 id="JVM加载Class文件"><a href="#JVM加载Class文件" class="headerlink" title="JVM加载Class文件"></a>JVM加载Class文件</h2><h3 id="加载方式"><a href="#加载方式" class="headerlink" title="加载方式"></a>加载方式</h3><p>JVM加载class文件到内存有两种方式：</p>
-<ul>
-<li>显示加载：在代码中通过ClassLoader来加载需要的类。<br>  显示加载类的方式通常有：<ul>
-<li>Class.forName();</li>
-<li>ClassLoader.loadClass();</li>
-<li>ClassLoader.findSystemClass();</li>
-</ul>
-</li>
-<li>隐式加载：JVM自动加载需要的类到内存。<h3 id="如何加载"><a href="#如何加载" class="headerlink" title="如何加载"></a>如何加载</h3>一般有三个阶段：</li>
-</ul>
-<ol>
-<li>将.class文件包含的字节码加载到内存中。</li>
-<li>字节码验证、Class类等数据结构的分析以及相应的内存分配和最后符号表的链接。</li>
-<li>类中静态属性和初始化赋值，以及静态块的执行。</li>
-</ol>
-<p><img src="http://i.imgur.com/8Q2U44B.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;ClassLoader：类加载器，作用：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;负责将Class加载到JVM中；&lt;/li&gt;
-&lt;li&gt;审查每个类应该又谁来加载，是一个父优先的等级加载机制；&lt;/li&gt;
-&lt;li&gt;将Class字节码重新解析成JVM统一要求的对象格式&lt;h2 id=&quot;ClassLoader类结构分析&quot;&gt;&lt;a href=&quot;#ClassLoader类结构分析&quot; class=&quot;headerlink&quot; title=&quot;ClassLoader类结构分析&quot;&gt;&lt;/a&gt;ClassLoader类结构分析&lt;/h2&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.wanqhblog.top/categories/java/"/>
-    
-    
-      <category term="classloader" scheme="http://www.wanqhblog.top/tags/classloader/"/>
-    
-      <category term="jvm" scheme="http://www.wanqhblog.top/tags/jvm/"/>
     
   </entry>
   
