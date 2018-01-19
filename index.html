@@ -172,6 +172,156 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringCloudConfig" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/19/SpringCloudConfig/">SpringCloud分布式配置中心Config</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/19/SpringCloudConfig/" class="archive-article-date">
+  	<time datetime="2018-01-19T01:10:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>SpringCloudConfig是SpringCloud创建的用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为客户端和服务端两部分。服务端也称为分布式配置中心，是一个独立的微服务应用，用来连接配置仓库并为客户端提供获取配置信息，加密/解密信息等访问接口。而客户端则是微服务架构中各微服务应用或基础设施，通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="构建配置中心"><a href="#构建配置中心" class="headerlink" title="构建配置中心"></a>构建配置中心</h2><p>新建一个SpringBoot项目，命名config-server；添加一下依赖：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>在主类上使用<code>@EnableConfigServer</code>注解来开启配置中心服务端功能。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@EnableConfigServer</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigserverApplication</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		SpringApplication.run(ConfigserverApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在application.properties文件中添加git仓库配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">spring.application.name=config-server</div><div class="line">server.port=<span class="number">9000</span></div><div class="line">#表示配置中心所在仓库的位置</div><div class="line">spring.cloud.config.server.git.uri=https:<span class="comment">//github.com/wqh8522/spring-cloud-config.git</span></div><div class="line">#仓库路径下的的相对搜索位置，可以配置多个</div><div class="line">spring.cloud.config.server.git.search-paths=config-client</div><div class="line">#git的用户名</div><div class="line">spring.cloud.config.server.git.username=username</div><div class="line">#git的密码</div><div class="line">spring.cloud.config.server.git.password=password</div></pre></td></tr></table></figure></p>
+<p>然后启动项目，如果成功启动，继续下面步骤。</p>
+<h2 id="仓库配置"><a href="#仓库配置" class="headerlink" title="仓库配置"></a>仓库配置</h2><p>根据上面git配置信息指定的仓库位置创建一个config-client目录作为配置仓库，并新建一下4个文件：</p>
+<ul>
+<li>wqh.properties： form=wqh_default_1.0</li>
+<li>wqh-dev.properties：form=wqh_dev_1.0</li>
+<li>wqh-prod.properties：form=wqh_prod_1.0</li>
+<li>wqh-test.properties：form=wqh_test_1.0</li>
+</ul>
+<p>因为使用的是git做配置仓库，所以SpringCloudConfig天然就支持对微服务应用配置信息的版本管理，所以在git仓库中添加一个分支，将上面的1.0改为2.0，以测试版本控制。这里对于git的操作省略。<br>接下来可以通过浏览器、postman、curl等工具直接访问配置内容。配置信息的url和配置文件的映射关系如下：</p>
+<ul>
+<li><code>/{application}/{profile}[/{label}]</code></li>
+<li><code>/{application}-{profile}.yml</code>或<code>/{application}-{profile}.properties</code></li>
+<li><code>/{label}/{application}-{profile}.yml</code>或<code>/{label}/{application}-{profile}.properties</code><br>这里的url会映射<code>{application}-{profile}.yml</code>对应的配置文件。{label}对应git上不同的分支，默认是master。<br>访问url：<code>http://localhost:9000/wqh/test/config-label</code>，该url的是要访问config-label分支，wqh应用的test环境。<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/90513660.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>可以看到该json返回了应用名wqh，环境名test，分支名config-label，以及test环境和默认环境配置的内容。配置服务器在从git中获取到配置信息后，实际上会存储一份在config-server的文件系统，也就是复制一份在本地存储。<h2 id="客户端配置"><a href="#客户端配置" class="headerlink" title="客户端配置"></a>客户端配置</h2>同样新建一个SpringBoot项目，命名config-client，映入依赖：<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>创建bootstrap.properties文件来获取配置文件的config-server位置。属性配置必须在bootstrap.properties文件中才正确加载config-server中的配置信息。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#配置服务名</div><div class="line">spring.application.name=wqh</div><div class="line">#服务id</div><div class="line">server.port=<span class="number">60000</span></div><div class="line">#配置对应文件规则中的&#123;profile&#125;部分</div><div class="line">spring.cloud.config.profile=test</div><div class="line">#配置对应文件规则中的&#123;label&#125;</div><div class="line">spring.cloud.config.label=config-label</div><div class="line">#配置中心的地址</div><div class="line">spring.cloud.config.uri=http:<span class="comment">//localhost:9000/</span></div></pre></td></tr></table></figure></p>
+<p>创建一个接口来获取配置中心的name属性：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RefreshScope</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</div><div class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;form&#125;"</span>)</div><div class="line">    <span class="keyword">private</span> String form;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> Environment environment;</div><div class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/get_name"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"form:"</span>+form;</div><div class="line">    &#125;</div><div class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/get_name_env"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name_env</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> environment.getProperty(<span class="string">"form"</span>,<span class="string">"undefine"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>访问接口即可获取指定的信息。</p>
+<h1 id="配置介绍"><a href="#配置介绍" class="headerlink" title="配置介绍"></a>配置介绍</h1><p>架构<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/84498860.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>客户端从配置管理中获取配置流程：</p>
+<blockquote>
+<ol>
+<li>应用启动，根据bootstrap.properties中配置的应用名{application}、环境名{profile}、分支名{label}，行配置中心获取配置信息。</li>
+<li>ConfigServer根据自己维护的Git仓库信息和客户端传递过来的配置定位信息去查找配置信息。</li>
+<li>通过git clone命令将找到的配置信息下载到ConfigServer的文件系统中。</li>
+<li>ConfigServer创建Spring的ApplicationContext实例，并从git本地仓库中加载配置文件，最后将这些配置文件内容读取出来返回给客户端</li>
+<li>客户端应用在获得外部配置文件后加载到客户端ApplicationContext实例，该配置内容的优先级高于客户端Jar包内部的配置内容，所以在Jar包中重复的内容将不再被加载。</li>
+</ol>
+</blockquote>
+<h2 id="服务端配置"><a href="#服务端配置" class="headerlink" title="服务端配置"></a>服务端配置</h2><ul>
+<li><strong>URL占位符配置</strong><br>前面用到了三种占位符：<blockquote>
+<ol>
+<li>{application}：映射到客户端的spring.application.name</li>
+<li>{profile}：映射到客户端的spring.profiles.active或者是application-{profile}.yml</li>
+<li>{label}：映射到版本库的分支<br>这些占位符除了用于表示配置文件的规则外，还可以用于ConfigServer中对git仓库的URI配置。如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spring.cloud.config.server.git.uri=https:<span class="comment">//github.com/wqh8522/spring-cloud-config/&#123;application&#125;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p>使用{label}占位符需要注意，如果git仓库分支和标签包含“/”，那么{label}参数在HTTP的URL中应该使用“(_)”来替代。</p>
+<h2 id="客户端配置-1"><a href="#客户端配置-1" class="headerlink" title="客户端配置"></a>客户端配置</h2><ul>
+<li><p><strong>失败快速响应</strong><br>在客户端的bootstrap.properties文件中添加配置即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spring.cloud.config.fail-fast=true</div></pre></td></tr></table></figure>
+</li>
+<li><p><strong>重试机制</strong><br>客户端需要使用spring-retry和spring-boot-starter-aop依赖：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.retry&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-retry&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>重试机制的配置：</p>
+<blockquote>
+<p># 配置重试次数，默认为6<br>spring.cloud.config.retry.max-attempts=6<br># 间隔乘数，默认1.1<br>spring.cloud.config.retry.multiplier=1.1<br># 初始重试间隔时间，默认1000ms<br>spring.cloud.config.retry.initial-interval=1000<br># 最大间隔时间，默认2000ms<br>spring.cloud.config.retry.max-interval=2000</p>
+<ul>
+<li><strong>动态刷新</strong><br>添加<code>spring-boot-starter-actuator</code>依赖<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<p>重启客户端，查看控制台可以看有/refresh接口，通过post请求发送到该接口就能刷新配置。<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/73847071.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h2 id="加密解密"><a href="#加密解密" class="headerlink" title="加密解密"></a>加密解密</h2><p>在jdk自带了限制长度的JCE，所以从Oracle官网下载不限制长度版本：<a href="http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" target="_blank" rel="external">点击下载jce8</a>，解压之后得到三个文件<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/47236425.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>将上面两个jar包复制到$JAVA_HOME$\jre\lib\security中将原来的覆盖</p>
+<ul>
+<li><strong>对称加密</strong><br>对称加密简单，只需要设置密钥即可，但是这个密钥必须配置在<strong>bootstrap.properties</strong>中，否则无法获取到密钥信息。如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">encrypt.key=wqh3520</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>访问<code>/encrypt/status</code>接口：<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/65955540.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>加密相关接口：</p>
+<ol>
+<li>/encrypt/status：查看加密状态；</li>
+<li>/key：查看密钥端点；</li>
+<li>/encrpt：对请求的body内容进行加密的端点；</li>
+<li>/decrypt：对请求的body内容解密的端点。<br>接着使用postman等工具来加密解密数据：<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/97007333.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>这里加密数据之后，拿到加密后的字符在配置文件中使用需要以{cipher}开头，如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">form=&#123;cipher&#125;<span class="number">0f</span>a7c3c11e5625fe3d90f03ac8820aaaa90336a4245b5d90cea61547ef94b8f7</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><strong>非对称加密</strong><br>对称只要配置一个密钥即可，而非对称加密是密钥对，所以安全性比对称加密要搞。生成密钥对可以使用jdk自带的keytool工具，使用命令：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -genkeypair -alias config-server -keyalg RSA -keystore config-server.keystore</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/64690270.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>然后再命令执行的文件夹下会生成一个名为：<code>config-server.keystore</code>的文件，将其拷贝到配置中心的<code>src\main\resources</code>目录下。然后在配置文件中添加加密配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">encrypt.key-store.location=config-server.keystore</div><div class="line">encrypt.key-store.alias=config-server</div><div class="line">#在命令行第一次输入的密钥库口令</div><div class="line">encrypt.key-store.password=<span class="number">123456</span></div><div class="line">#最后输入的口令</div><div class="line">encrypt.key-store.secret=<span class="number">654321</span></div></pre></td></tr></table></figure></p>
+<p>后面的操作与对称加密一样。</p>
+<h1 id="配置高可用配置中心"><a href="#配置高可用配置中心" class="headerlink" title="配置高可用配置中心"></a>配置高可用配置中心</h1><h2 id="改造config-server"><a href="#改造config-server" class="headerlink" title="改造config-server"></a>改造config-server</h2><p>在微服务架构中，基本每一个服务都会配置成高可用的，配置中心也一样。对上面的config-server进行改造，添加eureka的依赖，是其作为服务在服务注册中心注册。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-cloud-starter-eureka&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<p>在主类上使用<code>@EnableEurekaClient</code>或<code>@EnableDiscoveryClient</code>开启服务发现功能，使其成为eureka的一个客户端。然后添加eureka的相关配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">eureka.client.service-url.defaultZone=http:<span class="comment">//localhost:8888/eureka</span></div></pre></td></tr></table></figure></p>
+<h2 id="改造config-client"><a href="#改造config-client" class="headerlink" title="改造config-client"></a>改造config-client</h2><p>与前面一样需要添加依赖，使用注解开启功能和配注册中心。另外还需要修改<code>spring.cloud.config.*</code>的配置，最终配置如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#配置服务名</div><div class="line">spring.application.name=wqh</div><div class="line">#服务id</div><div class="line">server.port=<span class="number">60000</span></div><div class="line">eureka.client.service-url.defaultZone=http:<span class="comment">//localhost:8888/eureka</span></div><div class="line">#开启通过服务来访问config-server</div><div class="line">spring.cloud.config.discovery.enabled=<span class="keyword">true</span></div><div class="line">#指定配置中心注册的服务名</div><div class="line">spring.cloud.config.discovery.service-id=config-server</div><div class="line">spring.cloud.config.profile=dev</div></pre></td></tr></table></figure></p>
+<hr>
+<p>参考：《SpringCloud微服务实战》</p>
+<p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/01/19/SpringCloudConfig/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringCloudAPI网关服务Zuul" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -192,7 +342,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说，权限管理也是一个不可少的模块，在微服务架构中，系统被拆分，不可能每个模块都去添加一个个权限管理，这样系统代码重复、工作量大、后期维护也难。为了解决这些常见的架构问题，API网关应运而生。SpringCloudZuul是基于Netflix Zuul实现的API网关组件，它实现了请求路由、负载均衡、校验过滤、与服务治理框架的结合、请求转发是的熔断机制和服务的聚合等功能。
+        <p>》SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说，权限管理也是一个不可少的模块，在微服务架构中，系统被拆分，不可能每个模块都去添加一个个权限管理，这样系统代码重复、工作量大、后期维护也难。为了解决这些常见的架构问题，API网关应运而生。SpringCloudZuul是基于Netflix Zuul实现的API网关组件，它实现了请求路由、负载均衡、校验过滤、与服务治理框架的结合、请求转发是的熔断机制和服务的聚合等功能。
         
           <a class="article-more-a" href="/2018/01/18/SpringCloudAPI网关服务Zuul/#more">more >></a>
         
@@ -817,100 +967,6 @@
 
 
   
-    <article id="post-SpringBoot使用JWT实现登录验证" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/02/SpringBoot使用JWT实现登录验证/">SpringBoot使用JWT实现登录验证</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/02/SpringBoot使用JWT实现登录验证/" class="archive-article-date">
-  	<time datetime="2018-01-02T08:46:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是JWT"><a href="#什么是JWT" class="headerlink" title="什么是JWT"></a>什么是JWT</h2><blockquote>
-<p>JSON Web Token（JWT）是一个开放的标准（RFC 7519），它定义了一个紧凑且自包含的方式，用于在各方之间以JSON对象安全地传输信息。这些信息可以通过数字签名进行验证和信任。可以使用秘密（使用HMAC算法）或使用RSA的公钥/私钥对来对JWT进行签名。<br>具体的jwt介绍可以查看官网的介绍：<a href="https://jwt.io/introduction/" target="_blank" rel="external">https://jwt.io/introduction/</a></p>
-</blockquote>
-<h2 id="jwt请求流程"><a href="#jwt请求流程" class="headerlink" title="jwt请求流程"></a>jwt请求流程</h2><p>引用官网的图片
-        
-          <a class="article-more-a" href="/2018/01/02/SpringBoot使用JWT实现登录验证/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JWT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringBoot/" class="article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/02/SpringBoot使用JWT实现登录验证/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -1030,15 +1086,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1054,23 +1110,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1086,6 +1130,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
               </li>
              
@@ -1094,15 +1142,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1118,11 +1158,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
+                <a href="javascript:void(0)" class="js-tag color1">webservice</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
+                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1130,11 +1178,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
               </li>
              
               <li class="article-tag-list-item">

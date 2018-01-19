@@ -4,8 +4,23 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/</loc>
+    <lastmod>2018-01-19T08:54:51.622Z</lastmod>
+    <data>
+        <display>
+        <title>SpringCloud分布式配置中心Config</title>
+        <pubTime>2018-01-19T01:10:44.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/</loc>
-    <lastmod>2018-01-18T03:50:49.770Z</lastmod>
+    <lastmod>2018-01-18T03:57:06.950Z</lastmod>
     <data>
         <display>
         <title>SpringCloudAPI网关服务Zuul</title>
@@ -253,9 +268,9 @@
         <title>关于SpringBoot上传图片的几种方式</title>
         <pubTime>2017-12-28T12:30:59.000Z</pubTime>
         
-        <tag>FastDFS</tag>
-         
         <tag>图片上传</tag>
+         
+        <tag>FastDFS</tag>
          
         <tag>七牛云</tag>
          
