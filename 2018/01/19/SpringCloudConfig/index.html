@@ -9,6 +9,7 @@
   <title>SpringCloud分布式配置中心Config | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="SpringCloudConfig是SpringCloud创建的用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为客户端和服务端两部分。服务端也称为分布式配置中心，是一个独立的微服务应用，用来连接配置仓库并为客户端提供获取配置信息，加密/解密信息等访问接口。而客户端则是微服务架构中各微服务应用或基础设施，通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从">
+<meta name="keywords" content="SpringCloud,Config">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringCloud分布式配置中心Config">
 <meta property="og:url" content="http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/index.html">
@@ -22,7 +23,7 @@
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-19/65955540.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-19/97007333.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
 <meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-19/64690270.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10">
-<meta property="og:updated_time" content="2018-01-19T08:54:51.622Z">
+<meta property="og:updated_time" content="2018-01-19T09:02:55.974Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringCloud分布式配置中心Config">
 <meta name="twitter:description" content="SpringCloudConfig是SpringCloud创建的用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为客户端和服务端两部分。服务端也称为分布式配置中心，是一个独立的微服务应用，用来连接配置仓库并为客户端提供获取配置信息，加密/解密信息等访问接口。而客户端则是微服务架构中各微服务应用或基础设施，通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从">
@@ -192,7 +193,7 @@
 
         
         <a href="/2018/01/19/SpringCloudConfig/" class="archive-article-date">
-  	<time datetime="2018-01-19T01:10:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
+  	<time datetime="2018-01-19T10:10:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
 </a>
         
       </header>
@@ -200,9 +201,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>SpringCloudConfig是SpringCloud创建的用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为客户端和服务端两部分。服务端也称为分布式配置中心，是一个独立的微服务应用，用来连接配置仓库并为客户端提供获取配置信息，加密/解密信息等访问接口。而客户端则是微服务架构中各微服务应用或基础设施，通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。</p>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="构建配置中心"><a href="#构建配置中心" class="headerlink" title="构建配置中心"></a>构建配置中心</h2><p>新建一个SpringBoot项目，命名config-server；添加一下依赖：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>SpringCloudConfig是SpringCloud创建的用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为客户端和服务端两部分。服务端也称为分布式配置中心，是一个独立的微服务应用，用来连接配置仓库并为客户端提供获取配置信息，加密/解密信息等访问接口。而客户端则是微服务架构中各微服务应用或基础设施，通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。<a id="more"></a></p>
 </blockquote>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="构建配置中心"><a href="#构建配置中心" class="headerlink" title="构建配置中心"></a>构建配置中心</h2><p>新建一个SpringBoot项目，命名config-server；添加一下依赖：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-config-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>在主类上使用<code>@EnableConfigServer</code>注解来开启配置中心服务端功能。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@EnableConfigServer</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigserverApplication</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		SpringApplication.run(ConfigserverApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>在application.properties文件中添加git仓库配置：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">spring.application.name=config-server</div><div class="line">server.port=<span class="number">9000</span></div><div class="line">#表示配置中心所在仓库的位置</div><div class="line">spring.cloud.config.server.git.uri=https:<span class="comment">//github.com/wqh8522/spring-cloud-config.git</span></div><div class="line">#仓库路径下的的相对搜索位置，可以配置多个</div><div class="line">spring.cloud.config.server.git.search-paths=config-client</div><div class="line">#git的用户名</div><div class="line">spring.cloud.config.server.git.username=username</div><div class="line">#git的密码</div><div class="line">spring.cloud.config.server.git.password=password</div></pre></td></tr></table></figure></p>
 <p>然后启动项目，如果成功启动，继续下面步骤。</p>
@@ -238,12 +239,12 @@
 <ol>
 <li>{application}：映射到客户端的spring.application.name</li>
 <li>{profile}：映射到客户端的spring.profiles.active或者是application-{profile}.yml</li>
-<li>{label}：映射到版本库的分支<br>这些占位符除了用于表示配置文件的规则外，还可以用于ConfigServer中对git仓库的URI配置。如：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spring.cloud.config.server.git.uri=https:<span class="comment">//github.com/wqh8522/spring-cloud-config/&#123;application&#125;</span></div></pre></td></tr></table></figure>
-</li>
+<li>{label}：映射到版本库的分支</li>
 </ol>
 </blockquote>
 </li>
 </ul>
+<p>这些占位符除了用于表示配置文件的规则外，还可以用于ConfigServer中对git仓库的URI配置。如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spring.cloud.config.server.git.uri=https:<span class="comment">//github.com/wqh8522/spring-cloud-config/&#123;application&#125;</span></div></pre></td></tr></table></figure></p>
 <p>使用{label}占位符需要注意，如果git仓库分支和标签包含“/”，那么{label}参数在HTTP的URL中应该使用“(_)”来替代。</p>
 <h2 id="客户端配置-1"><a href="#客户端配置-1" class="headerlink" title="客户端配置"></a>客户端配置</h2><ul>
 <li><p><strong>失败快速响应</strong><br>在客户端的bootstrap.properties文件中添加配置即可：</p>
@@ -256,11 +257,11 @@
 <p>重试机制的配置：</p>
 <blockquote>
 <p># 配置重试次数，默认为6<br>spring.cloud.config.retry.max-attempts=6<br># 间隔乘数，默认1.1<br>spring.cloud.config.retry.multiplier=1.1<br># 初始重试间隔时间，默认1000ms<br>spring.cloud.config.retry.initial-interval=1000<br># 最大间隔时间，默认2000ms<br>spring.cloud.config.retry.max-interval=2000</p>
+</blockquote>
 <ul>
 <li><strong>动态刷新</strong><br>添加<code>spring-boot-starter-actuator</code>依赖<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
 </li>
 </ul>
-</blockquote>
 <p>重启客户端，查看控制台可以看有/refresh接口，通过post请求发送到该接口就能刷新配置。<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/73847071.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
 <h2 id="加密解密"><a href="#加密解密" class="headerlink" title="加密解密"></a>加密解密</h2><p>在jdk自带了限制长度的JCE，所以从Oracle官网下载不限制长度版本：<a href="http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip" target="_blank" rel="external">点击下载jce8</a>，解压之后得到三个文件<br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-19/47236425.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>将上面两个jar包复制到$JAVA_HOME$\jre\lib\security中将原来的覆盖</p>
 <ul>
@@ -295,7 +296,33 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Config</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/SpringCloud/" class="article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -519,27 +546,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分页</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">拦截器</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">CentOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -551,11 +570,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">分页</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">拦截器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">注解</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">redis</a>
+                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -563,15 +590,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Data-Jpa</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hibernate</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -587,7 +606,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+                <a href="javascript:void(0)" class="js-tag color2">Config</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Data-Jpa</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hibernate</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -611,31 +650,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Ribbon</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图片上传</a>
+                <a href="javascript:void(0)" class="js-tag color2">oracle</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -644,6 +667,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">websocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">图片上传</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
               </li>
             
             <div class="clearfix"></div>
