@@ -4,16 +4,33 @@
 
     
   <url>
-    <loc>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/</loc>
-    <lastmod>2018-01-25T01:26:02.968Z</lastmod>
+    <loc>http://www.wanqhblog.top/2018/01/25/CentOS-Kafka/</loc>
+    <lastmod>2018-01-25T08:20:10.660Z</lastmod>
     <data>
         <display>
-        <title>SpringCloudAPI网关服务Zuul</title>
-        <pubTime>2018-01-18T08:55:47.000Z</pubTime>
+        <title>CentOS7下Kafka的安装介绍</title>
+        <pubTime>2018-01-25T06:29:14.000Z</pubTime>
+        
+        <tag>Kafka</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.wanqhblog.top/2018/01/25/SpingCLoudBusRabbitMQ/</loc>
+    <lastmod>2018-01-25T01:30:32.798Z</lastmod>
+    <data>
+        <display>
+        <title>SpingCloudBus整合RabbitMQ</title>
+        <pubTime>2018-01-25T06:22:55.000Z</pubTime>
         
         <tag>SpringCloud</tag>
          
-        <tag>Zuul</tag>
+        <tag>RabbitMQ</tag>
          
          
            
@@ -26,16 +43,16 @@
 
     
   <url>
-    <loc>http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/</loc>
-    <lastmod>2018-01-24T09:48:01.388Z</lastmod>
+    <loc>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/</loc>
+    <lastmod>2018-01-25T01:26:02.968Z</lastmod>
     <data>
         <display>
-        <title>SpingCloudBus整合RabbitMQ</title>
-        <pubTime>2018-01-24T06:22:55.000Z</pubTime>
+        <title>SpringCloudAPI网关服务Zuul</title>
+        <pubTime>2018-01-18T08:55:47.000Z</pubTime>
         
         <tag>SpringCloud</tag>
          
-        <tag>RabbitMQ</tag>
+        <tag>Zuul</tag>
          
          
            

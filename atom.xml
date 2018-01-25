@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-24T09:48:01.388Z</updated>
+  <updated>2018-01-25T08:20:10.660Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -16,11 +16,106 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CentOS7下Kafka的安装介绍</title>
+    <link href="http://www.wanqhblog.top/2018/01/25/CentOS-Kafka/"/>
+    <id>http://www.wanqhblog.top/2018/01/25/CentOS-Kafka/</id>
+    <published>2018-01-25T06:29:14.000Z</published>
+    <updated>2018-01-25T08:20:10.660Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><blockquote>
+<p><strong>Kafka</strong>是分布式发布-订阅消息系统，最初由LinkedIn公司开发，之后成为之后成为Apache基金会的一部分，由<a href="https://baike.baidu.com/item/Scala" target="_blank" rel="external">Scala</a>和<a href="https://baike.baidu.com/item/Java/85979" target="_blank" rel="external">Java</a>编写。Kafka是一种快速、可扩展的、设计内在就是分布式的，分区的和可复制的提交日志服务。</p>
+<p>它与传统系统相比，有以下不同：</p>
+<ul>
+<li>它被设计为一个分布式系统，易于向外扩展；</li>
+<li>它同时为发布和订阅提供高吞吐量；</li>
+<li>它支持多订阅者，当失败时能自动平衡消费者；</li>
+<li>它将消息持久化到磁盘，因此可用于批量消费，例如<a href="http://en.wikipedia.org/wiki/Extract,_transform,_load" target="_blank" rel="external">ETL</a>，以及实时应用程序。 <a id="more"></a></li>
+</ul>
+</blockquote>
+<h1 id="安装kakfka"><a href="#安装kakfka" class="headerlink" title="安装kakfka"></a>安装kakfka</h1><p>从<a href="https://kafka.apache.org/downloads" target="_blank" rel="external">官网下载</a>Kafka安装包，解压安装，或直接使用命令下载。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://mirror.bit.edu.cn/apache/kafka/1.0.0/kafka_2.11-1.0.0.tgz</div></pre></td></tr></table></figure>
+<p>解压安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">tar -zvxf kafka_2.11-1.0.0.tgz -C /usr/<span class="built_in">local</span>/</div><div class="line">d /usr/<span class="built_in">local</span>/kafka_2.11-1.0.0/</div></pre></td></tr></table></figure>
+<p>修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim config/server.properties</div></pre></td></tr></table></figure>
+<p>修改其中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">broker.id=1</div><div class="line">log.dirs=data/kafka-logs</div></pre></td></tr></table></figure>
+<h1 id="功能验证"><a href="#功能验证" class="headerlink" title="功能验证"></a>功能验证</h1><h2 id="启动zookeeper"><a href="#启动zookeeper" class="headerlink" title="启动zookeeper"></a>启动zookeeper</h2><p>使用安装包中的脚本启动单节点Zookeeper实例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/zookeeper-server-start.sh -daemon config/zookeeper.properties</div></pre></td></tr></table></figure>
+<h2 id="启动Kafka服务"><a href="#启动Kafka服务" class="headerlink" title="启动Kafka服务"></a>启动Kafka服务</h2><p>使用kafka-server-start.sh启动kafka服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kafka-server-start.sh config/server.properties</div></pre></td></tr></table></figure>
+<h2 id="创建Topic"><a href="#创建Topic" class="headerlink" title="创建Topic"></a>创建Topic</h2><p>使用kafka-topics.sh 创建但分区单副本的topic test </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<h2 id="查看Topic"><a href="#查看Topic" class="headerlink" title="查看Topic"></a>查看Topic</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kafka-topics.sh --list --zookeeper localhost:2181</div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-25/43812418.jpg-blog" alt=""></p>
+<h2 id="产生消息"><a href="#产生消息" class="headerlink" title="产生消息"></a>产生消息</h2><p>使用kafka-console-producer.sh 发送消息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kafka-console-producer.sh --broker-list localhost:9092 --topic <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-25/84256783.jpg-blog" alt=""></p>
+<h2 id="消费消息"><a href="#消费消息" class="headerlink" title="消费消息"></a>消费消息</h2><p>使用kafka-console-consumer.sh 接收消息并在终端打印</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic <span class="built_in">test</span> --from-beginning</div></pre></td></tr></table></figure>
+<h2 id="删除Topic"><a href="#删除Topic" class="headerlink" title="删除Topic"></a>删除Topic</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<h2 id="查看描述-Topic-信息"><a href="#查看描述-Topic-信息" class="headerlink" title="查看描述 Topic 信息"></a>查看描述 Topic 信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-25/44126022.jpg-blog" alt=""></p>
+<p>第一行给出了所有分区的摘要，每个附加行给出了关于一个分区的信息。 由于我们只有一个分区，所以只有一行。</p>
+<p>“Leader”: 是负责给定分区的所有读取和写入的节点。 每个节点将成为分区随机选择部分的领导者。</p>
+<p>“Replicas”: 是复制此分区日志的节点列表，无论它们是否是领导者，或者即使他们当前处于活动状态。</p>
+<p>“Isr”: 是一组“同步”副本。这是复制品列表的子集，当前活着并被引导到领导者。</p>
+<h1 id="集群配置"><a href="#集群配置" class="headerlink" title="集群配置"></a>集群配置</h1><p>Kafka支持两种模式的集群搭建：</p>
+<ol>
+<li>单机多broker集群配置；</li>
+<li>多机多broker集群配置。</li>
+</ol>
+<h2 id="单机多breoker"><a href="#单机多breoker" class="headerlink" title="单机多breoker"></a>单机多breoker</h2><p>利用单节点部署多个broker。不同的broker不同的id，监听端口以及日志目录，如：</p>
+<ul>
+<li>将配置文件复制两份</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp config/server.properties config/server-1.properties</div><div class="line">cp config/server.properties config/server-2.properties</div></pre></td></tr></table></figure>
+<ul>
+<li>修改配置文件信息，这里为了对应，将上面的broker.id改为了0</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">vim config/server-1.properties</div><div class="line"><span class="comment">#修改内容</span></div><div class="line">broker.id=1</div><div class="line">listeners=PLAINTEXT://your.host.name:9093</div><div class="line">log.dirs=/data/kafka-logs-1</div><div class="line"></div><div class="line"></div><div class="line">vim config/server-2.properties</div><div class="line"><span class="comment">#修改内容</span></div><div class="line">broker.id=2</div><div class="line">listeners=PLAINTEXT://your.host.name:9094</div><div class="line">log.dirs=/data/kafka-logs-2</div></pre></td></tr></table></figure>
+<ul>
+<li>启动多个kafka服务</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">in</span>/kafka-server-start.sh config/server-1.properties </div><div class="line"></div><div class="line">bin/kafka-server-start.sh config/server-2.properties</div></pre></td></tr></table></figure>
+<ul>
+<li>最后按照上面方法产生和消费信息。</li>
+</ul>
+<h2 id="多机多broker"><a href="#多机多broker" class="headerlink" title="多机多broker"></a>多机多broker</h2><p>分别在多个节点按上述方式安装Kafka，配置启动多个Zookeeper 实例。如：192.168.18.130、192.168.18.131、192.168.18.132三台机器</p>
+<p>分别配置多个机器上的Kafka服务 设置不同的broke id，zookeeper.connect设置如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zookeeper.connect=192.168.18.130:2181,192.168.18.131:2181,192.168.18.132:2181</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><a href="https://www.mtyun.com/library/how-to-install-kafka-on-centos7" target="_blank" rel="external">在CentOS 7上安装Kafka</a></li>
+<li><a href="http://www.infoq.com/cn/articles/apache-kafka/" target="_blank" rel="external">Apache Kafka：下一代分布式消息系统</a></li>
+<li><a href="http://www.54tianzhisheng.cn/2018/01/04/Kafka/#%E4%BD%BF%E7%94%A8-Kafka-Connect-%E6%9D%A5%E5%AF%BC%E5%85%A5-%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE" target="_blank" rel="external">Kafka 安装及快速入门</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Kafka&lt;/strong&gt;是分布式发布-订阅消息系统，最初由LinkedIn公司开发，之后成为之后成为Apache基金会的一部分，由&lt;a href=&quot;https://baike.baidu.com/item/Scala&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Scala&lt;/a&gt;和&lt;a href=&quot;https://baike.baidu.com/item/Java/85979&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Java&lt;/a&gt;编写。Kafka是一种快速、可扩展的、设计内在就是分布式的，分区的和可复制的提交日志服务。&lt;/p&gt;
+&lt;p&gt;它与传统系统相比，有以下不同：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;它被设计为一个分布式系统，易于向外扩展；&lt;/li&gt;
+&lt;li&gt;它同时为发布和订阅提供高吞吐量；&lt;/li&gt;
+&lt;li&gt;它支持多订阅者，当失败时能自动平衡消费者；&lt;/li&gt;
+&lt;li&gt;它将消息持久化到磁盘，因此可用于批量消费，例如&lt;a href=&quot;http://en.wikipedia.org/wiki/Extract,_transform,_load&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ETL&lt;/a&gt;，以及实时应用程序。
+    
+    </summary>
+    
+    
+      <category term="Kafka" scheme="http://www.wanqhblog.top/tags/Kafka/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SpingCloudBus整合RabbitMQ</title>
-    <link href="http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/"/>
-    <id>http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/</id>
-    <published>2018-01-24T06:22:55.000Z</published>
-    <updated>2018-01-24T09:48:01.388Z</updated>
+    <link href="http://www.wanqhblog.top/2018/01/25/SpingCLoudBusRabbitMQ/"/>
+    <id>http://www.wanqhblog.top/2018/01/25/SpingCLoudBusRabbitMQ/</id>
+    <published>2018-01-25T06:22:55.000Z</published>
+    <updated>2018-01-25T01:30:32.798Z</updated>
     
     <content type="html"><![CDATA[<h1 id="SpringCloudBus介绍"><a href="#SpringCloudBus介绍" class="headerlink" title="SpringCloudBus介绍"></a>SpringCloudBus介绍</h1><blockquote>
 <p>SpringCloudBus：消息总线，可以将分布式系统的节点与轻量级消息代理连接，然后实现广播状态更改（如配置更改）或广播其他管理指令。总线就像一个分布式执行器，用于扩展SpringBoot应用程序，但可以用作应用程序之间的通信通道。</p>
@@ -81,7 +176,8 @@
 <p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-24/87259611.jpg-blog" alt=""></p>
 <hr>
 <p>参考：《SpringCloud微服务实战》</p>
-<p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/</a></p>
+<p>示例地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/</a></p>
+<p>原文地址： <a href="http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/">SpingCloudBus整合RabbitMQ</a></p>
 ]]></content>
     
     <summary type="html">
@@ -1433,36 +1529,6 @@
     
     
       <category term="SpringBooot" scheme="http://www.wanqhblog.top/tags/SpringBooot/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Oracle新建用户</title>
-    <link href="http://www.wanqhblog.top/2017/10/01/oracle%E6%96%B0%E5%BB%BA%E7%94%A8%E6%88%B7/"/>
-    <id>http://www.wanqhblog.top/2017/10/01/oracle新建用户/</id>
-    <published>2017-10-01T01:22:39.000Z</published>
-    <updated>2017-10-02T02:15:11.009Z</updated>
-    
-    <content type="html"><![CDATA[<p>1.首先我们可以用scott用户以sysdba的身份登录oracle.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">conn scott/tiger as sysdba</div></pre></td></tr></table></figure></p>
-<p>2.然后我就可以来创建用户了.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="keyword">name</span>;</div></pre></td></tr></table></figure></p>
-<p>3.修改用户的密码. <a id="more"></a><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">alter</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">identified</span> <span class="keyword">by</span> <span class="keyword">password</span>;</div></pre></td></tr></table></figure></p>
-<p>4.创建一个表空间.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">tablespace</span> tablespace_name <span class="keyword">datafile</span> <span class="string">'c:\tablespace_name.dbf'</span> <span class="keyword">size</span> <span class="number">200</span>M;</div></pre></td></tr></table></figure></p>
-<p>5.创建好表空间,还需要将表空间分配给用户.<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">alter</span> <span class="keyword">user</span> <span class="keyword">name</span> <span class="keyword">default</span> <span class="keyword">tablespace</span> tablespacename;</div></pre></td></tr></table></figure></p>
-<p>6.给用户分配了表空间,用户还不能登陆（没有登录权限）,因此还需要为用户分配权限<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">grant</span> <span class="keyword">create</span> <span class="keyword">session</span>,<span class="keyword">create</span> <span class="keyword">table</span>,<span class="keyword">create</span> <span class="keyword">view</span>,<span class="keyword">create</span> <span class="keyword">sequence</span>,<span class="keyword">unlimited</span> <span class="keyword">tablespace</span> <span class="keyword">to</span> tablespace_name;</div></pre></td></tr></table></figure></p>
-<p>7.删除user<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">user</span> ×× <span class="keyword">cascade</span></div></pre></td></tr></table></figure></p>
-<p>8.说明： 删除了user，只是删除了该user下的schema objects，是不会删除相应的tablespace的。<br>删除tablespace<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">DROP</span> <span class="keyword">TABLESPACE</span> tablespace_name <span class="keyword">INCLUDING</span> <span class="keyword">CONTENTS</span> <span class="keyword">AND</span> <span class="keyword">DATAFILES</span>;</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;1.首先我们可以用scott用户以sysdba的身份登录oracle.&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;conn scott/tiger as sysdba&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;2.然后我就可以来创建用户了.&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;identified&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;3.修改用户的密码.
-    
-    </summary>
-    
-    
-      <category term="oracle" scheme="http://www.wanqhblog.top/tags/oracle/"/>
     
   </entry>
   
