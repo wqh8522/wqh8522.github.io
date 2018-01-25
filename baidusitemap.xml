@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/</loc>
+    <lastmod>2018-01-25T01:26:02.968Z</lastmod>
+    <data>
+        <display>
+        <title>SpringCloudAPI网关服务Zuul</title>
+        <pubTime>2018-01-18T08:55:47.000Z</pubTime>
+        
+        <tag>SpringCloud</tag>
+         
+        <tag>Zuul</tag>
+         
+         
+           
+             
+              <breadCrumb title="SpringCloud" url="http://www.wanqhblog.top/categories/SpringCloud/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/</loc>
     <lastmod>2018-01-24T09:48:01.388Z</lastmod>
     <data>
@@ -36,28 +58,6 @@
         <tag>SpringCloud</tag>
          
         <tag>Config</tag>
-         
-         
-           
-             
-              <breadCrumb title="SpringCloud" url="http://www.wanqhblog.top/categories/SpringCloud/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/</loc>
-    <lastmod>2018-01-18T03:57:06.950Z</lastmod>
-    <data>
-        <display>
-        <title>SpringCloudAPI网关服务Zuul</title>
-        <pubTime>2018-01-18T08:55:47.000Z</pubTime>
-        
-        <tag>SpringCloud</tag>
-         
-        <tag>Zuul</tag>
          
          
            
