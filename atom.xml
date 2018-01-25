@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-19T09:02:55.974Z</updated>
+  <updated>2018-01-24T09:48:01.388Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -16,11 +16,97 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>SpingCloudBus整合RabbitMQ</title>
+    <link href="http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/"/>
+    <id>http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/</id>
+    <published>2018-01-24T06:22:55.000Z</published>
+    <updated>2018-01-24T09:48:01.388Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="SpringCloudBus介绍"><a href="#SpringCloudBus介绍" class="headerlink" title="SpringCloudBus介绍"></a>SpringCloudBus介绍</h1><blockquote>
+<p>SpringCloudBus：消息总线，可以将分布式系统的节点与轻量级消息代理连接，然后实现广播状态更改（如配置更改）或广播其他管理指令。总线就像一个分布式执行器，用于扩展SpringBoot应用程序，但可以用作应用程序之间的通信通道。</p>
+<p>消息代理是一种消息验证、传输、路由的架构模式。它是一个中间产品，核心是一个消息的路由程序，用来实现接收和分发消息，并根据设定好的消息处理流来转发给正确的应用。通常一下场景需要使用消息代理<a id="more"></a></p>
+<ul>
+<li>将消息路由到一个或多个目的地</li>
+<li>消息转化为其他的表达方式</li>
+<li>执行消息的聚集、消息的分解，并将结果发送到它们的目的地，然后重新组合响应返回给信息用户</li>
+<li>调用Web服务来检索数据</li>
+<li>响应事件或错误</li>
+<li>使用发布-订阅模式提供内容或基于主题的消息内容。</li>
+</ul>
+</blockquote>
+<h1 id="RabbitMQ实现消息总线"><a href="#RabbitMQ实现消息总线" class="headerlink" title="RabbitMQ实现消息总线"></a>RabbitMQ实现消息总线</h1><p>RibbitMQ是实现了高级消息队列协议（AMQP）的开源消息代理软件，也称为面向消息的中间件。这里假设你已经了解RabbitMQ，具体的安装就不介绍了，可自行Google。</p>
+<h2 id="SpringBoot整合RabbitMQ"><a href="#SpringBoot整合RabbitMQ" class="headerlink" title="SpringBoot整合RabbitMQ"></a>SpringBoot整合RabbitMQ</h2><p>新建一个SpringBoot项目，这里命名hello-rabbitmq，然后添加<code>amqp</code>依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在配置文件<code>application.properties</code>中添加<code>RabbitMQ</code>的相关配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">spring.application.name=rabbitmq-hello</div><div class="line"></div><div class="line">#配置rabbitmq的主机</div><div class="line">spring.rabbitmq.host=<span class="number">192.168</span>.18.133</div><div class="line">#访问端口</div><div class="line">spring.rabbitmq.port=<span class="number">5672</span></div><div class="line">#安装RabbitMQ时配置的用户名</div><div class="line">spring.rabbitmq.username=wqh</div><div class="line">#安装RabbitMQ时配置的密码</div><div class="line">spring.rabbitmq.password=wqh</div></pre></td></tr></table></figure>
+<p>然后创建消息生产者Sender，这里发送一串字符串到hello的消息对列中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment"> *消息生产者Sender使用AmqpTemplate接口的实例来实现消息的发送</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sender</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(Sender.class);</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> AmqpTemplate amqpTemplate;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sender</span><span class="params">()</span></span>&#123;</div><div class="line">        String context = <span class="string">"wqh say hello "</span> + <span class="keyword">new</span> Date();</div><div class="line">        logger.info(<span class="string">"发送消息=========》》》》&#123;&#125;"</span>,context);</div><div class="line">        <span class="keyword">this</span>.amqpTemplate.convertAndSend(<span class="string">"hello"</span>,context);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>消息接收者Receiver，实现了对hello消息队列的消费</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 消息消费者Receiver 使用<span class="doctag">@RabbitListener</span>注解定义该类对hello队列的监听, 并用<span class="doctag">@RabbitHandler</span> 注解来指定对消息的处理方法</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="meta">@RabbitListener</span>(queues = <span class="string">"hello"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Receiver</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(Receiver.class);</div><div class="line"></div><div class="line">    <span class="meta">@RabbitHandler</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receiver</span><span class="params">(String hello)</span></span>&#123;</div><div class="line">        logger.info(<span class="string">"接收消息=====》》》》》&#123;&#125;"</span>,hello);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建RabbitMQ的配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> *  RabbitMQ的配置类，用来配队列、交换器、路由等高级信息</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitConfig</span> </span>&#123;</div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">helloConfig</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Queue(<span class="string">"hello"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建测试类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</div><div class="line"><span class="meta">@SpringBootTest</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitmqApplicationTests</span> </span>&#123;</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> Sender sender;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hello</span><span class="params">()</span></span>&#123;</div><div class="line">		sender.sender();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面说到一个hello队列，所以这里需要在RabbitMQ中添加一个hello队列，进入RabbitMQ的管理页面。</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-24/84351839.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<p>启动项目，运行测试方法：</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-24/73497814.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h2 id="SpringCloudBus整合RabbitMQ"><a href="#SpringCloudBus整合RabbitMQ" class="headerlink" title="SpringCloudBus整合RabbitMQ"></a>SpringCloudBus整合RabbitMQ</h2><p>前面使用SpringCloudConfig构建了一个配置中心，<a href="http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/">传送门</a>  。前面的结构中如果远程仓库配置发生改变，我们需要调用每个服务的<code>/refresh</code>接口或者重启服务才能获取到最新的配置信息，这种方法在微服务架构中几乎是完全不可行的。使用SpringCloudBus和RabbitMQ整合可以优雅的实现应用配置的动态刷新。直接改造之前的config-client项目</p>
+<ul>
+<li>添加<code>spring-cloud-starter-bus-amqp</code>依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-bus-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<ul>
+<li>在配置文件中添加RabbitMQ的相关配置，这里需要注意的要忽略权限，不然访问<code>/bus/refresh</code>接口的时候回返回<code>Full authentication is required to access this resource</code> 。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#忽略权限拦截</div><div class="line">management.security.enabled=<span class="keyword">false</span></div><div class="line"></div><div class="line">spring.rabbitmq.host=<span class="number">192.168</span>.18.133</div><div class="line">spring.rabbitmq.port=<span class="number">5672</span></div><div class="line">spring.rabbitmq.username=wqh</div><div class="line">spring.rabbitmq.password=wqh</div></pre></td></tr></table></figure>
+<ul>
+<li>将配置文件复制一份，修改端口，然后打包。分别启动eureka-server服务发现、config-server配置中心、两个config-client实例。项目结构</li>
+</ul>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-24/99612148.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<ul>
+<li>启动项目之后访问<code>http://localhost:60000/get_name</code>和<code>http://localhost:60001/get_name</code>获取到form属性。然后修改仓库中的中属性的值，会发现获取的到值并没有改变</li>
+<li>然后发出一个post请求到一个config-client，访问接口<code>/bus/refresh</code> ，发现这时候两个服务中都可以获取打最新的值</li>
+</ul>
+<p>在<code>/bus/refresh</code> 接口中有一个参数destination，该参数可以指定具体的实例刷新配置，还可指定具体的服务刷新配置。</p>
+<ul>
+<li><p>指定实例，只会触发端口号为60000的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/bus/refresh?destination=config-client:60000</div></pre></td></tr></table></figure>
+</li>
+<li><p>指定服务，这里会触发config-client服务的所有实例进行刷新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/bus/refresh?destination=config-client:**</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在《SpringCloud微服务实战》中提到了一个系统架构的优化，就是将消息总线加入到配置中心，然后通过destination参数来指定更新配置的服务或实例。</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-24/87259611.jpg-blog" alt=""></p>
+<hr>
+<p>参考：《SpringCloud微服务实战》</p>
+<p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;SpringCloudBus介绍&quot;&gt;&lt;a href=&quot;#SpringCloudBus介绍&quot; class=&quot;headerlink&quot; title=&quot;SpringCloudBus介绍&quot;&gt;&lt;/a&gt;SpringCloudBus介绍&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;SpringCloudBus：消息总线，可以将分布式系统的节点与轻量级消息代理连接，然后实现广播状态更改（如配置更改）或广播其他管理指令。总线就像一个分布式执行器，用于扩展SpringBoot应用程序，但可以用作应用程序之间的通信通道。&lt;/p&gt;
+&lt;p&gt;消息代理是一种消息验证、传输、路由的架构模式。它是一个中间产品，核心是一个消息的路由程序，用来实现接收和分发消息，并根据设定好的消息处理流来转发给正确的应用。通常一下场景需要使用消息代理
+    
+    </summary>
+    
+      <category term="SpringCloud" scheme="http://www.wanqhblog.top/categories/SpringCloud/"/>
+    
+    
+      <category term="SpringCloud" scheme="http://www.wanqhblog.top/tags/SpringCloud/"/>
+    
+      <category term="RabbitMQ" scheme="http://www.wanqhblog.top/tags/RabbitMQ/"/>
+    
+  </entry>
+  
+  <entry>
     <title>SpringCloud分布式配置中心Config</title>
     <link href="http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/"/>
     <id>http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/</id>
     <published>2018-01-19T10:10:44.000Z</published>
-    <updated>2018-01-19T09:02:55.974Z</updated>
+    <updated>2018-01-19T09:04:34.303Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>SpringCloudConfig是SpringCloud创建的用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为客户端和服务端两部分。服务端也称为分布式配置中心，是一个独立的微服务应用，用来连接配置仓库并为客户端提供获取配置信息，加密/解密信息等访问接口。而客户端则是微服务架构中各微服务应用或基础设施，通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。<a id="more"></a></p>
@@ -110,6 +196,7 @@
 <hr>
 <p>参考：《SpringCloud微服务实战》</p>
 <p>源码地址：<a href="https://gitee.com/wqh3520/spring-cloud-1-9" target="_blank" rel="external">https://gitee.com/wqh3520/</a></p>
+<p>原文地址：<a href="http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/">SpringCloud分布式配置中心Config</a></p>
 ]]></content>
     
     <summary type="html">
@@ -766,9 +853,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="JWT" scheme="http://www.wanqhblog.top/tags/JWT/"/>
-    
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/tags/SpringBoot/"/>
+    
+      <category term="JWT" scheme="http://www.wanqhblog.top/tags/JWT/"/>
     
   </entry>
   
@@ -893,9 +980,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
-    
       <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
+    
+      <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
     
       <category term="七牛云" scheme="http://www.wanqhblog.top/tags/%E4%B8%83%E7%89%9B%E4%BA%91/"/>
     
@@ -1368,47 +1455,6 @@
       &lt;p&gt;1.首先我们可以用scott用户以sysdba的身份登录oracle.&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;conn scott/tiger as sysdba&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;2.然后我就可以来创建用户了.&lt;br&gt;&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;user&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;identified&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;by&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;name&lt;/span&gt;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;3.修改用户的密码.
-    
-    </summary>
-    
-    
-      <category term="oracle" scheme="http://www.wanqhblog.top/tags/oracle/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Oeacle常见的日期处理</title>
-    <link href="http://www.wanqhblog.top/2017/09/27/Oeacle%E6%97%A5%E6%9C%9F/"/>
-    <id>http://www.wanqhblog.top/2017/09/27/Oeacle日期/</id>
-    <published>2017-09-27T11:51:00.000Z</published>
-    <updated>2017-10-09T06:47:12.964Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="日期处理常用函数"><a href="#日期处理常用函数" class="headerlink" title="日期处理常用函数"></a>日期处理常用函数</h2><ol>
-<li>sysdate：当前日期和时间；</li>
-<li>to_char()：将数值型或日期型转换为字符型；</li>
-<li>to_date()：日期转换函数，例：to_date(‘2017-09-27 10:00:00’, ‘yyyy-mm-dd hh24:mi:ss’)；</li>
-<li>last_day(sysdate)：返回日期所在月的最后一天；</li>
-<li>trunc(number[,decimals])：指定元素格式截去一部分日期值；</li>
-<li>add_months(D,N)：返回日期D加N月后对应的日期时间，N为正时则表示D之后；N为负时则表示为D之前；N为小数则会自动先删除小数部分，而用整数部分;<a id="more"></a></li>
-<li>decode(条件,值1,翻译值1,值2,翻译值2,…值n,翻译值n,缺省值)：根据条件返回相应的值；</li>
-<li>ceil(n)：取大于等于数值n的最小整数；</li>
-<li>floor(n)：取小于等于数值n的最大整数；</li>
-<li>dbtimezone()：返回时区；</li>
-<li>……<h2 id="常见操作"><a href="#常见操作" class="headerlink" title="常见操作"></a>常见操作</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="comment">--得到当前的日期</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">sysdate</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--取得当前日期是本月的第几周</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'YYYYMMDD HH24:MI:SS W'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'w'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--取得当前日期是一个星期中的第几天,注意星期日是第一天 返回的是number 1开始星期天</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'d'</span>) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'yyyy'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得年</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'q'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得季度</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'mm'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得月份</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'dd'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得日期</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'ddd'</span>) <span class="keyword">from</span> dual;<span class="comment">-- 一年中的第几天</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'ww'</span>) <span class="keyword">from</span> dual; <span class="comment">-- 年中的第几个星期</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'w'</span>) <span class="keyword">from</span> dual;  <span class="comment">-- 该月的第几个信息</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'day'</span>) <span class="keyword">from</span> dual; <span class="comment">--星期几</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'hh'</span>) <span class="keyword">from</span> dual; <span class="comment">--小时 12小时制</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'hh24'</span>) <span class="keyword">from</span> dual; <span class="comment">--小时 24小时制</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'MI'</span>) <span class="keyword">from</span> dual; <span class="comment">--分</span></div><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'ss'</span>) <span class="keyword">from</span> dual; <span class="comment">--秒</span></div><div class="line">  </div><div class="line"><span class="comment">--得到当天凌晨0点0分0秒的日期</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual;</div><div class="line">  </div><div class="line"><span class="comment">--得到这天的最后一秒</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">0.99999</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--得到小时的具体数值</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">1</span>/<span class="number">24</span> <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">7</span>/<span class="number">24</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--得到明天凌晨0点0分0秒的日期</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>+<span class="number">1</span>) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>)+<span class="number">1</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--本月一日的日期</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,<span class="string">'mm'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--下月一日的日期</span></div><div class="line"><span class="keyword">select</span> trunc(add_months(<span class="keyword">sysdate</span>, <span class="number">1</span>),<span class="string">'mm'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--返回当前月的最后一天</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">last_day</span>(<span class="keyword">sysdate</span>) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> <span class="keyword">last_day</span>(trunc(<span class="keyword">sysdate</span>)) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">last_day</span>(<span class="keyword">sysdate</span>)) <span class="keyword">from</span> dual;</div><div class="line"><span class="keyword">select</span> trunc(add_months(<span class="keyword">sysdate</span>,<span class="number">1</span>),<span class="string">'mm'</span>) - <span class="number">1</span> <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--得到一年的每一天</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,<span class="string">'yyyy'</span>)+ rn <span class="number">-1</span> date0 <span class="keyword">from</span></div><div class="line">(<span class="keyword">select</span> <span class="keyword">rownum</span> rn <span class="keyword">from</span> all_objects</div><div class="line"><span class="keyword">where</span> <span class="keyword">rownum</span>&lt;<span class="number">366</span>);</div><div class="line"></div><div class="line"><span class="comment">--给现有的日期加上2年</span></div><div class="line"><span class="keyword">select</span> add_months(<span class="keyword">sysdate</span>,<span class="number">24</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--判断某一日子所在年分是否为润年</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">decode</span>(to_char(<span class="keyword">last_day</span>(trunc(<span class="keyword">sysdate</span>,<span class="string">'y'</span>)+<span class="number">31</span>),<span class="string">'dd'</span>),<span class="string">'29'</span>,<span class="string">'闰年'</span>,<span class="string">'平年'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--判断两年后是否为润年</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">decode</span>(to_char(<span class="keyword">last_day</span>(trunc(add_months(<span class="keyword">sysdate</span>,<span class="number">24</span>),<span class="string">'y'</span>)+<span class="number">31</span>),<span class="string">'dd'</span>),<span class="string">'29'</span>,<span class="string">'闰年'</span>,<span class="string">'平年'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">--查询当前日期的季度</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">ceil</span>(to_number(to_char(<span class="keyword">sysdate</span>,<span class="string">'mm'</span>))/<span class="number">3</span>) <span class="keyword">from</span> dual;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><p>根据时间以及用户id计算该用户本周、本日、本月记录的数据<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 本日 </span></div><div class="line"><span class="keyword">select</span> y.create_by,<span class="keyword">count</span>(y.create_date),u.name <span class="keyword">from</span> <span class="keyword">test</span> y,sys_user u</div><div class="line"> <span class="keyword">where</span> <span class="keyword">to_date</span>(y.create_date)=<span class="keyword">to_date</span>(<span class="keyword">sysdate</span>) <span class="keyword">and</span> y.create_by=u.id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> y.create_by,u.name;</div><div class="line"></div><div class="line"><span class="comment">--本周</span></div><div class="line"><span class="keyword">select</span> create_by,<span class="keyword">count</span>(create_date)</div><div class="line"><span class="keyword">from</span> <span class="keyword">test</span></div><div class="line"><span class="keyword">where</span> <span class="keyword">to_date</span>(create_date)&gt;=<span class="keyword">to_date</span>(<span class="keyword">sysdate</span>-to_number(to_char(<span class="keyword">sysdate</span><span class="number">-1</span>,<span class="string">'D'</span>)+<span class="number">1</span>)) <span class="keyword">and</span> slzt=<span class="string">'1'</span></div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> create_by;</div><div class="line"></div><div class="line"><span class="comment">--本月</span></div><div class="line"><span class="keyword">select</span> to_char(create_date,<span class="string">'yyyy-mm'</span>),create_by,<span class="keyword">count</span>(create_date) <span class="keyword">from</span> <span class="keyword">test</span></div><div class="line"><span class="keyword">where</span> <span class="keyword">to_date</span>(create_date)&gt;=<span class="keyword">to_date</span>(trunc(<span class="keyword">sysdate</span>,<span class="string">'mm'</span>)) <span class="keyword">and</span> <span class="keyword">to_date</span>(create_date)&lt;=<span class="keyword">to_date</span>(<span class="keyword">last_day</span>(<span class="keyword">sysdate</span>))</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> to_char(create_date,<span class="string">'yyyy-mm'</span>),create_by;</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;日期处理常用函数&quot;&gt;&lt;a href=&quot;#日期处理常用函数&quot; class=&quot;headerlink&quot; title=&quot;日期处理常用函数&quot;&gt;&lt;/a&gt;日期处理常用函数&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;sysdate：当前日期和时间；&lt;/li&gt;
-&lt;li&gt;to_char()：将数值型或日期型转换为字符型；&lt;/li&gt;
-&lt;li&gt;to_date()：日期转换函数，例：to_date(‘2017-09-27 10:00:00’, ‘yyyy-mm-dd hh24:mi:ss’)；&lt;/li&gt;
-&lt;li&gt;last_day(sysdate)：返回日期所在月的最后一天；&lt;/li&gt;
-&lt;li&gt;trunc(number[,decimals])：指定元素格式截去一部分日期值；&lt;/li&gt;
-&lt;li&gt;add_months(D,N)：返回日期D加N月后对应的日期时间，N为正时则表示D之后；N为负时则表示为D之前；N为小数则会自动先删除小数部分，而用整数部分;
     
     </summary>
     

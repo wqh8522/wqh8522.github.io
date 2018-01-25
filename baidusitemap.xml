@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/01/24/SpingCLoudBusRabbitMQ/</loc>
+    <lastmod>2018-01-24T09:48:01.388Z</lastmod>
+    <data>
+        <display>
+        <title>SpingCloudBus整合RabbitMQ</title>
+        <pubTime>2018-01-24T06:22:55.000Z</pubTime>
+        
+        <tag>SpringCloud</tag>
+         
+        <tag>RabbitMQ</tag>
+         
+         
+           
+             
+              <breadCrumb title="SpringCloud" url="http://www.wanqhblog.top/categories/SpringCloud/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/</loc>
-    <lastmod>2018-01-19T09:02:55.974Z</lastmod>
+    <lastmod>2018-01-19T09:04:34.303Z</lastmod>
     <data>
         <display>
         <title>SpringCloud分布式配置中心Config</title>
@@ -187,9 +209,9 @@
         <title>SpringBoot使用JWT实现登录验证</title>
         <pubTime>2018-01-02T08:46:17.000Z</pubTime>
         
-        <tag>JWT</tag>
-         
         <tag>SpringBoot</tag>
+         
+        <tag>JWT</tag>
          
          
            
@@ -275,9 +297,9 @@
         <title>关于SpringBoot上传图片的几种方式</title>
         <pubTime>2017-12-28T12:30:59.000Z</pubTime>
         
-        <tag>FastDFS</tag>
-         
         <tag>图片上传</tag>
+         
+        <tag>FastDFS</tag>
          
         <tag>七牛云</tag>
          
@@ -443,9 +465,9 @@
         <title>SpringAOP的使用</title>
         <pubTime>2017-08-28T02:10:56.000Z</pubTime>
         
-        <tag>spring</tag>
-         
         <tag>AOP</tag>
+         
+        <tag>spring</tag>
          
          
            
