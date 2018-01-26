@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/01/26/CentOS7-RabbitMQ/</loc>
+    <lastmod>2018-01-26T07:11:23.422Z</lastmod>
+    <data>
+        <display>
+        <title>CentOS7下RabbitMQ的安装介绍</title>
+        <pubTime>2018-01-26T01:13:48.000Z</pubTime>
+        
+        <tag>RabbitMQ</tag>
+         
+        <tag>CentOS</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/25/CentOS-Kafka/</loc>
     <lastmod>2018-01-25T08:20:10.660Z</lastmod>
     <data>
@@ -28,9 +47,9 @@
         <title>SpingCloudBus整合RabbitMQ</title>
         <pubTime>2018-01-25T06:22:55.000Z</pubTime>
         
-        <tag>SpringCloud</tag>
-         
         <tag>RabbitMQ</tag>
+         
+        <tag>SpringCloud</tag>
          
          
            
@@ -292,9 +311,9 @@
         <title>CentOS下Nginx的配置安装</title>
         <pubTime>2017-11-25T01:15:26.000Z</pubTime>
         
-        <tag>Nginx</tag>
-         
         <tag>CentOS</tag>
+         
+        <tag>Nginx</tag>
          
          
            
@@ -482,9 +501,9 @@
         <title>SpringAOP的使用</title>
         <pubTime>2017-08-28T02:10:56.000Z</pubTime>
         
-        <tag>AOP</tag>
-         
         <tag>spring</tag>
+         
+        <tag>AOP</tag>
          
          
            

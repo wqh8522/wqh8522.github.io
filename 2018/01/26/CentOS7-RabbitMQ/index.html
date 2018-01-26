@@ -6,18 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>Tag: oracle | wanqh的个人博客</title>
+  <title>CentOS7下RabbitMQ的安装介绍 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="努力思考中...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wanqh的个人博客">
-<meta property="og:url" content="http://www.wanqhblog.top/tags/oracle/index.html">
+  <meta name="description" content="介绍RabbitMQ是一个在AMQP基础上完成的，可复用的企业消息系统。它是由Erlang语言开发。 AMQP：Advanced Message Queue，高级消息队列协议。他是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。  RabbitMQ 最初起源于金融系统，用于在分布式系统中存储转发消息，在易用性、扩展性、高">
+<meta name="keywords" content="RabbitMQ,CentOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7下RabbitMQ的安装介绍">
+<meta property="og:url" content="http://www.wanqhblog.top/2018/01/26/CentOS7-RabbitMQ/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="努力思考中...">
+<meta property="og:description" content="介绍RabbitMQ是一个在AMQP基础上完成的，可复用的企业消息系统。它是由Erlang语言开发。 AMQP：Advanced Message Queue，高级消息队列协议。他是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。  RabbitMQ 最初起源于金融系统，用于在分布式系统中存储转发消息，在易用性、扩展性、高">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/27555791.jpg">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/48515723.jpg-blog">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/62188249.jpg-blog">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/57199153.jpg-blog">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/36041742.jpg-blog">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/99491906.jpg-blog">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/62559007.jpg-blog">
+<meta property="og:updated_time" content="2018-01-26T07:11:23.422Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wanqh的个人博客">
-<meta name="twitter:description" content="努力思考中...">
+<meta name="twitter:title" content="CentOS7下RabbitMQ的安装介绍">
+<meta name="twitter:description" content="介绍RabbitMQ是一个在AMQP基础上完成的，可复用的企业消息系统。它是由Erlang语言开发。 AMQP：Advanced Message Queue，高级消息队列协议。他是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。  RabbitMQ 最初起源于金融系统，用于在分布式系统中存储转发消息，在易用性、扩展性、高">
+<meta name="twitter:image" content="http://oy09glbzm.bkt.clouddn.com/18-1-26/27555791.jpg">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -170,98 +180,377 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-CentOS7-RabbitMQ" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/01/oracle新建用户/" class="archive-article-date">
-  	<time datetime="2017-10-01T01:22:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-01</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/01/oracle新建用户/">Oracle新建用户</a>
+    <h1 class="article-title" itemprop="name">
+      CentOS7下RabbitMQ的安装介绍
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/01/26/CentOS7-RabbitMQ/" class="archive-article-date">
+  	<time datetime="2018-01-26T01:13:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>RabbitMQ是一个在AMQP基础上完成的，可复用的企业消息系统。它是由Erlang语言开发。</p>
+<p>AMQP：Advanced Message Queue，高级消息队列协议。他是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。</p>
+<blockquote>
+<p>RabbitMQ 最初起源于金融系统，用于在分布式系统中存储转发消息，在易用性、扩展性、高可用性等方面表现不俗。具体特点包括：<a id="more"></a></p>
+<ol>
+<li>可靠性（Reliability）：RabbitMQ使用一些机制来保证可靠性，如持久化、传输确认、发布确认。</li>
+<li>灵活的路由（Flexible Routing）：在消息进入队列之前，通过 Exchange 来路由消息的。</li>
+<li>消息集群（Clustering）：多个 RabbitMQ 服务器可以组成一个集群，形成一个逻辑 Broker 。</li>
+<li>高可用（Highly Available Queues）：队列可以在集群中的机器上进行镜像，使得在部分节点出问题的情况下队列仍然可用。</li>
+<li>多种协议（Multi-protocol）：RabbitMQ支持多种消息队列协议，比如STOMP、MQTT等。</li>
+<li>多语言客户端（Many Clients）：RabbitMQ 几乎支持所有常用语言，比如 Java、.NET、Ruby 等。</li>
+<li>管理界面（Management UI）：RabbitMQ 提供了一个易用的用户界面，使得用户可以监控和管理消息 Broker 的许多方面。</li>
+<li>跟踪机制（Tracing）：如果消息异常，RabbitMQ 提供了消息跟踪机制，使用者可以找出发生了什么。</li>
+<li>插件机制（Plugin System）：RabbitMQ 提供了许多插件，来从多方面进行扩展，也可以编写自己的插件。</li>
+</ol>
+</blockquote>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>项目结构图：（直接引用百度百科的）</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/27555791.jpg" alt=""></p>
+<p>概念说明：</p>
+<ul>
+<li>Broker：消息队列服务器的实体，是一个中间件应用，负责接收消息生产者的消息，然后将消息发送至消息接收者或其他的Braker</li>
+<li>Exchange：消息交换机，是消息第一个到达的地方，消息通过它指定的路由规则，分发到不同的消息队列中去。</li>
+<li>Queue：消息队列，消息通过发送和路由之后最终达到的地方，到达Queue的消息即进入逻辑上等待消费的状态。每个消息都会被发送到一个或多个队列。</li>
+<li>Binding：绑定，它的作用就是把Exchange和Queue按照路由规则绑定起来，也就是Exchange和Queue之间的虚拟链接。</li>
+<li>Routing Key：路由关键字，Exchange根据这个关键字进行消息投递。</li>
+<li>Virtual host：虚拟主机，是对Broker的虚拟划分，将消费者、生产者和它们依赖的AMQP相关结构进行隔离，一般都是为了安全考虑。比如：我们可以在一个Broker中设置多个虚拟主机，对不同用户进行权限的分离。</li>
+<li>Connection：连接。代表生产者、消费者、Broker之间进行通信的物理网络。</li>
+<li>Channel：消息通道，用于连接生产者和消费者的逻辑结构。在客户端每个连接里，可建立多个Channel，每个Channel代表一个会话任务，通过Channel可以隔离同一个连接中的不同交互内容。</li>
+<li>Producer：消息生产者。</li>
+<li>Consumer：消息消费者。</li>
+</ul>
+<p>消息队列的使用过程：</p>
+<ol>
+<li>客户端连接到消息队列服务器，打开一个channel。</li>
+<li>客户端声明一个exchange，并设置相关属性。</li>
+<li>客户端声明一个queue，并设置相关属性。</li>
+<li>客户端使用routing key，在exchange和queue之间建立好绑定关系。</li>
+<li>客户端投递消息到exchange。</li>
+</ol>
+<p>exchange接收到消息后，就根据消息的key和已经设置的binding，进行消息路由，将消息投递到一个或多个队列里。</p>
+<p>exchange也有几个类型，完全根据key进行投递的叫做Direct交换机，例如，绑定时设置了routing key为”abc”，那么客户端提交的消息，只有设置了key为”abc”的才会投递到队列。对key进行模式匹配后进行投递的叫做Topic交换机，符号”#”匹配一个或多个词，符号”<em>”匹配正好一个词。例如”abc.#”匹配”abc.def.ghi”，”abc.</em>”只匹配”abc.def”。还有一种不需要key的，叫做Fanout交换机，它采取广播模式，一个消息进来时，投递到与该交换机绑定的所有队列。</p>
+<p>RabbitMQ支持消息的持久化，也就是数据写在磁盘上，为了数据安全考虑，我想大多数用户都会选择持久化。消息队列持久化包括3个部分：</p>
+<ol>
+<li>exchange持久化，在声明时指定durable =&gt; 1</li>
+<li>queue持久化，在声明时指定durable =&gt; 1</li>
+<li>消息持久化，在投递时指定delivery_mode =&gt; 2（1是非持久化）</li>
+</ol>
+<p>如果exchange和queue都是持久化的，那么它们之间的binding也是持久化的。如果exchange和queue两者之间有一个持久化，一个非持久化，就不允许建立绑定。</p>
+<h1 id="安装介绍"><a href="#安装介绍" class="headerlink" title="安装介绍"></a>安装介绍</h1><h2 id="Erlang安装配置"><a href="#Erlang安装配置" class="headerlink" title="Erlang安装配置"></a>Erlang安装配置</h2><p>前面说到RabbitMQ是由Erlang语言开发，所以需要先安装Erlang环境</p>
+<ul>
+<li>下载安装，地址：<a href="http://www.erlang.org/downloads" target="_blank" rel="external">http://www.erlang.org/downloads</a> ，选择版本下载。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://erlang.org/download/otp_src_20.1.tar.gz</div></pre></td></tr></table></figure>
+<ul>
+<li>解压编译安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#解压</span></div><div class="line">tar -zvxf otp_src_20.1.tar.gz </div><div class="line"><span class="comment">#配置安装路径编译代码</span></div><div class="line"><span class="built_in">cd</span> otp_src_20.1/</div><div class="line">./configure --prefix=/opt/erlang --without-javac</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>如下安装完成</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/48515723.jpg-blog" alt=""></p>
+<ul>
+<li>查看安装结果</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /opt/erlang</div><div class="line">bin/erl</div></pre></td></tr></table></figure>
+<p>安装成功</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/62188249.jpg-blog" alt=""></p>
+<ul>
+<li>配置环境变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim /etc/profile</div><div class="line"><span class="comment">#添加下面的配置</span></div><div class="line"><span class="comment">#set erlang environment</span></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/opt/erlang/bin</div><div class="line"><span class="comment">#使配置文件生效</span></div><div class="line"><span class="built_in">source</span>  /etc/profile</div></pre></td></tr></table></figure>
+<h2 id="RabbitMQ的安装配置"><a href="#RabbitMQ的安装配置" class="headerlink" title="RabbitMQ的安装配置"></a>RabbitMQ的安装配置</h2><ul>
+<li>下载安装，从官网下载，<a href="http://www.rabbitmq.com/releases/rabbitmq-server/" target="_blank" rel="external">点击下载</a> ，进入选择版本。在linux环境下需要下带有unix的，如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.12/rabbitmq-server-generic-unix-3.6.12.tar.xz</div></pre></td></tr></table></figure>
+<ul>
+<li>解压，这里将其解压到opt目录中。解压之后进入opt目录，修改rabbitmq的文件夹</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">xz -d rabbitmq-server-generic-unix-3.6.12.tar.xz </div><div class="line">tar -vxf  rabbitmq-server-generic-unix-3.6.12.tar -C /opt/</div><div class="line"><span class="built_in">cd</span> /opt/</div><div class="line">mv rabbitmq-server-3.6.12/ rabbitmq</div></pre></td></tr></table></figure>
+<ul>
+<li>配置环境变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim /etc/profile</div><div class="line"><span class="comment">#添加以下配置</span></div><div class="line"><span class="comment">#set rabbitmq environment</span></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/opt/rabbitmq/sbin</div><div class="line"><span class="comment">#使得文件生效</span></div><div class="line"><span class="built_in">source</span>  /etc/profile</div></pre></td></tr></table></figure>
+<h2 id="RabbitMQ服务操作"><a href="#RabbitMQ服务操作" class="headerlink" title="RabbitMQ服务操作"></a>RabbitMQ服务操作</h2><ul>
+<li>启动服务</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmq-server -detached</div></pre></td></tr></table></figure>
+<ul>
+<li>查看服务状态</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">./sbin/rabbitmqctl status</div><div class="line"></div><div class="line"><span class="comment">#显示一下信息，说明已经启动</span></div><div class="line">Status of node rabbit@localhost</div><div class="line">[&#123;pid,1452&#125;,</div><div class="line"> &#123;running_applications,</div><div class="line">     [&#123;rabbit,<span class="string">"RabbitMQ"</span>,<span class="string">"3.6.12"</span>&#125;,</div><div class="line">      &#123;ranch,<span class="string">"Socket acceptor pool for TCP protocols."</span>,<span class="string">"1.3.0"</span>&#125;,</div><div class="line">      &#123;ssl,<span class="string">"Erlang/OTP SSL application"</span>,<span class="string">"8.2.1"</span>&#125;,</div><div class="line">      &#123;public_key,<span class="string">"Public key infrastructure"</span>,<span class="string">"1.5"</span>&#125;,</div><div class="line">      &#123;asn1,<span class="string">"The Erlang ASN1 compiler version 5.0.3"</span>,<span class="string">"5.0.3"</span>&#125;,</div><div class="line">      &#123;crypto,<span class="string">"CRYPTO"</span>,<span class="string">"4.1"</span>&#125;,</div><div class="line">      &#123;mnesia,<span class="string">"MNESIA  CXC 138 12"</span>,<span class="string">"4.15.1"</span>&#125;,</div><div class="line">      &#123;os_mon,<span class="string">"CPO  CXC 138 46"</span>,<span class="string">"2.4.3"</span>&#125;,</div><div class="line">      &#123;rabbit_common,</div><div class="line">          <span class="string">"Modules shared by rabbitmq-server and rabbitmq-erlang-client"</span>,</div><div class="line">          <span class="string">"3.6.12"</span>&#125;,</div><div class="line">      &#123;compiler,<span class="string">"ERTS  CXC 138 10"</span>,<span class="string">"7.1.2"</span>&#125;,</div><div class="line">      &#123;xmerl,<span class="string">"XML parser"</span>,<span class="string">"1.3.15"</span>&#125;,</div><div class="line">      &#123;syntax_tools,<span class="string">"Syntax tools"</span>,<span class="string">"2.1.3"</span>&#125;,</div><div class="line">      &#123;sasl,<span class="string">"SASL  CXC 138 11"</span>,<span class="string">"3.1"</span>&#125;,</div><div class="line">      &#123;stdlib,<span class="string">"ERTS  CXC 138 10"</span>,<span class="string">"3.4.2"</span>&#125;,</div><div class="line">      &#123;kernel,<span class="string">"ERTS  CXC 138 10"</span>,<span class="string">"5.4"</span>&#125;]&#125;,</div><div class="line"> &#123;os,&#123;unix,linux&#125;&#125;,</div><div class="line"> &#123;erlang_version,</div><div class="line">     <span class="string">"Erlang/OTP 20 [erts-9.1] [source] [64-bit] [smp:1:1] [ds:1:1:10] [async-threads:64] [kernel-poll:true]\n"</span>&#125;,</div><div class="line"> &#123;memory,</div><div class="line">     [&#123;connection_readers,0&#125;,</div><div class="line">      &#123;connection_writers,0&#125;,</div><div class="line">      &#123;connection_channels,0&#125;,</div><div class="line">      &#123;connection_other,0&#125;,</div><div class="line">      &#123;queue_procs,2744&#125;,</div><div class="line">      &#123;queue_slave_procs,0&#125;,</div><div class="line">      &#123;plugins,0&#125;,</div><div class="line">      &#123;other_proc,19513536&#125;,</div><div class="line">      &#123;metrics,184272&#125;,</div><div class="line">      &#123;mgmt_db,0&#125;,</div><div class="line">      &#123;mnesia,61136&#125;,</div><div class="line">      &#123;other_ets,1523640&#125;,</div><div class="line">      &#123;binary,211896&#125;,</div><div class="line">      &#123;msg_index,43568&#125;,</div><div class="line">      &#123;code,21408137&#125;,</div><div class="line">      &#123;atom,891849&#125;,</div><div class="line">      &#123;other_system,17779446&#125;,</div><div class="line">      &#123;total,61620224&#125;]&#125;,</div><div class="line"> &#123;alarms,[]&#125;,</div><div class="line"> &#123;listeners,[&#123;clustering,25672,<span class="string">"::"</span>&#125;,&#123;amqp,5672,<span class="string">"::"</span>&#125;]&#125;,</div><div class="line"> &#123;vm_memory_calculation_strategy,rss&#125;,</div><div class="line"> &#123;vm_memory_high_watermark,0.4&#125;,</div><div class="line"> &#123;vm_memory_limit,771637248&#125;,</div><div class="line"> &#123;disk_free_limit,50000000&#125;,</div><div class="line"> &#123;disk_free,36134227968&#125;,</div><div class="line"> &#123;file_descriptors,</div><div class="line">     [&#123;total_limit,924&#125;,&#123;total_used,2&#125;,&#123;sockets_limit,829&#125;,&#123;sockets_used,0&#125;]&#125;,</div><div class="line"> &#123;processes,[&#123;<span class="built_in">limit</span>,1048576&#125;,&#123;used,153&#125;]&#125;,</div><div class="line"> &#123;run_queue,0&#125;,</div><div class="line"> &#123;uptime,21&#125;,</div><div class="line"> &#123;kernel,&#123;net_ticktime,60&#125;&#125;]</div></pre></td></tr></table></figure>
+<ul>
+<li>停止RabbitMQ</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl stop</div></pre></td></tr></table></figure>
+<h2 id="配置网页插件"><a href="#配置网页插件" class="headerlink" title="配置网页插件"></a>配置网页插件</h2><p>RabbitMQ网页管理的端口是15672，但是现在还不能访问，需要添加网页插件才能访问</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmq-plugins <span class="built_in">enable</span> rabbitmq_management</div></pre></td></tr></table></figure>
+<p>在浏览器中输入ip:15672</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/57199153.jpg-blog" alt=""></p>
+<p>在网上看到有人说默认的账号密码是guest，但是该账号只能通过localhost登录。所以需要配置一个用户并设置权限。</p>
+<ol>
+<li>添加用户</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl add_user [username] [password]</div></pre></td></tr></table></figure>
+<ol>
+<li>添加权限</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl set_permissions -p <span class="string">"/"</span> [username] <span class="string">".*"</span> <span class="string">".*"</span> <span class="string">".*"</span></div></pre></td></tr></table></figure>
+<ol>
+<li>修改用户角色</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl set_user_tags [username] administrator</div></pre></td></tr></table></figure>
+<p>下面就可以使用刚添加的用户登录了。可以在该页面进行RabbitMQ的管理，包括用户的设置。</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/36041742.jpg-blog" alt=""></p>
+<h2 id="安装报错"><a href="#安装报错" class="headerlink" title="安装报错"></a>安装报错</h2><ul>
+<li><p>error: No curses library functions found configure</p>
+<p>需要先安装ncurses-devel</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install ncurses-devel</div></pre></td></tr></table></figure>
+</li>
+<li><p>odbc : ODBC library - link check failed</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/99491906.jpg-blog" alt=""></p>
+<p>类似这样的错误，我们只需要关注APPLICATIONS DISABLED部分的提示信息，如这里就是缺少odbc，使用命令安装即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install unixODBC unixODBC-devel</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="集群的配置"><a href="#集群的配置" class="headerlink" title="集群的配置"></a>集群的配置</h1><h2 id="单机多节点"><a href="#单机多节点" class="headerlink" title="单机多节点"></a>单机多节点</h2><p>RabbitMQ启动之后，默认的名称是Rabbit，监听的端口是5672，如果想在同一台机器上启动多个节点，那么其他的节点就会因为节点名称和端口与默认的冲突而导致启动失败，可以通过设置环境变量来实现，具体方法如下：</p>
+<ol>
+<li>先关闭上面的网页管理插件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmq-plugins <span class="built_in">disable</span> rabbitmq_management</div></pre></td></tr></table></figure>
+<ol>
+<li>首先在机器上设置设置两个节点<strong>rabbit和rabbit_01</strong></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl stop //先停止运行节点，再进行集群部署</div><div class="line"><span class="comment">#启动第一个节点</span></div><div class="line">RABBITMQ_NODE_PORT=5672 RABBITMQ_NODENAME=rabbit rabbitmq-server -detached</div><div class="line"><span class="comment">#启动第二个节点</span></div><div class="line">RABBITMQ_NODE_PORT=5673 RABBITMQ_NODENAME=rabbit_1 rabbitmq-server -detached</div></pre></td></tr></table></figure>
+<ol>
+<li>将第二个节点rabbit-01加入到第一个集群节点rabbit中</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#停止rabbit_1节点的应用</span></div><div class="line">rabbitmqctl -n rabbit_1@localhost stop_app</div><div class="line"><span class="comment">#将rabbit_1添加到集群节点rabbit中去</span></div><div class="line">rabbitmqctl -n rabbit_1@localhost join_cluster rabbit@localhost</div><div class="line"><span class="comment">#查看集群节点状态</span></div><div class="line">rabbitmqctl cluster_status</div><div class="line"><span class="comment">#启动rabbit_1节点应用</span></div><div class="line">rabbitmqctl -n rabbit_1@localhost start_app</div><div class="line"><span class="comment">#查看rabbit_1节点的状态</span></div><div class="line">rabbitmqctl -n rabbit_1 status</div></pre></td></tr></table></figure>
+<p>如下集群配置完毕</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/62559007.jpg-blog" alt=""></p>
+<h2 id="多机多节点配置"><a href="#多机多节点配置" class="headerlink" title="多机多节点配置"></a>多机多节点配置</h2><p>不同于单机多节点的情况，在多机环境，如果要在cluster集群内部署多个节点，需要注意两个方面：</p>
+<ul>
+<li><strong>保证需要部署的这几个节点在同一个局域网内</strong></li>
+<li><strong>需要有相同的Erlang Cookie，否则不能进行通信，为保证cookie的完全一致，采用从一个节点copy的方式</strong></li>
+</ul>
+<p>环境介绍</p>
+<table>
+<thead>
+<tr>
+<th>RabbitMQ节点</th>
+<th>IP地址</th>
+<th>工作模式</th>
+<th>操作系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rabbitmqCluster</td>
+<td>186.16.195.24</td>
+<td>DISK</td>
+<td>CentOS 7.0 - 64位</td>
+</tr>
+<tr>
+<td>rabbitmqCluster01</td>
+<td>186.16.195.25</td>
+<td>DISK</td>
+<td>CentOS 7.0 - 64位</td>
+</tr>
+<tr>
+<td>rabbitmqCluster02</td>
+<td>186.16.195.26</td>
+<td>DISK</td>
+<td>CentOS 7.0 - 64位</td>
+</tr>
+</tbody>
+</table>
+<p>cluster部署过程：</p>
+<ul>
+<li>局域网配置</li>
+</ul>
+<p>分别在三个节点的/etc/hosts下设置相同的配置信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">186.16.195.24 rabbitmqCluster</div><div class="line">186.16.195.25 rabbitmqCluster01</div><div class="line">186.16.195.26 rabbitmqCluster02</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>设置不同节点间同一认证的Erlang Cookie</strong><br>采用从主节点copy的方式保持Cookie的一致性</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster01]<span class="comment"># scp /var/lib/rabbitmq/.erlang.cookie 186.16.195.25:/var/lib/rabbitmq</span></div><div class="line">[root@rabbitmqCluster02]<span class="comment"># scp /var/lib/rabbitmq/.erlang.cookie 186.16.195.26:/var/lib/rabbitmq12</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>使用 -detached运行各节点</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl stop</div><div class="line">rabbitmq-server -detached 12</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查看各节点的状态</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster]<span class="comment">#rabbitmqctl cluster_status</span></div><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl cluster_status</span></div><div class="line">[root@rabbitmqCluster02]<span class="comment">#rabbitmqctl cluster_status</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>创建并部署集群</strong>，以rabbitmqCluster01节点为例：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl stop_app</span></div><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl join_cluster rabbit@rabbitmqCluster</span></div><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl start_app123</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查看集群状态</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster]<span class="comment">#rabbitmqctl cluster_status</span></div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="http://www.linuxidc.com/Linux/2016-03/129557.htm" target="_blank" rel="external">CentOS7下RabbitMQ服务安装配置</a></li>
+<li><a href="https://www.jianshu.com/p/79ca08116d57" target="_blank" rel="external">消息队列之 RabbitMQ</a></li>
+<li><a href="http://blog.csdn.net/woogeyu/article/details/51119101" target="_blank" rel="external">RabbitMQ分布式集群架构和高可用性（HA）</a></li>
+<li><a href="https://geewu.gitbooks.io/rabbitmq-quick/content/" target="_blank" rel="external">https://geewu.gitbooks.io/rabbitmq-quick/content/</a></li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">oracle</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">RabbitMQ</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/27/Oeacle日期/" class="archive-article-date">
-  	<time datetime="2017-09-27T11:51:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/27/Oeacle日期/">Oeacle常见的日期处理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">oracle</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">CentOS</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2018/01/26/CentOS7-RabbitMQ/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/01/25/CentOS-Kafka/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CentOS7下Kafka的安装介绍</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概念"><span class="toc-number">2.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装介绍"><span class="toc-number">3.</span> <span class="toc-text">安装介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Erlang安装配置"><span class="toc-number">3.1.</span> <span class="toc-text">Erlang安装配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RabbitMQ的安装配置"><span class="toc-number">3.2.</span> <span class="toc-text">RabbitMQ的安装配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RabbitMQ服务操作"><span class="toc-number">3.3.</span> <span class="toc-text">RabbitMQ服务操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置网页插件"><span class="toc-number">3.4.</span> <span class="toc-text">配置网页插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装报错"><span class="toc-number">3.5.</span> <span class="toc-text">安装报错</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#集群的配置"><span class="toc-number">4.</span> <span class="toc-text">集群的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单机多节点"><span class="toc-number">4.1.</span> <span class="toc-text">单机多节点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多机多节点配置"><span class="toc-number">4.2.</span> <span class="toc-text">多机多节点配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
   
 
-    
+  
+
+  
+  <div id="SOHUCS" sid="CentOS7下RabbitMQ的安装介绍" style="padding: 0px 30px 0px 46px;"></div>
+<script type="text/javascript">
+(function(){
+var appid = "cytbAtNIL";
+var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+  
+
+  
 
 
           </div>
@@ -294,9 +583,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-25T08:20:10.660Z</updated>
+  <updated>2018-01-26T07:11:23.422Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -14,6 +14,237 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CentOS7下RabbitMQ的安装介绍</title>
+    <link href="http://www.wanqhblog.top/2018/01/26/CentOS7-RabbitMQ/"/>
+    <id>http://www.wanqhblog.top/2018/01/26/CentOS7-RabbitMQ/</id>
+    <published>2018-01-26T01:13:48.000Z</published>
+    <updated>2018-01-26T07:11:23.422Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>RabbitMQ是一个在AMQP基础上完成的，可复用的企业消息系统。它是由Erlang语言开发。</p>
+<p>AMQP：Advanced Message Queue，高级消息队列协议。他是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。</p>
+<blockquote>
+<p>RabbitMQ 最初起源于金融系统，用于在分布式系统中存储转发消息，在易用性、扩展性、高可用性等方面表现不俗。具体特点包括：<a id="more"></a></p>
+<ol>
+<li>可靠性（Reliability）：RabbitMQ使用一些机制来保证可靠性，如持久化、传输确认、发布确认。</li>
+<li>灵活的路由（Flexible Routing）：在消息进入队列之前，通过 Exchange 来路由消息的。</li>
+<li>消息集群（Clustering）：多个 RabbitMQ 服务器可以组成一个集群，形成一个逻辑 Broker 。</li>
+<li>高可用（Highly Available Queues）：队列可以在集群中的机器上进行镜像，使得在部分节点出问题的情况下队列仍然可用。</li>
+<li>多种协议（Multi-protocol）：RabbitMQ支持多种消息队列协议，比如STOMP、MQTT等。</li>
+<li>多语言客户端（Many Clients）：RabbitMQ 几乎支持所有常用语言，比如 Java、.NET、Ruby 等。</li>
+<li>管理界面（Management UI）：RabbitMQ 提供了一个易用的用户界面，使得用户可以监控和管理消息 Broker 的许多方面。</li>
+<li>跟踪机制（Tracing）：如果消息异常，RabbitMQ 提供了消息跟踪机制，使用者可以找出发生了什么。</li>
+<li>插件机制（Plugin System）：RabbitMQ 提供了许多插件，来从多方面进行扩展，也可以编写自己的插件。</li>
+</ol>
+</blockquote>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>项目结构图：（直接引用百度百科的）</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/27555791.jpg" alt=""></p>
+<p>概念说明：</p>
+<ul>
+<li>Broker：消息队列服务器的实体，是一个中间件应用，负责接收消息生产者的消息，然后将消息发送至消息接收者或其他的Braker</li>
+<li>Exchange：消息交换机，是消息第一个到达的地方，消息通过它指定的路由规则，分发到不同的消息队列中去。</li>
+<li>Queue：消息队列，消息通过发送和路由之后最终达到的地方，到达Queue的消息即进入逻辑上等待消费的状态。每个消息都会被发送到一个或多个队列。</li>
+<li>Binding：绑定，它的作用就是把Exchange和Queue按照路由规则绑定起来，也就是Exchange和Queue之间的虚拟链接。</li>
+<li>Routing Key：路由关键字，Exchange根据这个关键字进行消息投递。</li>
+<li>Virtual host：虚拟主机，是对Broker的虚拟划分，将消费者、生产者和它们依赖的AMQP相关结构进行隔离，一般都是为了安全考虑。比如：我们可以在一个Broker中设置多个虚拟主机，对不同用户进行权限的分离。</li>
+<li>Connection：连接。代表生产者、消费者、Broker之间进行通信的物理网络。</li>
+<li>Channel：消息通道，用于连接生产者和消费者的逻辑结构。在客户端每个连接里，可建立多个Channel，每个Channel代表一个会话任务，通过Channel可以隔离同一个连接中的不同交互内容。</li>
+<li>Producer：消息生产者。</li>
+<li>Consumer：消息消费者。</li>
+</ul>
+<p>消息队列的使用过程：</p>
+<ol>
+<li>客户端连接到消息队列服务器，打开一个channel。</li>
+<li>客户端声明一个exchange，并设置相关属性。</li>
+<li>客户端声明一个queue，并设置相关属性。</li>
+<li>客户端使用routing key，在exchange和queue之间建立好绑定关系。</li>
+<li>客户端投递消息到exchange。</li>
+</ol>
+<p>exchange接收到消息后，就根据消息的key和已经设置的binding，进行消息路由，将消息投递到一个或多个队列里。</p>
+<p>exchange也有几个类型，完全根据key进行投递的叫做Direct交换机，例如，绑定时设置了routing key为”abc”，那么客户端提交的消息，只有设置了key为”abc”的才会投递到队列。对key进行模式匹配后进行投递的叫做Topic交换机，符号”#”匹配一个或多个词，符号”<em>”匹配正好一个词。例如”abc.#”匹配”abc.def.ghi”，”abc.</em>”只匹配”abc.def”。还有一种不需要key的，叫做Fanout交换机，它采取广播模式，一个消息进来时，投递到与该交换机绑定的所有队列。</p>
+<p>RabbitMQ支持消息的持久化，也就是数据写在磁盘上，为了数据安全考虑，我想大多数用户都会选择持久化。消息队列持久化包括3个部分：</p>
+<ol>
+<li>exchange持久化，在声明时指定durable =&gt; 1</li>
+<li>queue持久化，在声明时指定durable =&gt; 1</li>
+<li>消息持久化，在投递时指定delivery_mode =&gt; 2（1是非持久化）</li>
+</ol>
+<p>如果exchange和queue都是持久化的，那么它们之间的binding也是持久化的。如果exchange和queue两者之间有一个持久化，一个非持久化，就不允许建立绑定。</p>
+<h1 id="安装介绍"><a href="#安装介绍" class="headerlink" title="安装介绍"></a>安装介绍</h1><h2 id="Erlang安装配置"><a href="#Erlang安装配置" class="headerlink" title="Erlang安装配置"></a>Erlang安装配置</h2><p>前面说到RabbitMQ是由Erlang语言开发，所以需要先安装Erlang环境</p>
+<ul>
+<li>下载安装，地址：<a href="http://www.erlang.org/downloads" target="_blank" rel="external">http://www.erlang.org/downloads</a> ，选择版本下载。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://erlang.org/download/otp_src_20.1.tar.gz</div></pre></td></tr></table></figure>
+<ul>
+<li>解压编译安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#解压</span></div><div class="line">tar -zvxf otp_src_20.1.tar.gz </div><div class="line"><span class="comment">#配置安装路径编译代码</span></div><div class="line"><span class="built_in">cd</span> otp_src_20.1/</div><div class="line">./configure --prefix=/opt/erlang --without-javac</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>如下安装完成</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/48515723.jpg-blog" alt=""></p>
+<ul>
+<li>查看安装结果</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /opt/erlang</div><div class="line">bin/erl</div></pre></td></tr></table></figure>
+<p>安装成功</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/62188249.jpg-blog" alt=""></p>
+<ul>
+<li>配置环境变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim /etc/profile</div><div class="line"><span class="comment">#添加下面的配置</span></div><div class="line"><span class="comment">#set erlang environment</span></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/opt/erlang/bin</div><div class="line"><span class="comment">#使配置文件生效</span></div><div class="line"><span class="built_in">source</span>  /etc/profile</div></pre></td></tr></table></figure>
+<h2 id="RabbitMQ的安装配置"><a href="#RabbitMQ的安装配置" class="headerlink" title="RabbitMQ的安装配置"></a>RabbitMQ的安装配置</h2><ul>
+<li>下载安装，从官网下载，<a href="http://www.rabbitmq.com/releases/rabbitmq-server/" target="_blank" rel="external">点击下载</a> ，进入选择版本。在linux环境下需要下带有unix的，如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.12/rabbitmq-server-generic-unix-3.6.12.tar.xz</div></pre></td></tr></table></figure>
+<ul>
+<li>解压，这里将其解压到opt目录中。解压之后进入opt目录，修改rabbitmq的文件夹</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">xz -d rabbitmq-server-generic-unix-3.6.12.tar.xz </div><div class="line">tar -vxf  rabbitmq-server-generic-unix-3.6.12.tar -C /opt/</div><div class="line"><span class="built_in">cd</span> /opt/</div><div class="line">mv rabbitmq-server-3.6.12/ rabbitmq</div></pre></td></tr></table></figure>
+<ul>
+<li>配置环境变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim /etc/profile</div><div class="line"><span class="comment">#添加以下配置</span></div><div class="line"><span class="comment">#set rabbitmq environment</span></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/opt/rabbitmq/sbin</div><div class="line"><span class="comment">#使得文件生效</span></div><div class="line"><span class="built_in">source</span>  /etc/profile</div></pre></td></tr></table></figure>
+<h2 id="RabbitMQ服务操作"><a href="#RabbitMQ服务操作" class="headerlink" title="RabbitMQ服务操作"></a>RabbitMQ服务操作</h2><ul>
+<li>启动服务</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmq-server -detached</div></pre></td></tr></table></figure>
+<ul>
+<li>查看服务状态</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">./sbin/rabbitmqctl status</div><div class="line"></div><div class="line"><span class="comment">#显示一下信息，说明已经启动</span></div><div class="line">Status of node rabbit@localhost</div><div class="line">[&#123;pid,1452&#125;,</div><div class="line"> &#123;running_applications,</div><div class="line">     [&#123;rabbit,<span class="string">"RabbitMQ"</span>,<span class="string">"3.6.12"</span>&#125;,</div><div class="line">      &#123;ranch,<span class="string">"Socket acceptor pool for TCP protocols."</span>,<span class="string">"1.3.0"</span>&#125;,</div><div class="line">      &#123;ssl,<span class="string">"Erlang/OTP SSL application"</span>,<span class="string">"8.2.1"</span>&#125;,</div><div class="line">      &#123;public_key,<span class="string">"Public key infrastructure"</span>,<span class="string">"1.5"</span>&#125;,</div><div class="line">      &#123;asn1,<span class="string">"The Erlang ASN1 compiler version 5.0.3"</span>,<span class="string">"5.0.3"</span>&#125;,</div><div class="line">      &#123;crypto,<span class="string">"CRYPTO"</span>,<span class="string">"4.1"</span>&#125;,</div><div class="line">      &#123;mnesia,<span class="string">"MNESIA  CXC 138 12"</span>,<span class="string">"4.15.1"</span>&#125;,</div><div class="line">      &#123;os_mon,<span class="string">"CPO  CXC 138 46"</span>,<span class="string">"2.4.3"</span>&#125;,</div><div class="line">      &#123;rabbit_common,</div><div class="line">          <span class="string">"Modules shared by rabbitmq-server and rabbitmq-erlang-client"</span>,</div><div class="line">          <span class="string">"3.6.12"</span>&#125;,</div><div class="line">      &#123;compiler,<span class="string">"ERTS  CXC 138 10"</span>,<span class="string">"7.1.2"</span>&#125;,</div><div class="line">      &#123;xmerl,<span class="string">"XML parser"</span>,<span class="string">"1.3.15"</span>&#125;,</div><div class="line">      &#123;syntax_tools,<span class="string">"Syntax tools"</span>,<span class="string">"2.1.3"</span>&#125;,</div><div class="line">      &#123;sasl,<span class="string">"SASL  CXC 138 11"</span>,<span class="string">"3.1"</span>&#125;,</div><div class="line">      &#123;stdlib,<span class="string">"ERTS  CXC 138 10"</span>,<span class="string">"3.4.2"</span>&#125;,</div><div class="line">      &#123;kernel,<span class="string">"ERTS  CXC 138 10"</span>,<span class="string">"5.4"</span>&#125;]&#125;,</div><div class="line"> &#123;os,&#123;unix,linux&#125;&#125;,</div><div class="line"> &#123;erlang_version,</div><div class="line">     <span class="string">"Erlang/OTP 20 [erts-9.1] [source] [64-bit] [smp:1:1] [ds:1:1:10] [async-threads:64] [kernel-poll:true]\n"</span>&#125;,</div><div class="line"> &#123;memory,</div><div class="line">     [&#123;connection_readers,0&#125;,</div><div class="line">      &#123;connection_writers,0&#125;,</div><div class="line">      &#123;connection_channels,0&#125;,</div><div class="line">      &#123;connection_other,0&#125;,</div><div class="line">      &#123;queue_procs,2744&#125;,</div><div class="line">      &#123;queue_slave_procs,0&#125;,</div><div class="line">      &#123;plugins,0&#125;,</div><div class="line">      &#123;other_proc,19513536&#125;,</div><div class="line">      &#123;metrics,184272&#125;,</div><div class="line">      &#123;mgmt_db,0&#125;,</div><div class="line">      &#123;mnesia,61136&#125;,</div><div class="line">      &#123;other_ets,1523640&#125;,</div><div class="line">      &#123;binary,211896&#125;,</div><div class="line">      &#123;msg_index,43568&#125;,</div><div class="line">      &#123;code,21408137&#125;,</div><div class="line">      &#123;atom,891849&#125;,</div><div class="line">      &#123;other_system,17779446&#125;,</div><div class="line">      &#123;total,61620224&#125;]&#125;,</div><div class="line"> &#123;alarms,[]&#125;,</div><div class="line"> &#123;listeners,[&#123;clustering,25672,<span class="string">"::"</span>&#125;,&#123;amqp,5672,<span class="string">"::"</span>&#125;]&#125;,</div><div class="line"> &#123;vm_memory_calculation_strategy,rss&#125;,</div><div class="line"> &#123;vm_memory_high_watermark,0.4&#125;,</div><div class="line"> &#123;vm_memory_limit,771637248&#125;,</div><div class="line"> &#123;disk_free_limit,50000000&#125;,</div><div class="line"> &#123;disk_free,36134227968&#125;,</div><div class="line"> &#123;file_descriptors,</div><div class="line">     [&#123;total_limit,924&#125;,&#123;total_used,2&#125;,&#123;sockets_limit,829&#125;,&#123;sockets_used,0&#125;]&#125;,</div><div class="line"> &#123;processes,[&#123;<span class="built_in">limit</span>,1048576&#125;,&#123;used,153&#125;]&#125;,</div><div class="line"> &#123;run_queue,0&#125;,</div><div class="line"> &#123;uptime,21&#125;,</div><div class="line"> &#123;kernel,&#123;net_ticktime,60&#125;&#125;]</div></pre></td></tr></table></figure>
+<ul>
+<li>停止RabbitMQ</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl stop</div></pre></td></tr></table></figure>
+<h2 id="配置网页插件"><a href="#配置网页插件" class="headerlink" title="配置网页插件"></a>配置网页插件</h2><p>RabbitMQ网页管理的端口是15672，但是现在还不能访问，需要添加网页插件才能访问</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmq-plugins <span class="built_in">enable</span> rabbitmq_management</div></pre></td></tr></table></figure>
+<p>在浏览器中输入ip:15672</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/57199153.jpg-blog" alt=""></p>
+<p>在网上看到有人说默认的账号密码是guest，但是该账号只能通过localhost登录。所以需要配置一个用户并设置权限。</p>
+<ol>
+<li>添加用户</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl add_user [username] [password]</div></pre></td></tr></table></figure>
+<ol>
+<li>添加权限</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl set_permissions -p <span class="string">"/"</span> [username] <span class="string">".*"</span> <span class="string">".*"</span> <span class="string">".*"</span></div></pre></td></tr></table></figure>
+<ol>
+<li>修改用户角色</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl set_user_tags [username] administrator</div></pre></td></tr></table></figure>
+<p>下面就可以使用刚添加的用户登录了。可以在该页面进行RabbitMQ的管理，包括用户的设置。</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/36041742.jpg-blog" alt=""></p>
+<h2 id="安装报错"><a href="#安装报错" class="headerlink" title="安装报错"></a>安装报错</h2><ul>
+<li><p>error: No curses library functions found configure</p>
+<p>需要先安装ncurses-devel</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install ncurses-devel</div></pre></td></tr></table></figure>
+</li>
+<li><p>odbc : ODBC library - link check failed</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/99491906.jpg-blog" alt=""></p>
+<p>类似这样的错误，我们只需要关注APPLICATIONS DISABLED部分的提示信息，如这里就是缺少odbc，使用命令安装即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install unixODBC unixODBC-devel</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="集群的配置"><a href="#集群的配置" class="headerlink" title="集群的配置"></a>集群的配置</h1><h2 id="单机多节点"><a href="#单机多节点" class="headerlink" title="单机多节点"></a>单机多节点</h2><p>RabbitMQ启动之后，默认的名称是Rabbit，监听的端口是5672，如果想在同一台机器上启动多个节点，那么其他的节点就会因为节点名称和端口与默认的冲突而导致启动失败，可以通过设置环境变量来实现，具体方法如下：</p>
+<ol>
+<li>先关闭上面的网页管理插件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rabbitmq-plugins <span class="built_in">disable</span> rabbitmq_management</div></pre></td></tr></table></figure>
+<ol>
+<li>首先在机器上设置设置两个节点<strong>rabbit和rabbit_01</strong></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl stop //先停止运行节点，再进行集群部署</div><div class="line"><span class="comment">#启动第一个节点</span></div><div class="line">RABBITMQ_NODE_PORT=5672 RABBITMQ_NODENAME=rabbit rabbitmq-server -detached</div><div class="line"><span class="comment">#启动第二个节点</span></div><div class="line">RABBITMQ_NODE_PORT=5673 RABBITMQ_NODENAME=rabbit_1 rabbitmq-server -detached</div></pre></td></tr></table></figure>
+<ol>
+<li>将第二个节点rabbit-01加入到第一个集群节点rabbit中</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#停止rabbit_1节点的应用</span></div><div class="line">rabbitmqctl -n rabbit_1@localhost stop_app</div><div class="line"><span class="comment">#将rabbit_1添加到集群节点rabbit中去</span></div><div class="line">rabbitmqctl -n rabbit_1@localhost join_cluster rabbit@localhost</div><div class="line"><span class="comment">#查看集群节点状态</span></div><div class="line">rabbitmqctl cluster_status</div><div class="line"><span class="comment">#启动rabbit_1节点应用</span></div><div class="line">rabbitmqctl -n rabbit_1@localhost start_app</div><div class="line"><span class="comment">#查看rabbit_1节点的状态</span></div><div class="line">rabbitmqctl -n rabbit_1 status</div></pre></td></tr></table></figure>
+<p>如下集群配置完毕</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-1-26/62559007.jpg-blog" alt=""></p>
+<h2 id="多机多节点配置"><a href="#多机多节点配置" class="headerlink" title="多机多节点配置"></a>多机多节点配置</h2><p>不同于单机多节点的情况，在多机环境，如果要在cluster集群内部署多个节点，需要注意两个方面：</p>
+<ul>
+<li><strong>保证需要部署的这几个节点在同一个局域网内</strong></li>
+<li><strong>需要有相同的Erlang Cookie，否则不能进行通信，为保证cookie的完全一致，采用从一个节点copy的方式</strong></li>
+</ul>
+<p>环境介绍</p>
+<table>
+<thead>
+<tr>
+<th>RabbitMQ节点</th>
+<th>IP地址</th>
+<th>工作模式</th>
+<th>操作系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rabbitmqCluster</td>
+<td>186.16.195.24</td>
+<td>DISK</td>
+<td>CentOS 7.0 - 64位</td>
+</tr>
+<tr>
+<td>rabbitmqCluster01</td>
+<td>186.16.195.25</td>
+<td>DISK</td>
+<td>CentOS 7.0 - 64位</td>
+</tr>
+<tr>
+<td>rabbitmqCluster02</td>
+<td>186.16.195.26</td>
+<td>DISK</td>
+<td>CentOS 7.0 - 64位</td>
+</tr>
+</tbody>
+</table>
+<p>cluster部署过程：</p>
+<ul>
+<li>局域网配置</li>
+</ul>
+<p>分别在三个节点的/etc/hosts下设置相同的配置信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">186.16.195.24 rabbitmqCluster</div><div class="line">186.16.195.25 rabbitmqCluster01</div><div class="line">186.16.195.26 rabbitmqCluster02</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>设置不同节点间同一认证的Erlang Cookie</strong><br>采用从主节点copy的方式保持Cookie的一致性</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster01]<span class="comment"># scp /var/lib/rabbitmq/.erlang.cookie 186.16.195.25:/var/lib/rabbitmq</span></div><div class="line">[root@rabbitmqCluster02]<span class="comment"># scp /var/lib/rabbitmq/.erlang.cookie 186.16.195.26:/var/lib/rabbitmq12</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>使用 -detached运行各节点</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rabbitmqctl stop</div><div class="line">rabbitmq-server -detached 12</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查看各节点的状态</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster]<span class="comment">#rabbitmqctl cluster_status</span></div><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl cluster_status</span></div><div class="line">[root@rabbitmqCluster02]<span class="comment">#rabbitmqctl cluster_status</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>创建并部署集群</strong>，以rabbitmqCluster01节点为例：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl stop_app</span></div><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl join_cluster rabbit@rabbitmqCluster</span></div><div class="line">[root@rabbitmqCluster01]<span class="comment">#rabbitmqctl start_app123</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查看集群状态</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@rabbitmqCluster]<span class="comment">#rabbitmqctl cluster_status</span></div></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="http://www.linuxidc.com/Linux/2016-03/129557.htm" target="_blank" rel="external">CentOS7下RabbitMQ服务安装配置</a></li>
+<li><a href="https://www.jianshu.com/p/79ca08116d57" target="_blank" rel="external">消息队列之 RabbitMQ</a></li>
+<li><a href="http://blog.csdn.net/woogeyu/article/details/51119101" target="_blank" rel="external">RabbitMQ分布式集群架构和高可用性（HA）</a></li>
+<li><a href="https://geewu.gitbooks.io/rabbitmq-quick/content/" target="_blank" rel="external">https://geewu.gitbooks.io/rabbitmq-quick/content/</a></li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h1&gt;&lt;p&gt;RabbitMQ是一个在AMQP基础上完成的，可复用的企业消息系统。它是由Erlang语言开发。&lt;/p&gt;
+&lt;p&gt;AMQP：Advanced Message Queue，高级消息队列协议。他是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;RabbitMQ 最初起源于金融系统，用于在分布式系统中存储转发消息，在易用性、扩展性、高可用性等方面表现不俗。具体特点包括：
+    
+    </summary>
+    
+    
+      <category term="RabbitMQ" scheme="http://www.wanqhblog.top/tags/RabbitMQ/"/>
+    
+      <category term="CentOS" scheme="http://www.wanqhblog.top/tags/CentOS/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS7下Kafka的安装介绍</title>
@@ -191,9 +422,9 @@
       <category term="SpringCloud" scheme="http://www.wanqhblog.top/categories/SpringCloud/"/>
     
     
-      <category term="SpringCloud" scheme="http://www.wanqhblog.top/tags/SpringCloud/"/>
-    
       <category term="RabbitMQ" scheme="http://www.wanqhblog.top/tags/RabbitMQ/"/>
+    
+      <category term="SpringCloud" scheme="http://www.wanqhblog.top/tags/SpringCloud/"/>
     
   </entry>
   
@@ -1282,9 +1513,9 @@
       <category term="Nginx" scheme="http://www.wanqhblog.top/categories/Nginx/"/>
     
     
-      <category term="Nginx" scheme="http://www.wanqhblog.top/tags/Nginx/"/>
-    
       <category term="CentOS" scheme="http://www.wanqhblog.top/tags/CentOS/"/>
+    
+      <category term="Nginx" scheme="http://www.wanqhblog.top/tags/Nginx/"/>
     
   </entry>
   
@@ -1383,152 +1614,6 @@
       <category term="mybatis" scheme="http://www.wanqhblog.top/tags/mybatis/"/>
     
       <category term="hibernate" scheme="http://www.wanqhblog.top/tags/hibernate/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringBoot入门</title>
-    <link href="http://www.wanqhblog.top/2017/10/05/SpringBoot%E5%85%A5%E9%97%A8/"/>
-    <id>http://www.wanqhblog.top/2017/10/05/SpringBoot入门/</id>
-    <published>2017-10-05T01:40:20.000Z</published>
-    <updated>2017-10-05T07:20:18.813Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Spring中常用注解"><a href="#Spring中常用注解" class="headerlink" title="Spring中常用注解"></a>Spring中常用注解</h2><h3 id="声明Bean的注解"><a href="#声明Bean的注解" class="headerlink" title="声明Bean的注解"></a>声明Bean的注解</h3><ul>
-<li><strong>@Component：</strong>声明类为组件，没有明确的角色；</li>
-<li><strong>@Service：</strong>声明该类在业务逻辑层（service层）使用；</li>
-<li><strong>@Reponsitory：</strong>在数据访问层（dao层）使用；</li>
-<li><strong>@Controller：</strong>表现层（MVC-&gt;SpringMVC）使用；<br>四个注解效果几乎等效，主要是区别类的作用，是层次更清晰。</li>
-<li><strong>@Scope：</strong>描述Spring容器如何新建Bean实例，<ul>
-<li><strong>Singleton：</strong>单例，一个Spring容器中只有一个Bean实例，Spring默认为该配置</li>
-<li><strong>Prototype：</strong>每次调用新建一个Bean实例</li>
-<li><strong>Request：</strong>web项目中，给每一个http request新建一个Bean实例</li>
-<li><strong>Session：</strong>web项目中，给每一个http session新建一个Bean实例</li>
-<li><strong>GlobalSession：</strong>这个只在portal应用中有用，给每一个global http session新建一个bean实例 <h3 id="注入Bean的注解"><a href="#注入Bean的注解" class="headerlink" title="注入Bean的注解"></a>注入Bean的注解</h3></li>
-</ul>
-</li>
-<li><strong>@Autowired:</strong>自动装配，Spring提供的注解；<a id="more"></a>默认按类型装配，默认情况下必须要求依赖对象必须存在，如果要允许null 值，可以设置它的required属性为false，如：@Autowired(required=false) ，如果我们想使用名称装配可以结合<strong>@Qualifier</strong>注解进行使用</li>
-<li><strong>@Resource：</strong>JSR-250提供的注解；默认安照名称进行装配，名称可以通过name属性进行指定，如果没有指定name属性，当注解写在字段上时，默认取字段名进行按照名称查找，如果注解写在setter方法上默认取属性名进行装配。 当找不到与名称匹配的bean时才按照类型进行装配。但是需要注意的是，如果name属性一旦指定，就只会按照名称进行装配。</li>
-<li><strong>@Inject：</strong>JSR-330提供的注解。与<strong>@Autowired</strong>基本一样，按类型装配，可以通过<strong>@Qualifier</strong>显式指定装配类型<br>这三个注解可在set方法或者属性上，个人觉得注解在属性上更好，优点是代码少，层次更清晰。<h3 id="Java配置注解"><a href="#Java配置注解" class="headerlink" title="Java配置注解"></a>Java配置注解</h3></li>
-<li><strong>@Configuration：</strong>声明当前类是一个配置类，该类相当于Spring一个xml配置文件。这个类中可能有0个或多个@Bean注解。也可以不使用包扫描，因为所有的Bean都在此类中定义。</li>
-<li><strong>@Bean：</strong>注解在方法上，声明当前方法返回的是值为一个Bean；如果</li>
-<li><p><strong>@ComponentScan：</strong>自动扫描指定包名下所有使用<strong>@Servcie</strong>、<strong>@Reponsitory</strong>、<strong>@Controller</strong>和<strong>@Component</strong>的类，并注册为Bean。<br>使用java配置方式的Spring程序，可以使用<strong>AnnotationConfigApplicationContext</strong>作为Spring容器，接受输入一个配置类作为参数，然后使用<strong>genBean()</strong>获取配置的Bean。</p>
-<h3 id="AOP注解"><a href="#AOP注解" class="headerlink" title="AOP注解"></a>AOP注解</h3><p>AOP：面向切面编程，相对于OOP面向对象编程；Spring的AOP的存在是为了解耦,AOP可以让一组类共享相同行为。在OOP中只能通过继承类和实现接口来使代码的耦合度增强，且继承是能为单继承，阻碍更多行为添加到一组类上，AOP弥补了OOP的不足。<br>Spring支持AspectJ的注解式切面编程。</p>
-</li>
-<li><p><strong>@Aspect:</strong>声明是一个切面；</p>
-</li>
-<li><strong>@Before：</strong>定义切点，定义为前置通知</li>
-<li><strong>@After：</strong>定义为后置通知</li>
-<li><strong>@Around：</strong>定义为环绕通知，其中参数为切点</li>
-<li><strong>@PointCut：</strong>定义统一的拦截规则，上面的通知可以引用</li>
-</ul>
-<p>如果是使用java配置方式的Spring程序，需要在配置类上使用<strong>@EnableAspectJAutoProxy</strong>开启对AspectJ代理的支持。</p>
-<h3 id="Spring-EL和资源调用注解"><a href="#Spring-EL和资源调用注解" class="headerlink" title="Spring EL和资源调用注解"></a>Spring EL和资源调用注解</h3><p>Spring EL表达式支持在xml和注解中使用，类似于jsp的EL表达式。</p>
-<ul>
-<li><strong>@PropertySource:</strong>指定资源文件地址，</li>
-<li><strong>@Value：</strong>其中的参数为读取资源信息，也可以使用该注解注入，这样就需要配置一个PropertySourcePalceholderConfigurer的Bean。<h3 id="Bean的初始化和销毁"><a href="#Bean的初始化和销毁" class="headerlink" title="Bean的初始化和销毁"></a>Bean的初始化和销毁</h3>使用JSR250形式的Bean</li>
-<li><strong>@PostConstruct：</strong>在构造函数执行完之后执行</li>
-<li><strong>@PerDestory：</strong>在Bean销毁之前执行<br>在<strong>@Bean</strong>注解中可以指定属性：initMethod和destoryMethod指定类的init和destory方法在构造之后、bean销毁之前执行。<h3 id="异步注解"><a href="#异步注解" class="headerlink" title="异步注解"></a>异步注解</h3></li>
-<li><strong>@EnableAsync：</strong>注解开启异步任务支持，在配置类中使用</li>
-<li><strong>@Async：</strong>表明该方法是个异步方法，如果该注解用在类上，则表明该类所有的方法都是异步方法。<h3 id="计划任务"><a href="#计划任务" class="headerlink" title="计划任务"></a>计划任务</h3></li>
-<li><strong>@EnableScheduling：</strong>在配置类来开启对计划任务的支持，</li>
-<li><strong>@Schedule：</strong>声明这是一个计划任务，使用fixedRate属性每个固定时间执行，cron可按照指定时间执行，cron是UNIX和类UNIX系统下的定时任务。<h3 id="测试注解"><a href="#测试注解" class="headerlink" title="测试注解"></a>测试注解</h3></li>
-<li><strong>@ContextConfiguration：</strong>加载配置ApplicationContext，其中class属性用来加载配置类</li>
-<li><strong>@ActiveProfile：</strong>用来声明活动的profile<h3 id="Spring-MVC注解"><a href="#Spring-MVC注解" class="headerlink" title="Spring MVC注解"></a>Spring MVC注解</h3></li>
-<li><strong>@Controller：</strong>声明该类是一个控制器</li>
-<li><strong>@RequestMapping：</strong>配置URL和方法之间的映射</li>
-<li><strong>@ResponseBody：</strong>支持将返回值放在response体内，而不是返回一个页面；此注解可放在返回值钱或者方法前。返回一般为json数据</li>
-<li><strong>@RequestBody：</strong>允许request的参数放在request体内，而不是直接在地址后面，此注解放在参数钱</li>
-<li><strong>@PathVariable：</strong>用来接收路径参数</li>
-<li><strong>@RestController:</strong>组合注解，组合了@Controller和@ResponseBody</li>
-<li><strong>@ControllerAdvice：</strong>可以将对于控制器的全局配置放置在同一个位置</li>
-<li><strong>@ExceptionHandler:</strong>用于全局处理控制里的异常，</li>
-<li><strong>@InitBinder：</strong>用来设置WebDataBinder，<strong>WebDataBinder</strong>用来自动绑定前台参数到Model中</li>
-<li><strong>@ModelAttribute：</strong>绑定键值对到Model里，<strong>@ControllerAdvice</strong>注解标注的类中是让全局的@RequestMapping都能获得到在此处设置的键值对。<h3 id="其他注解"><a href="#其他注解" class="headerlink" title="其他注解"></a>其他注解</h3></li>
-<li><strong>@Profile：</strong>为在不同环境下使用不同的配置提供支持</li>
-<li><strong>@ConfigurationProperties：</strong>绑定指定的properties中的值，并且支持层级关系。</li>
-<li><strong>@Primary：</strong> 标志这个 Bean 如果在多个同类 Bean 候选时，该 Bean 优先被考虑。</li>
-<li><strong>@Conditional：</strong>根据满足某一特定条件创建一个特定的Bean</li>
-<li><strong>@EnableWebMvc：</strong>开启Web MVC的配置支持</li>
-<li><strong>@EnableConfigurationProperties：</strong>开启对<strong>@ConfigurationProperties</strong>注解配置Bean的支持</li>
-<li><strong>@EnableTransactionManagement:</strong>开启对注解式事务的支持</li>
-<li><strong>@EnableCaching：</strong>开启注解式的缓存支持<h2 id="SpringBoot简介"><a href="#SpringBoot简介" class="headerlink" title="SpringBoot简介"></a>SpringBoot简介</h2><blockquote>
-<p>Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
-<li>快速构建项目；</li>
-<li>对主流开发框架的无配置集成；</li>
-<li>项目可独立运行，无须外部依赖Servlet容器；</li>
-<li>提供运行时的应用监控；</li>
-<li>极大地提高了开发、部署效率；</li>
-<li>与云计算的天然集成。</li>
-</ol>
-<h2 id="创建第一个SpringBoot应用"><a href="#创建第一个SpringBoot应用" class="headerlink" title="创建第一个SpringBoot应用"></a>创建第一个SpringBoot应用</h2><p>可以使用Spring网站在线创建：<a href="https://start.spring.io/" target="_blank" rel="external">https://start.spring.io/</a><br><img src="https://i.imgur.com/09JwCTm.png" alt=""><br>下载完解压后就能得到一个标准的maven项目，这里也可以选择gradle方式<br><img src="https://i.imgur.com/XURuy7w.png" alt=""><br>使用IDE创建，这里使用IDEA创建：<br>选择Spring Initializr，在右边选择jdk版本<br><img src="https://i.imgur.com/fsAi30r.png" alt=""><br>修改填写maven的一些属性，这里的Java Version要与前面的版本对应<br><img src="https://i.imgur.com/8mnotun.png" alt=""><br>选择SpringBoot的版本以及需要添加的依赖<br><img src="https://i.imgur.com/nfymcBB.png" alt=""><br>最后就是项目名称<br><img src="https://i.imgur.com/YCAnc3f.png" alt=""><br>创建完成的项目结构：<br><img src="https://i.imgur.com/4F2kGUw.png" alt=""><br>添加一个Controller并启动项目测试：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/hello"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span>  <span class="string">"Hello SpringBoot"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoApplication</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		SpringApplication.run(DemoApplication.class, args);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>访问：<a href="http://localhost:8080/hello" target="_blank" rel="external">http://localhost:8080/hello</a><br><img src="https://i.imgur.com/QtGfbag.png" alt=""></p>
-<h2 id="表单验证"><a href="#表单验证" class="headerlink" title="表单验证"></a>表单验证</h2><p>创建一个学生类，添加学生信息验证学生年龄最小为20岁，学生姓名不能为空：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Students</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String id;</div><div class="line"></div><div class="line">    <span class="meta">@NotNull</span>(message = <span class="string">"姓名必传"</span>)</div><div class="line">    <span class="keyword">private</span> String name;</div><div class="line"></div><div class="line">    <span class="comment">//@Min 该注解限制字段的最小值</span></div><div class="line">    <span class="meta">@Min</span>(value = <span class="number">20</span> ,message = <span class="string">"未满20岁的学生禁止注册！！"</span>)</div><div class="line">    <span class="keyword">private</span> Integer age;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Students</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(String id)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.age = age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"Students&#123;"</span> +</div><div class="line">                <span class="string">"id='"</span> + id + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</div><div class="line">                <span class="string">", age="</span> + age +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/** 日志打印 */</span></div><div class="line">   <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(Hello.class);</div><div class="line"></div><div class="line">   <span class="comment">/**</span></div><div class="line"><span class="comment">    * <span class="doctag">@Valid</span> 表示该对象需要验证</span></div><div class="line"><span class="comment">    * <span class="doctag">@param</span> student </span></div><div class="line"><span class="comment">    * <span class="doctag">@param</span> bindingResult 验证返回的信息</span></div><div class="line"><span class="comment">    * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">    */</span></div><div class="line">   <span class="meta">@PostMapping</span>(<span class="string">"/saveStudent"</span>)</div><div class="line">   <span class="function"><span class="keyword">public</span> Object <span class="title">saveStudent</span><span class="params">(@Valid Students student,BindingResult bindingResult)</span></span>&#123;</div><div class="line">       <span class="keyword">if</span>(bindingResult.hasErrors())&#123;</div><div class="line">           <span class="comment">//如果失败，打印并返回验证结果</span></div><div class="line">           String error = bindingResult.getFieldError().getDefaultMessage();<span class="comment">//获取错误信息</span></div><div class="line">           logger.info(String.format(<span class="string">"errorMsg=&#123;&#125;"</span>),error+<span class="string">"age:"</span>+student.getAge());</div><div class="line">           <span class="keyword">return</span> error;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">return</span> student;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/2xKpn9f.png" alt=""><br><img src="https://i.imgur.com/d5jrdmg.png" alt=""></p>
-<h2 id="统一异常处理"><a href="#统一异常处理" class="headerlink" title="统一异常处理"></a>统一异常处理</h2><p>@ControllerAdvice:使用该注解标注的类，表明该类是Controller的全局配置类；<br>@ExceptionHandler：全局处理控制器的异常<br>自定义异常类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">**</div><div class="line"> * Created By wqh</div><div class="line"> * <span class="number">2017</span>/<span class="number">9</span>/<span class="number">24</span>   <span class="number">15</span>:<span class="number">13</span></div><div class="line"> * Description: 自定义异常，只有继承RuntimeException才能被Spring的hadler捕获</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentExceprion</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Integer code;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StudentExceprion</span><span class="params">(ResultEnum resultEnum)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(resultEnum.getMessage());</div><div class="line">        <span class="keyword">this</span>.code = resultEnum.getCode();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getCode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCode</span><span class="params">(Integer code)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.code = code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created By wqh</span></div><div class="line"><span class="comment"> * 2017/9/24 14:50</span></div><div class="line"><span class="comment"> * Description:返回结果的封装的工具类</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResultUtil</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ResponseResult <span class="title">success</span><span class="params">(Object object)</span></span>&#123;</div><div class="line">        ResponseResult responseResult = <span class="keyword">new</span> ResponseResult();</div><div class="line">        responseResult.setCode(<span class="number">1</span>);</div><div class="line">        responseResult.setMessage(<span class="string">"成功"</span>);</div><div class="line">        responseResult.setData(object);</div><div class="line">        <span class="keyword">return</span> responseResult;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  ResponseResult <span class="title">success</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> success(<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ResponseResult <span class="title">error</span><span class="params">(Integer code,String content)</span></span>&#123;</div><div class="line">        ResponseResult&lt;Students&gt; responseResult = <span class="keyword">new</span> ResponseResult&lt;&gt;();</div><div class="line">        responseResult.setCode(code);</div><div class="line">        responseResult.setMessage(content);</div><div class="line">        <span class="keyword">return</span> responseResult;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>控制层全局配置类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ControllerAdvice</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandle</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@ExceptionHandler</span>(value = Exception.class)</div><div class="line">    <span class="meta">@ResponseBody</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ResponseResult <span class="title">handle</span><span class="params">(Exception e)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(e <span class="keyword">instanceof</span> StudentExceprion)&#123;</div><div class="line">            StudentExceprion studentExceprion = (StudentExceprion) e;</div><div class="line">            <span class="keyword">return</span> ResultUtil.error(studentExceprion.getCode(),studentExceprion.getMessage());</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line"></div><div class="line">            <span class="keyword">return</span> ResultUtil.error(ResultEnum.UNKNOW_ERROR.getCode(),ResultEnum.UNKNOW_ERROR.getMessage());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created By wqh</span></div><div class="line"><span class="comment"> * 2017/9/24   15:26</span></div><div class="line"><span class="comment"> * Description: 返回结果的枚举类</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span>  ResultEnum &#123;</div><div class="line">    UNKNOW_ERROR (-<span class="number">1</span>,<span class="string">"未知错误"</span>),</div><div class="line">    SUCCESS(<span class="number">1</span>,<span class="string">"成功"</span>),</div><div class="line">    PRIMARY_ERROR(<span class="number">100</span>,<span class="string">"你可能在上小学"</span>),</div><div class="line">    MIDDLE_ERROR(<span class="number">101</span>,<span class="string">"你可能在上初中"</span>),</div><div class="line">    WORK_ERROR(<span class="number">102</span>,<span class="string">"你可能在打工"</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Integer code;</div><div class="line">    <span class="keyword">private</span> String message;</div><div class="line"></div><div class="line">    ResultEnum(Integer code, String message) &#123;</div><div class="line">        <span class="keyword">this</span>.code = code;</div><div class="line">        <span class="keyword">this</span>.message = message;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getCode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> message;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Created By wqh</span></div><div class="line"><span class="comment"> * 2017/9/24 14:43</span></div><div class="line"><span class="comment"> * Description: 相应结果的封装</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResponseResult</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">   <span class="comment">/** 响应码 */</span></div><div class="line">    <span class="keyword">private</span> Integer code;</div><div class="line"></div><div class="line">    <span class="comment">/** 响应信息 */</span></div><div class="line">    <span class="keyword">private</span> String message;</div><div class="line"></div><div class="line">    <span class="comment">/** 数据 */</span></div><div class="line">    <span class="keyword">private</span> T data;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getCode</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCode</span><span class="params">(Integer code)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.code = code;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> message;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMessage</span><span class="params">(String message)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.message = message;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getData</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(T data)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.data = data;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getAge</span><span class="params">(String id)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Students stu = studentDao.findOne(id);</div><div class="line">    <span class="keyword">if</span>(stu.getAge()&lt;<span class="number">10</span>)&#123;</div><div class="line">        <span class="comment">//抛出自定义异常</span></div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StudentExceprion(ResultEnum.PRIMARY_ERROR);</div><div class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (stu.getAge()&gt;<span class="number">10</span> &amp;&amp; stu.getAge()&lt;<span class="number">15</span>)&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StudentExceprion(ResultEnum.MIDDLE_ERROR);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> StudentExceprion(ResultEnum.WORK_ERROR);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在控制层直接调用Service层既可，但是异常需要往外抛，交给统一的处理</p>
-<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>使用Junit进行单元测试时很重要的，这里分别介绍测试service和dao层<br>添加测试依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<h3 id="测试Service层"><a href="#测试Service层" class="headerlink" title="测试Service层"></a>测试Service层</h3><p>Service层的测试比较简单，只要将Serice的Bean注入到测试类中。但是在SpringBoot中的测试类，需要在类上添加两个注解<strong>@RunWith(SpringRunner.class)、@SpringBootTest</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Autowired</span></div><div class="line">  <span class="keyword">private</span> StudentService studentService;</div><div class="line"></div><div class="line">  <span class="meta">@Test</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveStus</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line"></div><div class="line">      Students student = <span class="keyword">new</span> Students();</div><div class="line">      student.setAge(<span class="number">155</span>);</div><div class="line">      student.setName(<span class="string">"wqeqwasd"</span>);</div><div class="line">      student.setMoney(<span class="number">13</span>d);</div><div class="line">      studentService.saveStus(student);</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
-<h3 id="测试Controller层"><a href="#测试Controller层" class="headerlink" title="测试Controller层"></a>测试Controller层</h3><p>在开发Rest风格API时，对于Controller层的测试也是相当重要的；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</div><div class="line"><span class="meta">@SpringBootTest</span></div><div class="line"><span class="meta">@AutoConfigureMockMvc</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentActionTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> MockMvc mockMvc;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        mockMvc.perform(MockMvcRequestBuilders.post(<span class="string">"/studentAction/save"</span>)</div><div class="line">                                                .param(<span class="string">"name"</span>,<span class="string">"wqh"</span>)</div><div class="line">                                                .param(<span class="string">"age"</span>,<span class="string">"50"</span>))<span class="comment">//添加参数</span></div><div class="line">                .andExpect(MockMvcResultMatchers.status().isOk())<span class="comment">//返回状态码为200</span></div><div class="line">                .andDo(print())<span class="comment">//打印出请求和相应的内容</span></div><div class="line">                .andReturn().getResponse().getContentAsString();<span class="comment">//将返回信息转化为String类型</span></div><div class="line"><span class="comment">//                .andExpect(MockMvcResultMatchers.content().string("ww"));//返回结果必须是ww</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="SpringBoot实现热部署"><a href="#SpringBoot实现热部署" class="headerlink" title="SpringBoot实现热部署"></a>SpringBoot实现热部署</h2><p>SpringBoot热部署是使用了spring-boot-devtools工具：<br>添加依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--热部署功能--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>Pom文件build中添加<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">plugins</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">fork</span>&gt;</span>true<span class="tag">&lt;/<span class="name">fork</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></div></pre></td></tr></table></figure></p>
-<p>IDEA配置<br>当我们修改了Java类后，IDEA默认是不自动编译的，而spring-boot-devtools又是监测classpath下的文件发生变化才会重启应用，所以需要设置IDEA的自动编译：<br><img src="https://i.imgur.com/S8SPCWm.png" alt=""></p>
-<h2 id="学习资料汇总"><a href="#学习资料汇总" class="headerlink" title="学习资料汇总"></a>学习资料汇总</h2><h3 id="推荐博客"><a href="#推荐博客" class="headerlink" title="推荐博客"></a>推荐博客</h3><ul>
-<li><a href="http://blog.didispace.com/categories/Spring-Boot/" target="_blank" rel="external">程序猿DD</a></li>
-<li><a href="http://blog.csdn.net/liaokailin/article/category/5765237" target="_blank" rel="external">liaokailin的专栏</a></li>
-<li><a href="http://blog.720ui.com/columns/springboot_all/" target="_blank" rel="external">Spring Boot 揭秘与实战 系列</a></li>
-<li><a href="http://blog.csdn.net/column/details/spring-boot.html" target="_blank" rel="external">catoop的专栏</a></li>
-<li><a href="http://www.jianshu.com/c/f0cf6eae1754" target="_blank" rel="external">简书Spring Boot专题</a></li>
-<li><a href="http://blog.csdn.net/column/details/15397.html" target="_blank" rel="external">方志朋Spring Boot 专栏</a></li>
-<li><a href="http://lihao312.iteye.com/" target="_blank" rel="external">Spring-boot集成</a></li>
-<li><a href="http://www.ityouknow.com/spring-boot" target="_blank" rel="external">纯洁的微笑</a><h3 id="推荐网站"><a href="#推荐网站" class="headerlink" title="推荐网站"></a>推荐网站</h3></li>
-<li><a href="http://projects.spring.io/spring-boot/" target="_blank" rel="external">Spring boot 官网</a></li>
-<li><a href="https://qbgbook.gitbooks.io/spring-boot-reference-guide-zh/content/" target="_blank" rel="external">Spring Boot参考指南-中文版</a></li>
-<li><a href="https://dongchuan.gitbooks.io/gradle-user-guide-/content/tutorials/" target="_blank" rel="external">Gradle 中文参考指南</a></li>
-<li><a href="http://www.imooc.com/learn/767" target="_blank" rel="external">慕课网视频</a></li>
-<li><a href="http://www.mkyong.com/tutorials/spring-boot-tutorials/" target="_blank" rel="external">spring-boot-tutorials</a><h3 id="开源代码"><a href="#开源代码" class="headerlink" title="开源代码"></a>开源代码</h3></li>
-<li><a href="https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples" title="SpringBoot官方例子" target="_blank" rel="external">SpringBoot官方例子</a></li>
-<li><a href="https://github.com/ityouknow/spring-boot-examples" target="_blank" rel="external">spring-boot-examples</a></li>
-<li><a href="https://github.com/dyc87112/SpringBoot-Learning" target="_blank" rel="external">SpringBoot-Learning</a></li>
-<li><a href="https://github.com/cloudfavorites/favorites-web" target="_blank" rel="external">favorites-web</a></li>
-<li><a href="https://github.com/JeffLi1993/springboot-learning-example" target="_blank" rel="external">springboot-learning-example</a></li>
-<li><a href="https://github.com/leelance/spring-boot-all" target="_blank" rel="external">spring-boot-all</a></li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Spring中常用注解&quot;&gt;&lt;a href=&quot;#Spring中常用注解&quot; class=&quot;headerlink&quot; title=&quot;Spring中常用注解&quot;&gt;&lt;/a&gt;Spring中常用注解&lt;/h2&gt;&lt;h3 id=&quot;声明Bean的注解&quot;&gt;&lt;a href=&quot;#声明Bean的注解&quot; class=&quot;headerlink&quot; title=&quot;声明Bean的注解&quot;&gt;&lt;/a&gt;声明Bean的注解&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;@Component：&lt;/strong&gt;声明类为组件，没有明确的角色；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;@Service：&lt;/strong&gt;声明该类在业务逻辑层（service层）使用；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;@Reponsitory：&lt;/strong&gt;在数据访问层（dao层）使用；&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;@Controller：&lt;/strong&gt;表现层（MVC-&amp;gt;SpringMVC）使用；&lt;br&gt;四个注解效果几乎等效，主要是区别类的作用，是层次更清晰。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;@Scope：&lt;/strong&gt;描述Spring容器如何新建Bean实例，&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Singleton：&lt;/strong&gt;单例，一个Spring容器中只有一个Bean实例，Spring默认为该配置&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Prototype：&lt;/strong&gt;每次调用新建一个Bean实例&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Request：&lt;/strong&gt;web项目中，给每一个http request新建一个Bean实例&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Session：&lt;/strong&gt;web项目中，给每一个http session新建一个Bean实例&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;GlobalSession：&lt;/strong&gt;这个只在portal应用中有用，给每一个global http session新建一个bean实例 &lt;h3 id=&quot;注入Bean的注解&quot;&gt;&lt;a href=&quot;#注入Bean的注解&quot; class=&quot;headerlink&quot; title=&quot;注入Bean的注解&quot;&gt;&lt;/a&gt;注入Bean的注解&lt;/h3&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;@Autowired:&lt;/strong&gt;自动装配，Spring提供的注解；
-    
-    </summary>
-    
-      <category term="Spring" scheme="http://www.wanqhblog.top/categories/Spring/"/>
-    
-    
-      <category term="SpringBooot" scheme="http://www.wanqhblog.top/tags/SpringBooot/"/>
     
   </entry>
   
