@@ -5,12 +5,18 @@
     
   <url>
     <loc>http://www.wanqhblog.top/2018/01/28/SpringCloudBusKafka/</loc>
-    <lastmod>2018-01-29T04:03:59.412Z</lastmod>
+    <lastmod>2018-01-29T04:31:17.455Z</lastmod>
     <data>
         <display>
         <title>SpringCloudBus使用Kafka实现消息总线</title>
         <pubTime>2018-01-28T06:43:29.000Z</pubTime>
         
+        <tag>Kafka</tag>
+         
+        <tag>SpringCloud</tag>
+         
+        <tag>SpringBoot</tag>
+         
          
            
         </display>
