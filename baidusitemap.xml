@@ -4,6 +4,27 @@
 
     
   <url>
+    <loc>http://www.wanqhblog.top/2018/02/01/SpringBootTaskSchedule/</loc>
+    <lastmod>2018-01-31T01:58:20.920Z</lastmod>
+    <data>
+        <display>
+        <title>SpringBoot几种定时任务的实现方式</title>
+        <pubTime>2018-02-01T07:07:41.000Z</pubTime>
+        
+        <tag>SpringBoot</tag>
+         
+        <tag>Quartz</tag>
+         
+        <tag>Task</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.wanqhblog.top/2018/01/28/SpringCloudBusKafka/</loc>
     <lastmod>2018-01-29T04:31:17.455Z</lastmod>
     <data>
@@ -13,9 +34,9 @@
         
         <tag>Kafka</tag>
          
-        <tag>SpringCloud</tag>
-         
         <tag>SpringBoot</tag>
+         
+        <tag>SpringCloud</tag>
          
          
            
@@ -49,9 +70,9 @@
         <title>CentOS7下RabbitMQ的安装介绍</title>
         <pubTime>2018-01-26T01:13:48.000Z</pubTime>
         
-        <tag>RabbitMQ</tag>
-         
         <tag>CentOS</tag>
+         
+        <tag>RabbitMQ</tag>
          
          
            
@@ -332,9 +353,9 @@
         <title>CentOS下Nginx的配置安装</title>
         <pubTime>2017-11-25T01:15:26.000Z</pubTime>
         
-        <tag>CentOS</tag>
-         
         <tag>Nginx</tag>
+         
+        <tag>CentOS</tag>
          
          
            
@@ -522,9 +543,9 @@
         <title>SpringAOP的使用</title>
         <pubTime>2017-08-28T02:10:56.000Z</pubTime>
         
-        <tag>AOP</tag>
-         
         <tag>spring</tag>
+         
+        <tag>AOP</tag>
          
          
            
