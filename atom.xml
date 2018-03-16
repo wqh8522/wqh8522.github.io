@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-03-16T14:06:35.787Z</updated>
+  <updated>2018-03-16T14:08:15.051Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.wanqhblog.top/2018/03/14/Oracle%20ROW_NUMBER()%20OVER()%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E9%99%85%E5%9C%BA%E6%99%AF%E4%BD%BF%E7%94%A8/"/>
     <id>http://www.wanqhblog.top/2018/03/14/Oracle ROW_NUMBER() OVER()函数的实际场景使用/</id>
     <published>2018-03-14T03:51:34.000Z</published>
-    <updated>2018-03-16T14:06:35.787Z</updated>
+    <updated>2018-03-16T14:08:15.051Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近开发的系统中有个在线咨询功能。学生在前台提交咨询信息，教师可以登录后台回复咨询。该功能设计是直接使用一张表，使用是否开始标识该条记录是否是咨询的开始，然后使用一个会话id标识是属于一次咨询，根据创建时间排序，最后就像聊天一样。</p>
 <p>后来遇到一个需求，就是需要查询出指定教师回复的咨询信息的第一条问和第一条答。先查询出所有开始的问，然后使用会话id内连接加子查询。<a id="more"></a>然而遇到的问题是教师可能有多条回答，如果直接使用mybaits返回一个list，然后再去取第一条不是不可以。但是还是想直接使用sql完成，经过一番查找找到：</p>
