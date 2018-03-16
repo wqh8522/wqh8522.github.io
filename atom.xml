@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-01-31T01:58:20.920Z</updated>
+  <updated>2018-03-16T13:54:53.692Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -16,11 +16,80 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Oracle ROW_NUMBER() OVER()函数的实际场景使用</title>
+    <link href="http://www.wanqhblog.top/2018/03/14/Oracle%20ROW_NUMBER()%20OVER()%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E9%99%85%E5%9C%BA%E6%99%AF%E4%BD%BF%E7%94%A8/"/>
+    <id>http://www.wanqhblog.top/2018/03/14/Oracle ROW_NUMBER() OVER()函数的实际场景使用/</id>
+    <published>2018-03-14T03:51:34.000Z</published>
+    <updated>2018-03-16T13:54:53.692Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近开发的系统中有个在线咨询功能。学生在前台提交咨询信息，教师可以登录后台回复咨询。该功能设计是直接使用一张表，使用是否开始标识该条记录是否是咨询的开始，然后使用一个会话id标识是属于一次咨询，根据创建时间排序，最后就像聊天一样。</p>
+<p>后来遇到一个需求，就是需要查询出指定教师回复的咨询信息的第一条问和第一条答。先查询出所有开始的问，然后使用会话id内连接加子查询。然而遇到的问题是教师可能有多条回答，如果直接使用mybaits返回一个list，然后再去取第一条不是不可以。但是还是想直接使用sql完成，经过一番查找找到：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">row_number() over(partition by  col1 ORDER BY col2 ASC )</div></pre></td></tr></table></figure>
+<p>(ps：以上问题如果有更好解决办法的欢迎评论)</p>
+<p>##数据库</p>
+<p>我将项目的数据库表进行改造并插入数据</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-14/14933320.jpg-blog" alt=""></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Table structure for zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">"ZXZX"</span> (</div><div class="line"><span class="string">"ID"</span> VARCHAR2(<span class="number">64</span> <span class="keyword">BYTE</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"CONSULT_ID"</span> VARCHAR2(<span class="number">255</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"CONTENT"</span> VARCHAR2(<span class="number">255</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"CREATE_DATE"</span> <span class="built_in">DATE</span> <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"IS_START"</span> VARCHAR2(<span class="number">255</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"USER_ID"</span> VARCHAR2(<span class="number">64</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> </div><div class="line">)</div><div class="line"><span class="keyword">LOGGING</span></div><div class="line"><span class="keyword">NOCOMPRESS</span></div><div class="line">NOCACHE</div><div class="line">;</div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Records of zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'12sassaasd'</span>, <span class="string">'12123123'</span>, <span class="string">'第一条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 21:09:26'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'1'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'213123qwewq'</span>, <span class="string">'12123123'</span>, <span class="string">'第一次回答第一条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 22:10:16'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'sasdass2342'</span>, <span class="string">'12123123'</span>, <span class="string">'第二次回答第一条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 22:11:07'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'23234wewer'</span>, <span class="string">'12123123'</span>, <span class="string">'第一条问追问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 22:22:00'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'345'</span>, <span class="string">'12123123'</span>, <span class="string">'回答一条追问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:12:55'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'234324'</span>, <span class="string">'334455'</span>, <span class="string">'第二条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:08:21'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'1'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'5623365'</span>, <span class="string">'334455'</span>, <span class="string">'回答第二条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:14:07'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'12314'</span>, <span class="string">'112233'</span>, <span class="string">'问问问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:14:49'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'1'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'12342'</span>, <span class="string">'112233'</span>, <span class="string">'答答答'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:15:15'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'002'</span>);</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Indexes structure for table zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Checks structure for table zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">"ZXZX"</span> <span class="keyword">ADD</span> <span class="keyword">CHECK</span> (<span class="string">"ID"</span> <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>);</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Primary Key structure for table zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">"ZXZX"</span> <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span> (<span class="string">"ID"</span>);</div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-14/33929690.jpg-blog" alt=""></p>
+<p>##数据查询</p>
+<p>这里需要将user_id=001所回答的问题查询出，也就是上图红框中的信息。</p>
+<ul>
+<li>首先查询001的回答，这里就可能每个会话有多条，使用前面提到的row_number() over()便可以解决重复问题：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">       row_number()  over(partition by  consult_id  ORDER BY create_date ASC ) as rn,</div><div class="line">       id,      </div><div class="line">       consult_id ,      </div><div class="line">       content,      </div><div class="line">       user_id ,      </div><div class="line">       is_start,      </div><div class="line">       create_date      </div><div class="line">FROM zxzx  </div><div class="line">WHERE user_id = &apos;001&apos; AND is_start !=&apos;1&apos;</div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-15/57520084.jpg-blog" alt=""></p>
+<ul>
+<li>接着上面的查询，可以看出排序分组之后的数据都有一个rn编号，接着将rn为一取出即可：</li>
+</ul>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-15/94742878.jpg-blog" alt=""></p>
+<ul>
+<li>然后需要查询出所有的问的记录。将上面作为子查询，使用内连接并用consult_id字段连接。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span></div><div class="line">   w.id,      </div><div class="line">   w.consult_id ,      </div><div class="line">   w.content,      </div><div class="line">   w.user_id ,      </div><div class="line">   w.is_start,      </div><div class="line">   w.create_date, </div><div class="line">   h.id,      </div><div class="line">   h.consult_id ,      </div><div class="line">   h.content,      </div><div class="line">   h.user_id ,      </div><div class="line">   h.is_start,      </div><div class="line">   h.create_date</div><div class="line"><span class="keyword">from</span> zxzx w <span class="keyword">inner</span> <span class="keyword">join</span> (</div><div class="line">  <span class="keyword">select</span> * <span class="keyword">from</span>(</div><div class="line">    <span class="keyword">SELECT</span></div><div class="line">           row_number()  <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span>  consult_id  <span class="keyword">ORDER</span> <span class="keyword">BY</span> create_date <span class="keyword">ASC</span> ) <span class="keyword">as</span> rn,</div><div class="line">           <span class="keyword">id</span>,      </div><div class="line">           consult_id ,      </div><div class="line">           <span class="keyword">content</span>,      </div><div class="line">           user_id ,      </div><div class="line">           is_start,      </div><div class="line">           create_date      </div><div class="line">    <span class="keyword">FROM</span> zxzx  </div><div class="line">    <span class="keyword">WHERE</span> user_id = <span class="string">'001'</span> <span class="keyword">AND</span> is_start !=<span class="string">'1'</span></div><div class="line">  )<span class="keyword">where</span> rn = <span class="number">1</span></div><div class="line">) h <span class="keyword">on</span> h.consult_id = w.consult_id </div><div class="line"><span class="keyword">where</span> w.is_start = <span class="string">'1'</span></div></pre></td></tr></table></figure>
+<ul>
+<li>最后查询结果</li>
+</ul>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-16/35936413.jpg-blog" alt=""></p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="数据库结果去重"><a href="#数据库结果去重" class="headerlink" title="数据库结果去重"></a>数据库结果去重</h3><p>上面说到使用<code>row_number() over()</code>函数获取根据某个字段分组后的一条数据，这就有点像“去重”。在Oracle中还可以使用<code>distinct</code>来返回唯一值。</p>
+<ol>
+<li>distinct关键字，语法如下：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">col</span> <span class="keyword">FROM</span> table_name</div></pre></td></tr></table></figure>
+<p>​    在使用关键字 distinct 的时候，主要是要知道其作用于单个字段和多个字段的时候是有区别的：</p>
+<ul>
+<li>作用于单个字段时，其“去重”的是表中所有该字段值重复的数据；</li>
+<li>作用于多个字段的时候，其“去重”的表中所有字段（即 distinct 具体作用的多个字段）值都相同的数据。</li>
+</ul>
+<ol>
+<li>row_number() over() 函数，语法如下：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">row_number() over(partition by  col1 ORDER BY col2 ASC )</div></pre></td></tr></table></figure>
+<p>​    row_number()函数用于给记录进行标号，over()函数的作用是将表中的记录进行分组和排序。语法类似上面：将表中的数据按照col1进行分组，按照col2排序。partition by：表示分组。该函数主要是根据分组进行排序之后然后取出第一条数据以实现“去重”</p>
+<h3 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h3><ol>
+<li>内连接<code>inner join  on</code>：只显示两张表都匹配的结果；</li>
+<li>左外连接<code>left join on</code>：以左边的表为基准，显示出左表的全部字段和右表所匹配的字段，空的用<code>null</code>表示；</li>
+<li>右外连接<code>right join on</code>：与左外连接相反，右外连接会查询出右表的所有字段，显示左表与右表匹配的字段，空用<code>null</code>表示；</li>
+<li>全连接<code>full join on</code>：显示两张表全部内容。</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;最近开发的系统中有个在线咨询功能。学生在前台提交咨询信息，教师可以登录后台回复咨询。该功能设计是直接使用一张表，使用是否开始标识该条记录是否
+    
+    </summary>
+    
+      <category term="Oracle" scheme="http://www.wanqhblog.top/categories/Oracle/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>SpringBoot几种定时任务的实现方式</title>
     <link href="http://www.wanqhblog.top/2018/02/01/SpringBootTaskSchedule/"/>
     <id>http://www.wanqhblog.top/2018/02/01/SpringBootTaskSchedule/</id>
     <published>2018-02-01T07:07:41.000Z</published>
-    <updated>2018-01-31T01:58:20.920Z</updated>
+    <updated>2018-02-01T01:38:01.321Z</updated>
     
     <content type="html"><![CDATA[<p>定时任务实现的几种方式：</p>
 <ul>
@@ -63,8 +132,12 @@
 </ul>
 <p>其中每个元素可以是一个值(如6),一个连续区间(9-12),一个间隔时间(8-18/4)(/表示每隔4小时),一个列表(1,3,5),通配符。由于”月份中的日期”和”星期中的日期”这两个元素互斥的,必须要对其中一个设置。配置实例：</p>
 <ul>
+<li>每隔5秒执行一次：<em>/5 </em> <em> </em> * ?</li>
+<li>每隔1分钟执行一次：0 <em>/1 </em> <em> </em> ?</li>
 <li>0 0 10,14,16 <em> </em> ? 每天上午10点，下午2点，4点</li>
 <li>0 0/30 9-17 <em> </em> ?   朝九晚五工作时间内每半小时</li>
+</ul>
+<ul>
 <li>0 0 12 ? * WED 表示每个星期三中午12点</li>
 <li>“0 0 12 <em> </em> ?” 每天中午12点触发 </li>
 <li>“0 15 10 ? <em> </em>“ 每天上午10:15触发</li>
@@ -150,6 +223,7 @@
 </tr>
 </tbody>
 </table>
+<p>在线cron表达式生成：<a href="http://qqe2.com/cron/index" target="_blank" rel="external">http://qqe2.com/cron/index</a></p>
 <h1 id="整合Quartz"><a href="#整合Quartz" class="headerlink" title="整合Quartz"></a>整合Quartz</h1><ul>
 <li>添加依赖</li>
 </ul>
@@ -1444,9 +1518,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="SpringBoot" scheme="http://www.wanqhblog.top/tags/SpringBoot/"/>
-    
       <category term="JWT" scheme="http://www.wanqhblog.top/tags/JWT/"/>
+    
+      <category term="SpringBoot" scheme="http://www.wanqhblog.top/tags/SpringBoot/"/>
     
   </entry>
   
@@ -1571,9 +1645,9 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/categories/SpringBoot/"/>
     
     
-      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
-    
       <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
+    
+      <category term="图片上传" scheme="http://www.wanqhblog.top/tags/%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0/"/>
     
       <category term="七牛云" scheme="http://www.wanqhblog.top/tags/%E4%B8%83%E7%89%9B%E4%BA%91/"/>
     
@@ -1726,57 +1800,6 @@
       <category term="SpringBoot" scheme="http://www.wanqhblog.top/tags/SpringBoot/"/>
     
       <category term="Redis" scheme="http://www.wanqhblog.top/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS下Nginx的配置安装</title>
-    <link href="http://www.wanqhblog.top/2017/11/25/CentOS%E4%B8%8BNginx%E7%9A%84%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85/"/>
-    <id>http://www.wanqhblog.top/2017/11/25/CentOS下Nginx的配置安装/</id>
-    <published>2017-11-25T01:15:26.000Z</published>
-    <updated>2017-12-29T02:49:51.302Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。在高连接并发的情况下，Nginx是Apache服务器不错的替代品。<br>NGINX是一个免费的开源高性能的HTTP服务器和反向代理，以及一个IMAP / POP3代理服务器。NGINX以其高性能，稳定性，丰富的功能集，简单的配置和低资源消耗而闻名。<br>NGINX是为解决C10K问题而编写的一些服务器之一。与传统的服务器不同，NGINX不依赖线程来处理请求。相反，它使用了一个更具可扩展性的事件驱动（异步）体系结构。这种体系结构使用很小但更重要的是，在负载下可预测的内存量。即使您不希望同时处理数千个请求，您仍然可以从NGINX的高性能和小内存占用中受益。NGINX在所有方向都可以扩展：从最小的VPS一直到大型的服务器集群。<a id="more"></a></p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>nginx使用编译安装，所以需要确定系统已经安装编译工具以及库文件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装PCRE"><a href="#安装PCRE" class="headerlink" title="安装PCRE"></a>安装PCRE</h3><p>PCRE的作用是使nginx支持Rewrite功能。<a href="https://sourceforge.net/projects/pcre/files/" target="_blank" rel="external">https://sourceforge.net/projects/pcre/files/</a></p>
-<ol>
-<li><p>下载，保存目录<code>/usr/local/nginx</code></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# wget https://sourceforge.net/projects/pcre/files/pcre/8.41/pcre-8.41.tar.gz</div></pre></td></tr></table></figure>
-</li>
-<li><p>解压，解压之后进入目录</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# tar -zvxf pcre-8.41.tar.gz </div><div class="line"></div><div class="line">[root@localhost nginx]# cd pcre-8.41/</div></pre></td></tr></table></figure>
-</li>
-<li><p>编译安装</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost pcre2-10.30]# ./configure </div><div class="line">[root@localhost pcre2-10.30]# make</div><div class="line">[root@localhost pcre2-10.30]# make install</div></pre></td></tr></table></figure>
-</li>
-<li><p>查看版本<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/3951804.jpg" alt=""></p>
-<h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><p>如果nginx还需支持SSL则还需要安装http_ssl_module模块，这里就不介绍了。<br>下载，<a href="http://nginx.org/download/" target="_blank" rel="external">http://nginx.org/download/</a>选择对应的版本，这里使用1.9.0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# wget http://nginx.org/download/nginx-1.9.0.tar.gz</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>下载完成后，同样是要解压编译安装.<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# tar -zvxf nginx-1.9.0.tar.gz </div><div class="line">[root@localhost nginx]# cd nginx-1.9.0/</div><div class="line">[root@localhost nginx-1.9.0]# ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-pcre=/usr/local/nginx/pcre-8.41</div><div class="line">[root@localhost nginx-1.9.0]# make</div><div class="line">[root@localhost nginx-1.9.0]# make install</div></pre></td></tr></table></figure></p>
-<p>查看nginx版本<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/14426767.jpg" alt=""><br>配置文件路径：<code>/usr/local/webserver/nginx/conf/nginx.conf</code>，使用vim编辑配置文件，添加location：</p>
-<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/30992423.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
-<h3 id="启动测试"><a href="#启动测试" class="headerlink" title="启动测试"></a>启动测试</h3><p>在测试之前先运行一个tomcat服务器，使用8080端口：<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/92166265.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>然后启动nginx服务器：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost apache-tomcat-8.0.48]# /usr/local/webserver/nginx/sbin/nginx</div></pre></td></tr></table></figure></p>
-<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/85044529.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>上面我们配置了转发<code>/test</code>:</p>
-<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/95715631.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;Nginx(“engine x”)是一款是由俄罗斯的程序设计师Igor Sysoev所开发高性能的 Web和 反向代理 服务器，也是一个 IMAP/POP3/SMTP 代理服务器。在高连接并发的情况下，Nginx是Apache服务器不错的替代品。&lt;br&gt;NGINX是一个免费的开源高性能的HTTP服务器和反向代理，以及一个IMAP / POP3代理服务器。NGINX以其高性能，稳定性，丰富的功能集，简单的配置和低资源消耗而闻名。&lt;br&gt;NGINX是为解决C10K问题而编写的一些服务器之一。与传统的服务器不同，NGINX不依赖线程来处理请求。相反，它使用了一个更具可扩展性的事件驱动（异步）体系结构。这种体系结构使用很小但更重要的是，在负载下可预测的内存量。即使您不希望同时处理数千个请求，您仍然可以从NGINX的高性能和小内存占用中受益。NGINX在所有方向都可以扩展：从最小的VPS一直到大型的服务器集群。
-    
-    </summary>
-    
-      <category term="Nginx" scheme="http://www.wanqhblog.top/categories/Nginx/"/>
-    
-    
-      <category term="Nginx" scheme="http://www.wanqhblog.top/tags/Nginx/"/>
-    
-      <category term="CentOS" scheme="http://www.wanqhblog.top/tags/CentOS/"/>
     
   </entry>
   

@@ -172,6 +172,128 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Oracle ROW_NUMBER() OVER()函数的实际场景使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/Oracle ROW_NUMBER() OVER()函数的实际场景使用/">Oracle ROW_NUMBER() OVER()函数的实际场景使用</a>
+    </h1>
+  
+
+        
+        <a href="/2018/03/14/Oracle ROW_NUMBER() OVER()函数的实际场景使用/" class="archive-article-date">
+  	<time datetime="2018-03-14T03:51:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近开发的系统中有个在线咨询功能。学生在前台提交咨询信息，教师可以登录后台回复咨询。该功能设计是直接使用一张表，使用是否开始标识该条记录是否是咨询的开始，然后使用一个会话id标识是属于一次咨询，根据创建时间排序，最后就像聊天一样。</p>
+<p>后来遇到一个需求，就是需要查询出指定教师回复的咨询信息的第一条问和第一条答。先查询出所有开始的问，然后使用会话id内连接加子查询。然而遇到的问题是教师可能有多条回答，如果直接使用mybaits返回一个list，然后再去取第一条不是不可以。但是还是想直接使用sql完成，经过一番查找找到：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">row_number() over(partition by  col1 ORDER BY col2 ASC )</div></pre></td></tr></table></figure>
+<p>(ps：以上问题如果有更好解决办法的欢迎评论)</p>
+<p>##数据库</p>
+<p>我将项目的数据库表进行改造并插入数据</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-14/14933320.jpg-blog" alt=""></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Table structure for zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">"ZXZX"</span> (</div><div class="line"><span class="string">"ID"</span> VARCHAR2(<span class="number">64</span> <span class="keyword">BYTE</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"CONSULT_ID"</span> VARCHAR2(<span class="number">255</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"CONTENT"</span> VARCHAR2(<span class="number">255</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"CREATE_DATE"</span> <span class="built_in">DATE</span> <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"IS_START"</span> VARCHAR2(<span class="number">255</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> ,</div><div class="line"><span class="string">"USER_ID"</span> VARCHAR2(<span class="number">64</span> <span class="keyword">BYTE</span>) <span class="literal">NULL</span> </div><div class="line">)</div><div class="line"><span class="keyword">LOGGING</span></div><div class="line"><span class="keyword">NOCOMPRESS</span></div><div class="line">NOCACHE</div><div class="line">;</div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Records of zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'12sassaasd'</span>, <span class="string">'12123123'</span>, <span class="string">'第一条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 21:09:26'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'1'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'213123qwewq'</span>, <span class="string">'12123123'</span>, <span class="string">'第一次回答第一条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 22:10:16'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'sasdass2342'</span>, <span class="string">'12123123'</span>, <span class="string">'第二次回答第一条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 22:11:07'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'23234wewer'</span>, <span class="string">'12123123'</span>, <span class="string">'第一条问追问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 22:22:00'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'345'</span>, <span class="string">'12123123'</span>, <span class="string">'回答一条追问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:12:55'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'234324'</span>, <span class="string">'334455'</span>, <span class="string">'第二条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:08:21'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'1'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'5623365'</span>, <span class="string">'334455'</span>, <span class="string">'回答第二条问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:14:07'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'001'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'12314'</span>, <span class="string">'112233'</span>, <span class="string">'问问问'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:14:49'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'1'</span>, <span class="string">'111'</span>);</div><div class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"ZXZX"</span> <span class="keyword">VALUES</span> (<span class="string">'12342'</span>, <span class="string">'112233'</span>, <span class="string">'答答答'</span>, <span class="keyword">TO_DATE</span>(<span class="string">'2018-03-14 23:15:15'</span>, <span class="string">'YYYY-MM-DD HH24:MI:SS'</span>), <span class="string">'0'</span>, <span class="string">'002'</span>);</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Indexes structure for table zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Checks structure for table zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">"ZXZX"</span> <span class="keyword">ADD</span> <span class="keyword">CHECK</span> (<span class="string">"ID"</span> <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>);</div><div class="line"></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="comment">-- Primary Key structure for table zxzx</span></div><div class="line"><span class="comment">-- ----------------------------</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">"ZXZX"</span> <span class="keyword">ADD</span> PRIMARY <span class="keyword">KEY</span> (<span class="string">"ID"</span>);</div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-14/33929690.jpg-blog" alt=""></p>
+<p>##数据查询</p>
+<p>这里需要将user_id=001所回答的问题查询出，也就是上图红框中的信息。</p>
+<ul>
+<li>首先查询001的回答，这里就可能每个会话有多条，使用前面提到的row_number() over()便可以解决重复问题：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">SELECT</div><div class="line">       row_number()  over(partition by  consult_id  ORDER BY create_date ASC ) as rn,</div><div class="line">       id,      </div><div class="line">       consult_id ,      </div><div class="line">       content,      </div><div class="line">       user_id ,      </div><div class="line">       is_start,      </div><div class="line">       create_date      </div><div class="line">FROM zxzx  </div><div class="line">WHERE user_id = &apos;001&apos; AND is_start !=&apos;1&apos;</div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-15/57520084.jpg-blog" alt=""></p>
+<ul>
+<li>接着上面的查询，可以看出排序分组之后的数据都有一个rn编号，接着将rn为一取出即可：</li>
+</ul>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-15/94742878.jpg-blog" alt=""></p>
+<ul>
+<li>然后需要查询出所有的问的记录。将上面作为子查询，使用内连接并用consult_id字段连接。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span></div><div class="line">   w.id,      </div><div class="line">   w.consult_id ,      </div><div class="line">   w.content,      </div><div class="line">   w.user_id ,      </div><div class="line">   w.is_start,      </div><div class="line">   w.create_date, </div><div class="line">   h.id,      </div><div class="line">   h.consult_id ,      </div><div class="line">   h.content,      </div><div class="line">   h.user_id ,      </div><div class="line">   h.is_start,      </div><div class="line">   h.create_date</div><div class="line"><span class="keyword">from</span> zxzx w <span class="keyword">inner</span> <span class="keyword">join</span> (</div><div class="line">  <span class="keyword">select</span> * <span class="keyword">from</span>(</div><div class="line">    <span class="keyword">SELECT</span></div><div class="line">           row_number()  <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span>  consult_id  <span class="keyword">ORDER</span> <span class="keyword">BY</span> create_date <span class="keyword">ASC</span> ) <span class="keyword">as</span> rn,</div><div class="line">           <span class="keyword">id</span>,      </div><div class="line">           consult_id ,      </div><div class="line">           <span class="keyword">content</span>,      </div><div class="line">           user_id ,      </div><div class="line">           is_start,      </div><div class="line">           create_date      </div><div class="line">    <span class="keyword">FROM</span> zxzx  </div><div class="line">    <span class="keyword">WHERE</span> user_id = <span class="string">'001'</span> <span class="keyword">AND</span> is_start !=<span class="string">'1'</span></div><div class="line">  )<span class="keyword">where</span> rn = <span class="number">1</span></div><div class="line">) h <span class="keyword">on</span> h.consult_id = w.consult_id </div><div class="line"><span class="keyword">where</span> w.is_start = <span class="string">'1'</span></div></pre></td></tr></table></figure>
+<ul>
+<li>最后查询结果</li>
+</ul>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-16/35936413.jpg-blog" alt=""></p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="数据库结果去重"><a href="#数据库结果去重" class="headerlink" title="数据库结果去重"></a>数据库结果去重</h3><p>上面说到使用<code>row_number() over()</code>函数获取根据某个字段分组后的一条数据，这就有点像“去重”。在Oracle中还可以使用<code>distinct</code>来返回唯一值。</p>
+<ol>
+<li>distinct关键字，语法如下：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> <span class="keyword">col</span> <span class="keyword">FROM</span> table_name</div></pre></td></tr></table></figure>
+<p>​    在使用关键字 distinct 的时候，主要是要知道其作用于单个字段和多个字段的时候是有区别的：</p>
+<ul>
+<li>作用于单个字段时，其“去重”的是表中所有该字段值重复的数据；</li>
+<li>作用于多个字段的时候，其“去重”的表中所有字段（即 distinct 具体作用的多个字段）值都相同的数据。</li>
+</ul>
+<ol>
+<li>row_number() over() 函数，语法如下：</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">row_number() over(partition by  col1 ORDER BY col2 ASC )</div></pre></td></tr></table></figure>
+<p>​    row_number()函数用于给记录进行标号，over()函数的作用是将表中的记录进行分组和排序。语法类似上面：将表中的数据按照col1进行分组，按照col2排序。partition by：表示分组。该函数主要是根据分组进行排序之后然后取出第一条数据以实现“去重”</p>
+<h3 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h3><ol>
+<li>内连接<code>inner join  on</code>：只显示两张表都匹配的结果；</li>
+<li>左外连接<code>left join on</code>：以左边的表为基准，显示出左表的全部字段和右表所匹配的字段，空的用<code>null</code>表示；</li>
+<li>右外连接<code>right join on</code>：与左外连接相反，右外连接会查询出右表的所有字段，显示左表与右表匹配的字段，空用<code>null</code>表示；</li>
+<li>全连接<code>full join on</code>：显示两张表全部内容。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Oracle/" class="article-tag-list-link color2">Oracle</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/03/14/Oracle ROW_NUMBER() OVER()函数的实际场景使用/">阅读全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringBootTaskSchedule" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -790,103 +912,9 @@
 
 
   
-    <article id="post-SpringCloud声明式服务调用Feign" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/16/SpringCloud声明式服务调用Feign/">SpringCloud声明式服务调用Feign</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/16/SpringCloud声明式服务调用Feign/" class="archive-article-date">
-  	<time datetime="2018-01-16T01:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>前面使用了Ribbon做客户端负载均衡，使用Hystrix做容错保护，这两者被作为基础工具类框架被广泛地应用在各个微服务的实现中。SpringCloudFeign是将两者做了更高层次的封装以简化开发。它基于Netfix Feign实现，整合了SpringCloudRibbon和SpringCloudHystrix，除了提供这两者的强大功能外，还提供了一种声明是的Web服务客户端定义的方式。SpringCloudFeign在NetFixFeign的基础上扩展了对SpringMVC注解的支持，在其实现下，我们只需创建一个接口并用注解的方式来配置它，即可完成对服务提供方的接口绑定。简化了SpringCloudRibbon自行封装服务调用客户端的开发量。</p>
-</blockquote>
-<h1 id="快速使用"><a href="#快速使用" class="headerlink" title="快速使用"></a>快速使用</h1>
-        
-          <a class="article-more-a" href="/2018/01/16/SpringCloud声明式服务调用Feign/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Feign</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringCloud/" class="article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/01/16/SpringCloud声明式服务调用Feign/">阅读全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -991,10 +1019,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Nginx</a>
               </li>
              
@@ -1003,19 +1027,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">oracle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">AOP</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1027,23 +1043,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">RabbitMQ</a>
+                <a href="javascript:void(0)" class="js-tag color3">分布式文件系统</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">注解</a>
+                <a href="javascript:void(0)" class="js-tag color1">Kafka</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Task</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1055,7 +1067,39 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">AOP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">注解</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Config</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Quartz</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Task</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Zuul</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1071,22 +1115,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">JWT</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Hystrix</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Zuul</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">classloader</a>
               </li>
              
@@ -1099,7 +1127,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Config</a>
+                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">SpringBooot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1111,23 +1147,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">javamail</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Feign</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">图片上传</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">FastDFS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1136,6 +1156,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">websocket</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">图片上传</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">七牛云</a>
               </li>
             
             <div class="clearfix"></div>
