@@ -6,18 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.wanqhblog.top">
-  <title>Archives | wanqh的个人博客</title>
+  <title>Oracle按年、月、日、周等统计数据 | wanqh的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="努力思考中...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="wanqh的个人博客">
-<meta property="og:url" content="http://www.wanqhblog.top/archives/page/2/index.html">
+  <meta name="description" content="在很多项目中都会有数据统计的功能，如按照年、月、周、日统计某个用户提交的数量；或者直接统计指定年、月、周或者日新增的数量。最近我接触的一个项目，客户就要求根据月和周统计每个单位提价提交的数量。">
+<meta name="keywords" content="数据统计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle按年、月、日、周等统计数据">
+<meta property="og:url" content="http://www.wanqhblog.top/2018/03/21/Oracle按年、月、日、周统计数据/index.html">
 <meta property="og:site_name" content="wanqh的个人博客">
-<meta property="og:description" content="努力思考中...">
+<meta property="og:description" content="在很多项目中都会有数据统计的功能，如按照年、月、周、日统计某个用户提交的数量；或者直接统计指定年、月、周或者日新增的数量。最近我接触的一个项目，客户就要求根据月和周统计每个单位提价提交的数量。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-3-21/15651356.jpg-blog">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-3-21/25054752.jpg-blog">
+<meta property="og:image" content="http://oy09glbzm.bkt.clouddn.com/18-3-21/75838951.jpg-blog">
+<meta property="og:updated_time" content="2018-03-21T14:04:22.383Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wanqh的个人博客">
-<meta name="twitter:description" content="努力思考中...">
+<meta name="twitter:title" content="Oracle按年、月、日、周等统计数据">
+<meta name="twitter:description" content="在很多项目中都会有数据统计的功能，如按照年、月、周、日统计某个用户提交的数量；或者直接统计指定年、月、周或者日新增的数量。最近我接触的一个项目，客户就要求根据月和周统计每个单位提价提交的数量。">
+<meta name="twitter:image" content="http://oy09glbzm.bkt.clouddn.com/18-3-21/15651356.jpg-blog">
   
     <link rel="alternative" href="/atom.xml" title="wanqh的个人博客" type="application/atom+xml">
   
@@ -170,451 +176,201 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Oracle按年、月、日、周统计数据" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Oracle按年、月、日、周等统计数据
+    </h1>
+  
+
+        
+        <a href="/2018/03/21/Oracle按年、月、日、周统计数据/" class="archive-article-date">
+  	<time datetime="2018-03-21T12:28:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在很多项目中都会有数据统计的功能，如按照年、月、周、日统计某个用户提交的数量；或者直接统计指定年、月、周或者日新增的数量。最近我接触的一个项目，客户就要求根据月和周统计每个单位提价提交的数量。<a id="more"></a></p>
+<h2 id="按年统计"><a href="#按年统计" class="headerlink" title="按年统计"></a>按年统计</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> </div><div class="line">  o.id,</div><div class="line">  o.name,</div><div class="line">  to_char(a.create_date,<span class="string">'yyyy'</span>),</div><div class="line">  <span class="keyword">count</span>(*)</div><div class="line"><span class="keyword">from</span> news a</div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_user u <span class="keyword">on</span> u.id = a.create_by </div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_office o <span class="keyword">on</span> o.id = u.office_id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> o.id,o.name,to_char(a.create_date,<span class="string">'yyyy'</span>)</div></pre></td></tr></table></figure>
+<p>这里就是将创建时间格式化为年形式，按照单位id分组，查询出提交的数量。</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-21/15651356.jpg-blog" alt=""></p>
+<h2 id="按月统计"><a href="#按月统计" class="headerlink" title="按月统计"></a>按月统计</h2><p>这里直接将上面的的日期格式改为<code>yyyy-MM</code>形式即可。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> </div><div class="line">  o.id,</div><div class="line">  o.name,</div><div class="line">  to_char(a.create_date,<span class="string">'yyyy-MM'</span>),</div><div class="line">  <span class="keyword">count</span>(*)</div><div class="line"><span class="keyword">from</span> news a</div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_user u <span class="keyword">on</span> u.id = a.create_by </div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_office o <span class="keyword">on</span> o.id = u.office_id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> o.id,o.name,to_char(a.create_date,<span class="string">'yyyy-MM'</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-21/25054752.jpg-blog" alt=""></p>
+<h2 id="按周统计"><a href="#按周统计" class="headerlink" title="按周统计"></a>按周统计</h2><p>按周统计可以显示两种效果，一种是显示出该日期的周一的日期，也就是自然周的日期，另外一种是按周自然周统计。</p>
+<h3 id="按自然周统计"><a href="#按自然周统计" class="headerlink" title="按自然周统计"></a>按自然周统计</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> </div><div class="line">  o.id,</div><div class="line">  o.name,</div><div class="line">  to_char(a.create_date,<span class="string">'ww'</span>),</div><div class="line">  <span class="keyword">count</span>(*)</div><div class="line"><span class="keyword">from</span> t_dzjg_news a</div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_user u <span class="keyword">on</span> u.id = a.create_by </div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_office o <span class="keyword">on</span> o.id = u.office_id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> o.id,o.name,to_char(a.create_date,<span class="string">'ww'</span>)</div></pre></td></tr></table></figure>
+<p>这里的<code>ww</code>是获取该日期的在年中的第几周。</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/18-3-21/75838951.jpg-blog" alt=""></p>
+<h3 id="按自然周的日期统计"><a href="#按自然周的日期统计" class="headerlink" title="按自然周的日期统计"></a>按自然周的日期统计</h3><p>这里处理起来可以会比较繁琐，首先要获取日期的所在周的周一的日期，然后根据周一日期分组查询：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">---获取指定日期的周一的日期</span></div><div class="line"><span class="keyword">select</span> trunc(<span class="keyword">sysdate</span>,<span class="string">'ww'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="keyword">select</span> to_char(trunc(<span class="keyword">sysdate</span>,<span class="string">'ww'</span>),<span class="string">'yyyy-MM-dd'</span>) <span class="keyword">from</span> dual;</div><div class="line"></div><div class="line"><span class="comment">---将创建时间格式为周一的形式，再去查找</span></div><div class="line"><span class="keyword">select</span> </div><div class="line">  o.id,</div><div class="line">  to_char(trunc(a.create_date,<span class="string">'ww'</span>),<span class="string">'yyyy-MM-dd'</span>) <span class="keyword">AS</span> 周一,</div><div class="line">  <span class="keyword">count</span>(*)</div><div class="line"><span class="keyword">from</span> t_dzjg_news a</div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_user u <span class="keyword">on</span> u.id = a.create_by </div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_office o <span class="keyword">on</span> o.id = u.office_id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> o.id,to_char(trunc(a.create_date,<span class="string">'ww'</span>),<span class="string">'yyyy-MM-dd'</span>)</div></pre></td></tr></table></figure>
+<p>这里使用到一个函数<code>trunc()</code>：该函数类似截取函数，按指定的格式截取输入的数据。这里将时间截取为显示周的形式。</p>
+<h2 id="按季度统计"><a href="#按季度统计" class="headerlink" title="按季度统计"></a>按季度统计</h2><p>在oracle中<code>q</code>为时间的季度如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'q'</span>) <span class="keyword">from</span> dual;<span class="comment">--取得当前时间的季度</span></div></pre></td></tr></table></figure>
+<p>所以上面的sql可以改为：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> </div><div class="line">  o.id,</div><div class="line">  to_char(a.create_date,<span class="string">'q'</span>) <span class="keyword">AS</span> 季度,</div><div class="line">  <span class="keyword">count</span>(*)</div><div class="line"><span class="keyword">from</span> t_dzjg_news a</div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_user u <span class="keyword">on</span> u.id = a.create_by </div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_office o <span class="keyword">on</span> o.id = u.office_id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> o.id, to_char(a.create_date,<span class="string">'q'</span>)</div></pre></td></tr></table></figure>
+<h2 id="按天统计"><a href="#按天统计" class="headerlink" title="按天统计"></a>按天统计</h2><p>这个就几乎没啥好说的了：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> </div><div class="line">  o.id,</div><div class="line">  to_char(a.create_date,<span class="string">'yyyy-MM-dd'</span>) <span class="keyword">AS</span> 日期,</div><div class="line">  <span class="keyword">count</span>(*)</div><div class="line"><span class="keyword">from</span> t_dzjg_news a</div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_user u <span class="keyword">on</span> u.id = a.create_by </div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_office o <span class="keyword">on</span> o.id = u.office_id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> o.id, to_char(a.create_date,<span class="string">'yyyy-MM-dd'</span>)</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>对于数据库数据的统计，这些还只是很简单基础。这几天通过写那些统计功能，虽然写的头大，但是对数据库知识越来越深。对于写复杂的sql语句，要细分问题，一步步的查询，最后将一步步分析的简单的查询组合成想要的复杂查询，可以说是从小到大，切忌从大到小。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>关于Oracle数据库中对时间常用的操作可以查看我之前的一篇博客：</p>
+<p><a href="http://blog.csdn.net/wqh8522/article/details/78913811" target="_blank" rel="external">Oeacle常见的日期处理</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/18/SpringCloudAPI网关服务Zuul/" class="archive-article-date">
-  	<time datetime="2018-01-18T08:55:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/18/SpringCloudAPI网关服务Zuul/">SpringCloudAPI网关服务Zuul</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Zuul</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据统计</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/SpringCloud/" class="article-tag-list-link color2">SpringCloud</a>
+        			<a href="/categories/Oracle/" class="article-tag-list-link color2">Oracle</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.wanqhblog.top/2018/03/21/Oracle按年、月、日、周统计数据/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/16/SpringCloud声明式服务调用Feign/" class="archive-article-date">
-  	<time datetime="2018-01-16T01:18:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/14/Oracle ROW_NUMBER() OVER()函数的实际场景使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Oracle ROW_NUMBER() OVER()函数的实际场景使用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/16/SpringCloud声明式服务调用Feign/">SpringCloud声明式服务调用Feign</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Feign</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringCloud/" class="article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#按年统计"><span class="toc-number">1.</span> <span class="toc-text">按年统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按月统计"><span class="toc-number">2.</span> <span class="toc-text">按月统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按周统计"><span class="toc-number">3.</span> <span class="toc-text">按周统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#按自然周统计"><span class="toc-number">3.1.</span> <span class="toc-text">按自然周统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按自然周的日期统计"><span class="toc-number">3.2.</span> <span class="toc-text">按自然周的日期统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按季度统计"><span class="toc-number">4.</span> <span class="toc-text">按季度统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按天统计"><span class="toc-number">5.</span> <span class="toc-text">按天统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最后"><span class="toc-number">7.</span> <span class="toc-text">最后</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/15/SpringCloud容错保护Hystrix（二）/" class="archive-article-date">
-  	<time datetime="2018-01-15T11:30:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/15/SpringCloud容错保护Hystrix（二）/">SpringCloud容错保护Hystrix（二）</a>
-    </h1>
+        
+    </div>
+</aside>
+
+
+
+
+
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Hystrix</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringClou/" class="article-tag-list-link color1">SpringClou</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/12/SpringCloud容错保护Hystrix（一）/" class="archive-article-date">
-  	<time datetime="2018-01-12T01:57:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/12/SpringCloud容错保护Hystrix（一）/">SpringCloud容错保护Hystrix（一）</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Hystrix</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringClou/" class="article-tag-list-link color1">SpringClou</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/11/springcloud客户端负载均衡ribbon/" class="archive-article-date">
-  	<time datetime="2018-01-11T08:52:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/11/springcloud客户端负载均衡ribbon/">SpringCloud客户端负载均衡Ribbon</a>
-    </h1>
+  <div id="SOHUCS" sid="Oracle按年、月、日、周等统计数据" style="padding: 0px 30px 0px 46px;"></div>
+<script type="text/javascript">
+(function(){
+var appid = "cytbAtNIL";
+var conf = "prod_6e78941de6cd41b03664c8f120466b0c";
+var width = window.innerWidth || document.documentElement.clientWidth;
+if (width < 960) {
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="//changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("//changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Ribbon</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringCloud/" class="article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/10/SprngCloud服务治理Eureka/" class="archive-article-date">
-  	<time datetime="2018-01-10T07:04:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/10/SprngCloud服务治理Eureka/">SpringCloud服务治理Eureka</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Eureka</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringCloud/" class="article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/04/MyBatis使用自定义拦截器进行分页/" class="archive-article-date">
-  	<time datetime="2018-01-04T07:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/04/MyBatis使用自定义拦截器进行分页/">MyBatis拦截器实现分页</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">分页</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">拦截器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/MyBatis/" class="article-tag-list-link color3">MyBatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/02/SpringBoot使用JWT实现登录验证/" class="archive-article-date">
-  	<time datetime="2018-01-02T08:46:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/02/SpringBoot使用JWT实现登录验证/">SpringBoot使用JWT实现登录验证</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JWT</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/SpringBoot/" class="article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/">Next &raquo;</a>
-    </nav>
-  
-
 
 
           </div>
@@ -647,8 +403,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
