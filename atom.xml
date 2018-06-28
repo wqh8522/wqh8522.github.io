@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-03-29T08:51:55.974Z</updated>
+  <updated>2018-06-28T12:54:42.152Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -16,11 +16,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>test</title>
+    <link href="http://www.wanqhblog.top/2018/06/28/test/"/>
+    <id>http://www.wanqhblog.top/2018/06/28/test/</id>
+    <published>2018-06-28T12:53:11.000Z</published>
+    <updated>2018-06-28T12:54:42.152Z</updated>
+    
+    <content type="html"><![CDATA[<p>hhhhhhhhhhhhh</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;hhhhhhhhhhhhh&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="test" scheme="http://www.wanqhblog.top/tags/test/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Java8：Lambda表达式增强版Comparator和排序</title>
     <link href="http://www.wanqhblog.top/2018/03/29/Java8%EF%BC%9ALambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%A2%9E%E5%BC%BA%E7%89%88Comparator%E5%92%8C%E6%8E%92%E5%BA%8F/"/>
     <id>http://www.wanqhblog.top/2018/03/29/Java8：Lambda表达式增强版Comparator和排序/</id>
     <published>2018-03-29T08:49:32.000Z</published>
-    <updated>2018-03-29T08:51:55.974Z</updated>
+    <updated>2018-06-28T12:38:55.175Z</updated>
     
     <content type="html"><![CDATA[<h3 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a><strong>1、概述</strong></h3><p>在这篇教程里，我们将要去了解下即将到来的<strong>JDK 8（译注，现在JDK 8已经发布了）中的Lambda表达式——特别是怎样使用它来编写Comparator和对集合（Collection）进行排序。</strong></p>
 <p>这篇文章是Baeldung上的<a href="http://www.baeldung.com/java-tutorial" target="_blank" rel="external">“Java ——回归基础”（“Java – Back to Basic”）系列</a>的一部分。 <a id="more"></a></p>
@@ -82,7 +104,7 @@
     <link href="http://www.wanqhblog.top/2018/03/28/%E5%A4%A7%E5%8D%8E%E6%91%84%E5%83%8F%E5%A4%B4%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91-web%E7%AB%AF%E5%AE%9E%E7%8E%B0%E5%AE%9E%E6%97%B6%E8%A7%86%E9%A2%91%E7%9B%91%E6%8E%A7/"/>
     <id>http://www.wanqhblog.top/2018/03/28/大华摄像头二次开发-web端实现实时视频监控/</id>
     <published>2018-03-28T12:23:02.000Z</published>
-    <updated>2018-03-28T12:38:35.951Z</updated>
+    <updated>2018-06-28T12:38:55.187Z</updated>
     
     <content type="html"><![CDATA[<p>最近客户提需要，需要在现有的系统中集成视频监控功能，摄像头是大华的。而大华又没有关于java的sdk，官网只能下载到c++的demo和dll文件。无奈只能自己在网上找了，最后找到了一些解决办法，把实现方法记录一下。</p>
 <a id="more"></a>
@@ -137,7 +159,7 @@
     <link href="http://www.wanqhblog.top/2018/03/21/Oracle%E6%8C%89%E5%B9%B4%E3%80%81%E6%9C%88%E3%80%81%E6%97%A5%E3%80%81%E5%91%A8%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE/"/>
     <id>http://www.wanqhblog.top/2018/03/21/Oracle按年、月、日、周统计数据/</id>
     <published>2018-03-21T12:28:29.000Z</published>
-    <updated>2018-03-21T14:07:17.223Z</updated>
+    <updated>2018-06-28T12:38:55.175Z</updated>
     
     <content type="html"><![CDATA[<p>在很多项目中都会有数据统计的功能，如按照年、月、周、日统计某个用户提交的数量；或者直接统计指定年、月、周或者日新增的数量。最近我接触的一个项目，客户就要求根据月和周统计每个单位提价提交的数量。<a id="more"></a></p>
 <h2 id="按年统计"><a href="#按年统计" class="headerlink" title="按年统计"></a>按年统计</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> </div><div class="line">  o.id,</div><div class="line">  o.name,</div><div class="line">  to_char(a.create_date,<span class="string">'yyyy'</span>),</div><div class="line">  <span class="keyword">count</span>(*)</div><div class="line"><span class="keyword">from</span> news a</div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_user u <span class="keyword">on</span> u.id = a.create_by </div><div class="line"><span class="keyword">left</span> <span class="keyword">join</span> sys_office o <span class="keyword">on</span> o.id = u.office_id</div><div class="line"><span class="keyword">group</span> <span class="keyword">by</span> o.id,o.name,to_char(a.create_date,<span class="string">'yyyy'</span>)</div></pre></td></tr></table></figure>
@@ -182,7 +204,7 @@
     <link href="http://www.wanqhblog.top/2018/03/14/Oracle%20ROW_NUMBER()%20OVER()%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E9%99%85%E5%9C%BA%E6%99%AF%E4%BD%BF%E7%94%A8/"/>
     <id>http://www.wanqhblog.top/2018/03/14/Oracle ROW_NUMBER() OVER()函数的实际场景使用/</id>
     <published>2018-03-14T03:51:34.000Z</published>
-    <updated>2018-03-16T14:08:15.051Z</updated>
+    <updated>2018-06-28T12:38:55.175Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近开发的系统中有个在线咨询功能。学生在前台提交咨询信息，教师可以登录后台回复咨询。该功能设计是直接使用一张表，使用是否开始标识该条记录是否是咨询的开始，然后使用一个会话id标识是属于一次咨询，根据创建时间排序，最后就像聊天一样。</p>
 <p>后来遇到一个需求，就是需要查询出指定教师回复的咨询信息的第一条问和第一条答。先查询出所有开始的问，然后使用会话id内连接加子查询。<a id="more"></a>然而遇到的问题是教师可能有多条回答，如果直接使用mybaits返回一个list，然后再去取第一条不是不可以。但是还是想直接使用sql完成，经过一番查找找到：</p>
@@ -250,7 +272,7 @@
     <link href="http://www.wanqhblog.top/2018/02/01/SpringBootTaskSchedule/"/>
     <id>http://www.wanqhblog.top/2018/02/01/SpringBootTaskSchedule/</id>
     <published>2018-02-01T07:07:41.000Z</published>
-    <updated>2018-02-01T01:38:01.321Z</updated>
+    <updated>2018-06-28T12:38:55.179Z</updated>
     
     <content type="html"><![CDATA[<p>定时任务实现的几种方式：</p>
 <ul>
@@ -435,7 +457,7 @@
     <link href="http://www.wanqhblog.top/2018/01/28/SpringCloudBusKafka/"/>
     <id>http://www.wanqhblog.top/2018/01/28/SpringCloudBusKafka/</id>
     <published>2018-01-28T06:43:29.000Z</published>
-    <updated>2018-01-29T04:31:17.455Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p><strong>Kafka</strong>是分布式发布-订阅消息系统，最初由LinkedIn公司开发，之后成为之后成为Apache基金会的一部分，由<a href="https://baike.baidu.com/item/Scala" target="_blank" rel="external">Scala</a>和<a href="https://baike.baidu.com/item/Java/85979" target="_blank" rel="external">Java</a>编写。Kafka是一种快速、可扩展的、设计内在就是分布式的，分区的和可复制的提交日志服务。</p>
@@ -497,9 +519,9 @@
     
       <category term="Kafka" scheme="http://www.wanqhblog.top/tags/Kafka/"/>
     
-      <category term="SpringBoot" scheme="http://www.wanqhblog.top/tags/SpringBoot/"/>
-    
       <category term="SpringCloud" scheme="http://www.wanqhblog.top/tags/SpringCloud/"/>
+    
+      <category term="SpringBoot" scheme="http://www.wanqhblog.top/tags/SpringBoot/"/>
     
   </entry>
   
@@ -508,7 +530,7 @@
     <link href="http://www.wanqhblog.top/2018/01/26/CentOS7-RabbitMQ/"/>
     <id>http://www.wanqhblog.top/2018/01/26/CentOS7-RabbitMQ/</id>
     <published>2018-01-26T01:13:48.000Z</published>
-    <updated>2018-01-26T08:17:11.586Z</updated>
+    <updated>2018-06-28T12:38:55.171Z</updated>
     
     <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>RabbitMQ是一个在AMQP基础上完成的，可复用的企业消息系统。它是由Erlang语言开发。</p>
 <p>AMQP：Advanced Message Queue，高级消息队列协议。他是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。</p>
@@ -728,9 +750,9 @@
     </summary>
     
     
-      <category term="CentOS" scheme="http://www.wanqhblog.top/tags/CentOS/"/>
-    
       <category term="RabbitMQ" scheme="http://www.wanqhblog.top/tags/RabbitMQ/"/>
+    
+      <category term="CentOS" scheme="http://www.wanqhblog.top/tags/CentOS/"/>
     
   </entry>
   
@@ -739,7 +761,7 @@
     <link href="http://www.wanqhblog.top/2018/01/25/CentOS-Kafka/"/>
     <id>http://www.wanqhblog.top/2018/01/25/CentOS-Kafka/</id>
     <published>2018-01-25T06:29:14.000Z</published>
-    <updated>2018-01-26T09:18:26.938Z</updated>
+    <updated>2018-06-28T12:38:55.171Z</updated>
     
     <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><blockquote>
 <p><strong>Kafka</strong>是分布式发布-订阅消息系统，最初由LinkedIn公司开发，之后成为之后成为Apache基金会的一部分，由<a href="https://baike.baidu.com/item/Scala" target="_blank" rel="external">Scala</a>和<a href="https://baike.baidu.com/item/Java/85979" target="_blank" rel="external">Java</a>编写。Kafka是一种快速、可扩展的、设计内在就是分布式的，分区的和可复制的提交日志服务。</p>
@@ -842,7 +864,7 @@
     <link href="http://www.wanqhblog.top/2018/01/25/SpingCLoudBusRabbitMQ/"/>
     <id>http://www.wanqhblog.top/2018/01/25/SpingCLoudBusRabbitMQ/</id>
     <published>2018-01-25T06:22:55.000Z</published>
-    <updated>2018-01-25T01:30:32.798Z</updated>
+    <updated>2018-06-28T12:38:55.179Z</updated>
     
     <content type="html"><![CDATA[<h1 id="SpringCloudBus介绍"><a href="#SpringCloudBus介绍" class="headerlink" title="SpringCloudBus介绍"></a>SpringCloudBus介绍</h1><blockquote>
 <p>SpringCloudBus：消息总线，可以将分布式系统的节点与轻量级消息代理连接，然后实现广播状态更改（如配置更改）或广播其他管理指令。总线就像一个分布式执行器，用于扩展SpringBoot应用程序，但可以用作应用程序之间的通信通道。</p>
@@ -929,7 +951,7 @@
     <link href="http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/"/>
     <id>http://www.wanqhblog.top/2018/01/19/SpringCloudConfig/</id>
     <published>2018-01-19T10:10:44.000Z</published>
-    <updated>2018-01-19T09:04:34.303Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>SpringCloudConfig是SpringCloud创建的用来为分布式系统中的基础设施和微服务应用提供集中化的外部配置支持，它分为客户端和服务端两部分。服务端也称为分布式配置中心，是一个独立的微服务应用，用来连接配置仓库并为客户端提供获取配置信息，加密/解密信息等访问接口。而客户端则是微服务架构中各微服务应用或基础设施，通过指定的配置中心来管理应用资源与业务相关的配置内容，并在启动的时候从配置中心获取和加载配置信息。<a id="more"></a></p>
@@ -1043,7 +1065,7 @@
     <link href="http://www.wanqhblog.top/2018/01/18/SpringCloudAPI%E7%BD%91%E5%85%B3%E6%9C%8D%E5%8A%A1Zuul/"/>
     <id>http://www.wanqhblog.top/2018/01/18/SpringCloudAPI网关服务Zuul/</id>
     <published>2018-01-18T08:55:47.000Z</published>
-    <updated>2018-01-25T01:26:02.968Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>SpringCloud微服务就是把一个大的项目拆分成多个小的模块，然后模块之间通过远程调用、服务治理的技术互相配合工作，随着业务的增加，项目也将会越来越庞大，接口数量也随之增加，对外提供服务的接口也会增加，运维人员对于这些接口的管理也会变得越来越难。另一方面对于一个系统来说，权限管理也是一个不可少的模块，在微服务架构中，系统被拆分，不可能每个模块都去添加一个个权限管理，这样系统代码重复、工作量大、后期维护也难。为了解决这些常见的架构问题，API网关应运而生。SpringCloudZuul是基于Netflix Zuul实现的API网关组件，它实现了请求路由、负载均衡、校验过滤、与服务治理框架的结合、请求转发是的熔断机制和服务的聚合等功能。<a id="more"></a></p>
@@ -1162,7 +1184,7 @@
     <link href="http://www.wanqhblog.top/2018/01/16/SpringCloud%E5%A3%B0%E6%98%8E%E5%BC%8F%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8Feign/"/>
     <id>http://www.wanqhblog.top/2018/01/16/SpringCloud声明式服务调用Feign/</id>
     <published>2018-01-16T01:18:28.000Z</published>
-    <updated>2018-01-16T08:05:28.026Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>前面使用了Ribbon做客户端负载均衡，使用Hystrix做容错保护，这两者被作为基础工具类框架被广泛地应用在各个微服务的实现中。SpringCloudFeign是将两者做了更高层次的封装以简化开发。它基于Netfix Feign实现，整合了SpringCloudRibbon和SpringCloudHystrix，除了提供这两者的强大功能外，还提供了一种声明是的Web服务客户端定义的方式。SpringCloudFeign在NetFixFeign的基础上扩展了对SpringMVC注解的支持，在其实现下，我们只需创建一个接口并用注解的方式来配置它，即可完成对服务提供方的接口绑定。简化了SpringCloudRibbon自行封装服务调用客户端的开发量。</p>
@@ -1275,7 +1297,7 @@
     <link href="http://www.wanqhblog.top/2018/01/15/SpringCloud%E5%AE%B9%E9%94%99%E4%BF%9D%E6%8A%A4Hystrix%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
     <id>http://www.wanqhblog.top/2018/01/15/SpringCloud容错保护Hystrix（二）/</id>
     <published>2018-01-15T11:30:20.000Z</published>
-    <updated>2018-01-16T08:07:40.577Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<p>接着上一篇:<a href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AD%A6%E4%B9%A0%E4%B9%8BHystrix%EF%BC%88%E4%B8%80%EF%BC%89/">SpringCloud容错保护Hystrix（一）</a></p>
 <h1 id="请求合并"><a href="#请求合并" class="headerlink" title="请求合并"></a>请求合并</h1><p>上一篇写到可以使用请求缓存来减轻高并发时的请求线程消耗、降低请求相应时间。请求合并又是什么东西呢？在微服务架构中，我们将项目拆分成多个模块，每个模块间通过远程调用进行通信。远程调用最常见的问题是通信消耗与连接数占用。在高并发情况下。随着通信次数的增加，通信时间会增加；因为依赖服务的线程池资源有限，将出现排队等待与响应延迟的情况。请求合并正是Hystrix为解决这两个问题而开发的，以减少通信消耗和线程数的占用。<a id="more"></a></p>
@@ -1378,7 +1400,7 @@
     <link href="http://www.wanqhblog.top/2018/01/12/SpringCloud%E5%AE%B9%E9%94%99%E4%BF%9D%E6%8A%A4Hystrix%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>http://www.wanqhblog.top/2018/01/12/SpringCloud容错保护Hystrix（一）/</id>
     <published>2018-01-12T01:57:51.000Z</published>
-    <updated>2018-01-16T08:07:16.960Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<p>与Eureka和Ribbon一样，Hystrix也是Netfix开源的一个框架，中文名：容错保护系统。SpringCloudHystrix实现了断路器、线程隔离等一系列服务保护功能。在微服务架构中，每个单元都在不同的进程中运行，进程间通过远程调用的方式相互依赖，这样就可能因为网络的原因出现调用故障和延迟，如果调用请求不断增加，将会导致自身服务的瘫痪。为了解决这些问题，产生了断路器等一系列服务保护机制。断路器详细介绍：<a href="https://martinfowler.com/bliki/CircuitBreaker.html" target="_blank" rel="external">断路器</a><a id="more"></a></p>
 <h1 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h1><p>直接使用上一篇：<a href="http://www.wanqhblog.top/2018/01/11/springcloudribbon/">SpringCloud客户端负载均衡Ribbon</a>，在article-service中添加。<br>pom文件<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;spring-cloud-starter-hystrix&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
@@ -1464,7 +1486,7 @@
     <link href="http://www.wanqhblog.top/2018/01/11/springcloud%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1ribbon/"/>
     <id>http://www.wanqhblog.top/2018/01/11/springcloud客户端负载均衡ribbon/</id>
     <published>2018-01-11T08:52:36.000Z</published>
-    <updated>2018-01-16T08:06:42.553Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<p>上一篇写到关于SpringCloudEureka的相关知识：<a href="http://www.wanqhblog.top/2018/01/10/SprngCloudEureka/">SpringCloud服务治理Eureka</a>。我们实现的服注册中心，以及服务提供者。接下来记录关于服务消费，以及客户端负载均衡器Ribbon的简单使用和配置。在使用Ribbon之前，先看看怎么调用服务吧。</p>
 <h2 id="基础的服务消费"><a href="#基础的服务消费" class="headerlink" title="基础的服务消费"></a>基础的服务消费</h2><h3 id="服务提供者"><a href="#服务提供者" class="headerlink" title="服务提供者"></a>服务提供者</h3><p>在上一篇的基础之上，创建一个<code>service-user</code>的微服务。这个微服我使用了h2数据库来保存数据，所以需要在配置文件中添加关于数据库的配置以及在pom文件中添加依赖，<a id="more"></a><br>application.yml<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">server:</div><div class="line">  port: <span class="number">40000</span></div><div class="line">spring:</div><div class="line">  application:</div><div class="line">    name: user-service</div><div class="line">#===========================================================</div><div class="line">#   数据库配置</div><div class="line">#===========================================================</div><div class="line">  jpa:</div><div class="line">    show-sql: <span class="keyword">true</span></div><div class="line">    hibernate:</div><div class="line">      ddl-auto: none</div><div class="line">    generate-ddl: <span class="keyword">false</span></div><div class="line">  datasource:</div><div class="line">    platform: h2</div><div class="line">    schema: classpath:schema.sql</div><div class="line">    data: classpath:data.sql</div><div class="line">#===========================================================</div><div class="line">#   eureka配置</div><div class="line">#===========================================================</div><div class="line">eureka:</div><div class="line">  client:</div><div class="line">    serviceUrl:</div><div class="line">      defaultZone: http:<span class="comment">//localhost:8888/eureka/</span></div><div class="line">  instance:</div><div class="line">    prefer-ip-address: <span class="keyword">true</span></div><div class="line">    instance-id: $&#123;spring.application.name&#125;:$&#123;server.port&#125;</div></pre></td></tr></table></figure></p>
@@ -1523,7 +1545,7 @@
     <link href="http://www.wanqhblog.top/2018/01/10/SprngCloud%E6%9C%8D%E5%8A%A1%E6%B2%BB%E7%90%86Eureka/"/>
     <id>http://www.wanqhblog.top/2018/01/10/SprngCloud服务治理Eureka/</id>
     <published>2018-01-10T07:04:55.000Z</published>
-    <updated>2018-01-16T08:06:09.970Z</updated>
+    <updated>2018-06-28T12:38:55.183Z</updated>
     
     <content type="html"><![CDATA[<h2 id="SpringCloud简介"><a href="#SpringCloud简介" class="headerlink" title="SpringCloud简介"></a>SpringCloud简介</h2><p>直接应用官方文档的介绍：<a href="https://springcloud.cc/spring-cloud-dalston.html" target="_blank" rel="external">https://springcloud.cc/spring-cloud-dalston.html</a><br><img src="http://oy09glbzm.bkt.clouddn.com/18-1-10/86331686.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
 <h2 id="SpringCloudEureka简介"><a href="#SpringCloudEureka简介" class="headerlink" title="SpringCloudEureka简介"></a>SpringCloudEureka简介</h2><a id="more"></a>
@@ -1583,7 +1605,7 @@
     <link href="http://www.wanqhblog.top/2018/01/04/MyBatis%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8B%A6%E6%88%AA%E5%99%A8%E8%BF%9B%E8%A1%8C%E5%88%86%E9%A1%B5/"/>
     <id>http://www.wanqhblog.top/2018/01/04/MyBatis使用自定义拦截器进行分页/</id>
     <published>2018-01-04T07:18:09.000Z</published>
-    <updated>2018-01-05T01:09:14.336Z</updated>
+    <updated>2018-06-28T12:38:55.175Z</updated>
     
     <content type="html"><![CDATA[<p>拦截器的作用就是拦截某些方法的调用，我们可以在方法执行前后为方法加上某些逻辑，也可以只执行拦截的逻辑代码而不执行被拦截的方法。Mybatis拦截器设计的一个初衷就是为了供用户在某些时候可以实现自己的逻辑而不必去动Mybatis固有的逻辑。</p>
 <h2 id="拦截器分页原理"><a href="#拦截器分页原理" class="headerlink" title="拦截器分页原理"></a>拦截器分页原理</h2><blockquote>
@@ -1622,7 +1644,7 @@
     <link href="http://www.wanqhblog.top/2018/01/02/SpringBoot%E4%BD%BF%E7%94%A8JWT%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81/"/>
     <id>http://www.wanqhblog.top/2018/01/02/SpringBoot使用JWT实现登录验证/</id>
     <published>2018-01-02T08:46:17.000Z</published>
-    <updated>2018-01-02T08:53:05.396Z</updated>
+    <updated>2018-06-28T12:38:55.179Z</updated>
     
     <content type="html"><![CDATA[<h2 id="什么是JWT"><a href="#什么是JWT" class="headerlink" title="什么是JWT"></a>什么是JWT</h2><blockquote>
 <p>JSON Web Token（JWT）是一个开放的标准（RFC 7519），它定义了一个紧凑且自包含的方式，用于在各方之间以JSON对象安全地传输信息。这些信息可以通过数字签名进行验证和信任。可以使用秘密（使用HMAC算法）或使用RSA的公钥/私钥对来对JWT进行签名。<br>具体的jwt介绍可以查看官网的介绍：<a href="https://jwt.io/introduction/" target="_blank" rel="external">https://jwt.io/introduction/</a></p>
@@ -1690,7 +1712,7 @@
     <link href="http://www.wanqhblog.top/2018/01/02/SpringBoot%E4%BD%BF%E7%94%A8AOP-%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E6%9D%83%E9%99%90%E9%AA%8C%E8%AF%81/"/>
     <id>http://www.wanqhblog.top/2018/01/02/SpringBoot使用AOP-注解实现简单的权限验证/</id>
     <published>2018-01-02T02:39:04.000Z</published>
-    <updated>2018-01-02T03:29:24.181Z</updated>
+    <updated>2018-06-28T12:38:55.179Z</updated>
     
     <content type="html"><![CDATA[<p>SpringAOP的介绍：<a href="http://www.wanqhblog.top/2017/08/28/SpringAOP/">传送门</a></p>
 <h2 id="demo介绍"><a href="#demo介绍" class="headerlink" title="demo介绍"></a>demo介绍</h2><p>主要通过自定义注解，使用SpringAOP的环绕通知拦截请求，判断该方法是否有自定义注解，然后判断该用户是否有该权限。这里做的比较简单，只有两个权限：一个普通用户、一个管理员。</p>
@@ -1715,44 +1737,6 @@
       <category term="AOP" scheme="http://www.wanqhblog.top/tags/AOP/"/>
     
       <category term="注解" scheme="http://www.wanqhblog.top/tags/%E6%B3%A8%E8%A7%A3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用nginx代理访问FastDFS上传的文件</title>
-    <link href="http://www.wanqhblog.top/2017/12/29/%E4%BD%BF%E7%94%A8nginx%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AEFastDFS%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6/"/>
-    <id>http://www.wanqhblog.top/2017/12/29/使用nginx代理访问FastDFS上传的文件/</id>
-    <published>2017-12-29T01:12:24.000Z</published>
-    <updated>2017-12-29T06:35:36.375Z</updated>
-    
-    <content type="html"><![CDATA[<p>上一次介绍了关于FastDFS系统单机版的安装配置以及使用官方测试上传图片：<br><a href="http://www.wanqhblog.top/2017/12/27/FastDFS%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%90%AD%E5%BB%BA/">Linux下FastDFS系统的搭建</a><br>上传成功返回的链接还无法访问，因为FastDFS不支持http协议，所以要想直接访问，还需要使用nginx访问传的图片，文件。</p>
-<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-27/58813378.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/500/fill/I0VGRUZFRg==/dissolve/70/gravity/SouthEast/dx/5/dy/5" alt=""><br><a id="more"></a></p>
-<h2 id="nginx的搭建"><a href="#nginx的搭建" class="headerlink" title="nginx的搭建"></a>nginx的搭建</h2><p>这里就不介绍了，传送门：<a href="http://www.wanqhblog.top/2017/11/25/CentOS%E4%B8%8BNginx%E7%9A%84%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85/">CentOS下Nginx的配置安装</a></p>
-<h2 id="fastdfs-nginx-module"><a href="#fastdfs-nginx-module" class="headerlink" title="fastdfs-nginx-module"></a>fastdfs-nginx-module</h2><p>下载地址：<a href="https://github.com/happyfish100/fastdfs-nginx-module" target="_blank" rel="external">https://github.com/happyfish100/fastdfs-nginx-module</a><br>这里我从新安装nginx服务器，命令如下：如果是在现有的nginx上添加，可能会比较麻烦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# wget https://github.com/happyfish100/fastdfs-nginx-module/archive/master.zip</div><div class="line">[root@localhost nginx]# unzip master.zip</div><div class="line">[root@localhost nginx]# cd nginx-1.9.0/</div><div class="line">[root@localhost nginx-1.9.0]#  ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-pcre=/usr/local/nginx/pcre-8.41 --add-module=/usr/local/nginx/fastdfs-nginx-module-master/src</div><div class="line">[root@localhost nginx-1.9.0]# make</div><div class="line">[root@localhost nginx-1.9.0]# make install</div></pre></td></tr></table></figure></p>
-<p>安装完成之后要三个配置文件拷贝到fastDFS的配置文件目录下，我这里是<code>/etc/fdfs</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx-1.9.0]# cp /usr/local/nginx/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs</div><div class="line"></div><div class="line">[root@localhost src]# cp /usr/local/fastdfs/fastdfs-5.11/conf/http.conf /etc/fdfs/</div><div class="line"></div><div class="line">[root@localhost src]# cp /usr/local//fastdfs/fastdfs-5.11/conf/mime.types /etc/fdfs/</div></pre></td></tr></table></figure></p>
-<p>修改mod_fastdfs.conf 配置信息：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost bin]# vim /etc/fdfs/mod_fastdfs.conf</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">base_path=/data/fastdfs/storage</div><div class="line">tracker_server=192.168.18.130:22122</div><div class="line">store_path0=/data/fastdfs/storage</div></pre></td></tr></table></figure>
-<p>然后建立软连接：指向文件保存路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx-1.9.0]# ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00</div></pre></td></tr></table></figure></p>
-<p>最后修改nginx的配置文件：添加location</p>
-<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/82209240.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>启动nginx：<br><code>[root@localhost src]# /usr/local/webserver/nginx/sbin/nginx -s reload</code><br>再次使用客户端测试类上传一张图片或者文件：<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/76287184.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>在浏览器访问返回的链接：<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/17508526.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
-<hr>
-<p>关于nginx+FastDFS的简单配置介绍完成！！！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;上一次介绍了关于FastDFS系统单机版的安装配置以及使用官方测试上传图片：&lt;br&gt;&lt;a href=&quot;http://www.wanqhblog.top/2017/12/27/FastDFS%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%90%AD%E5%BB%BA/&quot;&gt;Linux下FastDFS系统的搭建&lt;/a&gt;&lt;br&gt;上传成功返回的链接还无法访问，因为FastDFS不支持http协议，所以要想直接访问，还需要使用nginx访问传的图片，文件。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://oy09glbzm.bkt.clouddn.com/17-12-27/58813378.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/500/fill/I0VGRUZFRg==/dissolve/70/gravity/SouthEast/dx/5/dy/5&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="FastDFS" scheme="http://www.wanqhblog.top/categories/FastDFS/"/>
-    
-    
-      <category term="Nginx" scheme="http://www.wanqhblog.top/tags/Nginx/"/>
-    
-      <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
     
   </entry>
   
