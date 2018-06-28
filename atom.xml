@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.wanqhblog.top/"/>
-  <updated>2018-06-28T12:54:42.152Z</updated>
+  <updated>2018-06-28T12:38:55.175Z</updated>
   <id>http://www.wanqhblog.top/</id>
   
   <author>
@@ -14,28 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>test</title>
-    <link href="http://www.wanqhblog.top/2018/06/28/test/"/>
-    <id>http://www.wanqhblog.top/2018/06/28/test/</id>
-    <published>2018-06-28T12:53:11.000Z</published>
-    <updated>2018-06-28T12:54:42.152Z</updated>
-    
-    <content type="html"><![CDATA[<p>hhhhhhhhhhhhh</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;hhhhhhhhhhhhh&lt;/p&gt;
-
-    
-    </summary>
-    
-    
-      <category term="test" scheme="http://www.wanqhblog.top/tags/test/"/>
-    
-  </entry>
   
   <entry>
     <title>Java8：Lambda表达式增强版Comparator和排序</title>
@@ -1737,6 +1715,44 @@
       <category term="AOP" scheme="http://www.wanqhblog.top/tags/AOP/"/>
     
       <category term="注解" scheme="http://www.wanqhblog.top/tags/%E6%B3%A8%E8%A7%A3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用nginx代理访问FastDFS上传的文件</title>
+    <link href="http://www.wanqhblog.top/2017/12/29/%E4%BD%BF%E7%94%A8nginx%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AEFastDFS%E4%B8%8A%E4%BC%A0%E7%9A%84%E6%96%87%E4%BB%B6/"/>
+    <id>http://www.wanqhblog.top/2017/12/29/使用nginx代理访问FastDFS上传的文件/</id>
+    <published>2017-12-29T01:12:24.000Z</published>
+    <updated>2018-06-28T12:38:55.187Z</updated>
+    
+    <content type="html"><![CDATA[<p>上一次介绍了关于FastDFS系统单机版的安装配置以及使用官方测试上传图片：<br><a href="http://www.wanqhblog.top/2017/12/27/FastDFS%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%90%AD%E5%BB%BA/">Linux下FastDFS系统的搭建</a><br>上传成功返回的链接还无法访问，因为FastDFS不支持http协议，所以要想直接访问，还需要使用nginx访问传的图片，文件。</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-27/58813378.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/500/fill/I0VGRUZFRg==/dissolve/70/gravity/SouthEast/dx/5/dy/5" alt=""><br><a id="more"></a></p>
+<h2 id="nginx的搭建"><a href="#nginx的搭建" class="headerlink" title="nginx的搭建"></a>nginx的搭建</h2><p>这里就不介绍了，传送门：<a href="http://www.wanqhblog.top/2017/11/25/CentOS%E4%B8%8BNginx%E7%9A%84%E9%85%8D%E7%BD%AE%E5%AE%89%E8%A3%85/">CentOS下Nginx的配置安装</a></p>
+<h2 id="fastdfs-nginx-module"><a href="#fastdfs-nginx-module" class="headerlink" title="fastdfs-nginx-module"></a>fastdfs-nginx-module</h2><p>下载地址：<a href="https://github.com/happyfish100/fastdfs-nginx-module" target="_blank" rel="external">https://github.com/happyfish100/fastdfs-nginx-module</a><br>这里我从新安装nginx服务器，命令如下：如果是在现有的nginx上添加，可能会比较麻烦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx]# wget https://github.com/happyfish100/fastdfs-nginx-module/archive/master.zip</div><div class="line">[root@localhost nginx]# unzip master.zip</div><div class="line">[root@localhost nginx]# cd nginx-1.9.0/</div><div class="line">[root@localhost nginx-1.9.0]#  ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-pcre=/usr/local/nginx/pcre-8.41 --add-module=/usr/local/nginx/fastdfs-nginx-module-master/src</div><div class="line">[root@localhost nginx-1.9.0]# make</div><div class="line">[root@localhost nginx-1.9.0]# make install</div></pre></td></tr></table></figure></p>
+<p>安装完成之后要三个配置文件拷贝到fastDFS的配置文件目录下，我这里是<code>/etc/fdfs</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx-1.9.0]# cp /usr/local/nginx/fastdfs-nginx-module-master/src/mod_fastdfs.conf /etc/fdfs</div><div class="line"></div><div class="line">[root@localhost src]# cp /usr/local/fastdfs/fastdfs-5.11/conf/http.conf /etc/fdfs/</div><div class="line"></div><div class="line">[root@localhost src]# cp /usr/local//fastdfs/fastdfs-5.11/conf/mime.types /etc/fdfs/</div></pre></td></tr></table></figure></p>
+<p>修改mod_fastdfs.conf 配置信息：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost bin]# vim /etc/fdfs/mod_fastdfs.conf</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">base_path=/data/fastdfs/storage</div><div class="line">tracker_server=192.168.18.130:22122</div><div class="line">store_path0=/data/fastdfs/storage</div></pre></td></tr></table></figure>
+<p>然后建立软连接：指向文件保存路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost nginx-1.9.0]# ln -s /data/fastdfs/storage/data/ /data/fastdfs/storage/data/M00</div></pre></td></tr></table></figure></p>
+<p>最后修改nginx的配置文件：添加location</p>
+<p><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/82209240.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>启动nginx：<br><code>[root@localhost src]# /usr/local/webserver/nginx/sbin/nginx -s reload</code><br>再次使用客户端测试类上传一张图片或者文件：<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/76287184.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""><br>在浏览器访问返回的链接：<br><img src="http://oy09glbzm.bkt.clouddn.com/17-12-29/17508526.jpg?imageView2/0/q/75|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/300/fill/IzJDMUJFRQ==/dissolve/100/gravity/SouthEast/dx/10/dy/10" alt=""></p>
+<hr>
+<p>关于nginx+FastDFS的简单配置介绍完成！！！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;上一次介绍了关于FastDFS系统单机版的安装配置以及使用官方测试上传图片：&lt;br&gt;&lt;a href=&quot;http://www.wanqhblog.top/2017/12/27/FastDFS%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%90%AD%E5%BB%BA/&quot;&gt;Linux下FastDFS系统的搭建&lt;/a&gt;&lt;br&gt;上传成功返回的链接还无法访问，因为FastDFS不支持http协议，所以要想直接访问，还需要使用nginx访问传的图片，文件。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oy09glbzm.bkt.clouddn.com/17-12-27/58813378.jpg?imageView2/0/q/100|watermark/2/text/d2FucWhibG9nLnRvcA==/font/5a6L5L2T/fontsize/500/fill/I0VGRUZFRg==/dissolve/70/gravity/SouthEast/dx/5/dy/5&quot; alt=&quot;&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="FastDFS" scheme="http://www.wanqhblog.top/categories/FastDFS/"/>
+    
+    
+      <category term="Nginx" scheme="http://www.wanqhblog.top/tags/Nginx/"/>
+    
+      <category term="FastDFS" scheme="http://www.wanqhblog.top/tags/FastDFS/"/>
     
   </entry>
   
